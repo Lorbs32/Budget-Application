@@ -1,0 +1,1 @@
+Hello, my name is Andrew Redding. I'm studying team programming for this class and this is the last one I need, so I'm looking forward to working with everybody. The budget app sounds cool so I'm excited about helping to code it.
