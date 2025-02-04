@@ -1,0 +1,3 @@
+Hi I'm Josh a student at WCC in the computer science java program. I'm currently a product manager in the healthcare and clinical research industry. I love to build easy to use experiences with innovative thinking and technology.
+
+I've taken the Intro Java, Adv Java, Spring Framework, Linux, and Database classes. In the PHP and Android classes this semester. Excited to dive in!
