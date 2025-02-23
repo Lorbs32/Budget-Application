@@ -39,7 +39,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -56,77 +55,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.thymeleaf</groupId>-->
-<!--			<artifactId>thymeleaf</artifactId>-->
-<!--			<version>3.1.2.RELEASE</version>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.thymeleaf</groupId>-->
-<!--			<artifactId>thymeleaf-spring5</artifactId>-->
-<!--			<version>3.1.2.RELEASE</version>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-tomcat</artifactId>-->
-<!--			<scope>provided</scope>-->
-<!--		</dependency>-->
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-<!--			<version>2.3.3.RELEASE</version>-->
 		</dependency>
-
-		<!--		<dependency>-->
-<!--			<groupId>org.apache.tomcat.embed</groupId>-->
-<!--			<artifactId>tomcat-embed-jasper</artifactId>-->
-<!--&lt;!&ndash;			<version>10.1.18</version>&ndash;&gt;-->
-<!--&lt;!&ndash;			<scope>provided</scope>&ndash;&gt;-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>jakarta.servlet.jsp.jstl</groupId>-->
-<!--			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.glassfish.web</groupId>-->
-<!--			<artifactId>jakarta.servlet.jsp.jstl</artifactId>-->
-<!--			<scope>runtime</scope>-->
-<!--		</dependency>-->
-		<!-- https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
-<!--		<dependency>-->
-<!--			<groupId>jakarta.servlet.jsp.jstl</groupId>-->
-<!--			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>-->
-<!--			<version>3.0.2</version>-->
-<!--		</dependency>-->
-
-		<!--		<dependency>-->
-<!--			<groupId>jakarta.servlet.jsp.jstl</groupId>-->
-<!--			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>-->
-<!--			<version>3.0.2</version>-->
-<!--&lt;!&ndash;			<scope>provided</scope>&ndash;&gt;-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.glassfish.web</groupId>-->
-<!--			<artifactId>jakarta.servlet.jsp.jstl</artifactId>-->
-<!--			<version>3.0.0</version>-->
-<!--		</dependency>-->
-
-
-
-<!--		<dependency>-->
-<!--			<groupId>jakarta.servlet</groupId>-->
-<!--			<artifactId>jakarta.servlet-api</artifactId>-->
-<!--&lt;!&ndash;			<version>6.1.0</version>&ndash;&gt;-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>javax.servlet</groupId>-->
-<!--			<artifactId>jstl</artifactId>-->
-<!--			<version>1.2</version>-->
-<!--		</dependency>-->
 	</dependencies>
 
 	<build>
