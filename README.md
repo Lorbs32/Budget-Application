@@ -36,8 +36,7 @@ Before the project is open following this repos standard from your local cps298 
 
 - Git checkout branchname
 
-- Git merge main
- - While on your named feature branch
+- Git merge main (While on your named feature branch)
 
 
 RUN AND VIEW THE APP
