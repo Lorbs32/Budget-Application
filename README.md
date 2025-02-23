@@ -28,17 +28,17 @@ Resources include static | templates | application.properites | data.sql | schem
 
 Before the project is open following this repos standard from your local cps298 folder
 
--Git branch
+- Git branch
  - Confirm you are in the main branch
 
--Git pull main
+- Git pull main
 
--Git branch
+- Git branch
  - Confirm you have a named branch. If not Git branch <<enter firstname>>
 
--Git checkout branchname
+- Git checkout branchname
 
--Git merge main
+- Git merge main
  - While on your named feature branch
 
 
