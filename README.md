@@ -43,23 +43,16 @@ Git merge main
 
 
 RUN AND VIEW THE APP
-
 From IntelliJ or Eclipse with the project open
-
 To run the application open the AppApplication class and click the Run button.
-
 Open a browser tab and enter http://localhost:8080/
-
 You should see 
 
 ![image](https://github.com/user-attachments/assets/631d1b98-14cc-434d-b92c-58833dec8dbe)
 
 VIEW AND QUERY THE H2 DB
-
 While the project is running open a browser tab and enter http://localhost:8080/h2-console
-
 Leave the saved settings and setting name as Generic H2 (Embedded).
-
 Enter the Driver Class, JDBC URL, Username, Password. If you need this information contact Josh McGuire.
 ![image](https://github.com/user-attachments/assets/2c15416d-f19e-4bf5-b4f6-847b379f1da1)
 
