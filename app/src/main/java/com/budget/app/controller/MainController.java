@@ -13,33 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-public class MainController
-{
-    @Autowired
-    UserService userService;
+public class MainController {
+	@Autowired private UserService userService;
 
-    @Autowired
-    User authUser = null;
-
-    @RequestMapping("/")
-    public String home(Model model)
-    {
-        List<User> users = userService.getUsers();
-        model.addAttribute("users",users);
-        model.addAttribute("text", "Current Users");
-        return "login";
-    }
-
-    @RequestMapping("/dashboard")
-    public String dashboard(Model model, @ModelAttribute("email") String userEmail, BindingResult result)
-    {
-        if(userService.getUserByEmail(userEmail) == null)
-        {
-            System.out.println("dashboard user email doesn't exist or no parameter included.");
-            return "redirect:/";
-        }
-        authUser = userService.getUserByEmail(userEmail);
-        model.addAttribute("user",authUser);
-        return "dashboard";
-    }
+	@RequestMapping("/dashboard")
+	public String dashboard(Model model) {
+		model.addAttribute("users", userService.getUsers());
+		return "dashboard";
+	}
 }
