@@ -1,10 +1,10 @@
-INSERT INTO users (first_name,last_name,email_address) VALUES ('Josh','McGuire','joshmcguire14@gmail.com');
-INSERT INTO users (first_name,last_name,email_address) VALUES ('Emma','Grove','emmagrove20230@gmail.com');
-INSERT INTO users (first_name,last_name,email_address) VALUES ('Kyle','Lohrberg','lorbs32@gmail.com');
-INSERT INTO users (first_name,last_name,email_address) VALUES ('Naomi','Ellison','NRoseE32@yahoo.com');
-INSERT INTO users (first_name,last_name,email_address) VALUES ('Etana','Lehman','enlehman@wccnet.edu');
-INSERT INTO users (first_name,last_name,email_address) VALUES ('Andrew','Redding','ajredding@wccnet.edu');
-INSERT INTO users (first_name,last_name,email_address) VALUES ('Mazin','Iqbal','maziniqbal2005@gmail.com');
+INSERT INTO users (first_name,last_name,email_address, username, password) VALUES ('Josh','McGuire','joshmcguire14@gmail.com', 'joshmcquire14', 'password');
+INSERT INTO users (first_name,last_name,email_address, username, password) VALUES ('Emma','Grove','emmagrove20230@gmail.com', 'emmagrove20230', 'password');
+INSERT INTO users (first_name,last_name,email_address, username, password) VALUES ('Kyle','Lohrberg','lorbs32@gmail.com', 'lorbs32', 'password');
+INSERT INTO users (first_name,last_name,email_address, username, password) VALUES ('Naomi','Ellison','NRoseE32@yahoo.com', 'NRoseE32', 'password');
+INSERT INTO users (first_name,last_name,email_address, username, password) VALUES ('Etana','Lehman','enlehman@wccnet.edu', 'enlehman', 'password');
+INSERT INTO users (first_name,last_name,email_address, username, password) VALUES ('Andrew','Redding','ajredding@wccnet.edu', 'ajredding', 'password');
+INSERT INTO users (first_name,last_name,email_address, username, password) VALUES ('Mazin','Iqbal','maziniqbal2005@gmail.com', 'maziniqbal2005', 'password');
 
 --Category types 1 (Income), 2 (Expenses)
 INSERT INTO categories (category_label, category_type_id) VALUES ('W2',1);
