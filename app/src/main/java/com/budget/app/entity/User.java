@@ -3,6 +3,9 @@ package com.budget.app.entity;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name ="users")
 @Component
@@ -28,14 +31,19 @@ public class User
     @Column(name="password")
     private String password;
 
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    //@OneToOne(mappedBy = "user")
+    private List<Budget> budgets = new ArrayList<Budget>();
+
     public User() {}
 
-    public User(int id, String firstName, String lastName, String emailAddress)
+    public User(int id, String firstName, String lastName, String emailAddress, List<Budget> budgets)
     {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
+        this.budgets = budgets;
     }
 
     public int getId()
@@ -73,10 +81,7 @@ public class User
         this.id = id;
     }
 
-    public void setFirstName(String firstName)
-    {
-        this.firstName = firstName;
-    }
+    public void setFirstName(String firstName){this.firstName = firstName;}
 
     public void setLastName(String lastName)
     {
@@ -97,4 +102,8 @@ public class User
     {
         this.password = password;
     }
+
+    public List<Budget> getBudgets() {return budgets;}
+
+    public void setBudgets(List<Budget> budgets) {this.budgets = budgets;}
 }
