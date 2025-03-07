@@ -30,8 +30,13 @@ public class BudgetDate
     private Date endDate;
 
     @OneToMany(mappedBy = "budgetDate",cascade = CascadeType.ALL)
-    //@OneToOne(mappedBy = "budgetDate")
     private List<Budget> budgets = new ArrayList<Budget>();
+
+    @Transient
+    private boolean currentBudgetMonth = false;
+
+    @Transient
+    private boolean budgetSelected = false;
 
     public BudgetDate() {}
 
@@ -55,6 +60,10 @@ public class BudgetDate
 
     public Date getEndDate() {return endDate;}
 
+    public boolean getCurrentBudgetMonth() {return currentBudgetMonth;}
+
+    public boolean getBudgetSelected() {return budgetSelected;}
+
     public void setId(int id) {this.id = id;}
 
     public void setBudgetYear(int year) {this.budgetYear = year;}
@@ -68,4 +77,8 @@ public class BudgetDate
     public List<Budget> getBudgets() {return budgets;}
 
     public void setBudgets(List<Budget> budgets) {this.budgets = budgets;}
+
+    public void setCurrentBudgetMonth(boolean currentBudgetMonth) {this.currentBudgetMonth = currentBudgetMonth;}
+
+    public void setBudgetSelected(boolean budgetSelected) {this.budgetSelected = budgetSelected;}
 }

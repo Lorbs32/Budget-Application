@@ -1,7 +1,6 @@
 package com.budget.app.service;
 
-import com.budget.app.entity.BudgetDate;
-import com.budget.app.entity.User;
+import com.budget.app.entity.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -11,8 +10,9 @@ public interface BudgetService
 {
     public List<User> getUsers();
     public User getUserByEmail(String email);
-   // public List<BudgetDate> getBudgetDates();
-   // public List<BudgetDate> getBudgetDatesRange();
     public List<BudgetDate> getBudgetDatesBetween(LocalDate currentDate);
-    //public List<BudgetDate> getBudgetDateRangeById(int id);
+    public Budget getBudget(int userId, int dateId);
+    public List<Group> getGroups(int budgetId);
+    public List<LineItem> getLineItems(List<Group> groups);
+    public List<Transaction> getTransactions(List<LineItem> lineItems);
 }

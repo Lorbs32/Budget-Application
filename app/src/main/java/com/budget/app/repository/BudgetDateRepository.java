@@ -1,14 +1,11 @@
 package com.budget.app.repository;
 
 import com.budget.app.entity.BudgetDate;
-import com.budget.app.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
