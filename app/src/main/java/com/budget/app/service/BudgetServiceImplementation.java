@@ -1,14 +1,11 @@
 package com.budget.app.service;
 
-import com.budget.app.entity.BudgetDate;
-import com.budget.app.entity.User;
-import com.budget.app.repository.BudgetDateRepository;
-import com.budget.app.repository.UserRepository;
+import com.budget.app.entity.*;
+import com.budget.app.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +19,18 @@ public class BudgetServiceImplementation implements BudgetService
 
     @Autowired
     private BudgetDateRepository budgetDateRepository;
+
+    @Autowired
+    private BudgetRepository budgetRepository;
+
+    @Autowired
+    private GroupRepository groupRepository;
+
+    @Autowired
+    private LineItemRepository lineItemRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @Override
     public List<User> getUsers()
@@ -41,11 +50,51 @@ public class BudgetServiceImplementation implements BudgetService
         BudgetDate budgetDate = budgetDateRepository.findByBudgetDateBetween(currentDate);
         Integer currentBudgetDateId = budgetDate.getId();
         List<Integer> ids = new ArrayList<Integer>();
+
+        // TO DO need to write a more flexible algorithm here.
+        // This assumes 5 months to display and that the 3 month "march" is the current and selected month.
         ids.add(currentBudgetDateId - 2);
         ids.add(currentBudgetDateId - 1);
         ids.add(currentBudgetDateId);
         ids.add(currentBudgetDateId + 1);
         ids.add(currentBudgetDateId + 2);
-        return budgetDateRepository.findByIdIn(ids);
+        List<BudgetDate> listBudgetDates = budgetDateRepository.findByIdIn(ids);
+        listBudgetDates.get(2).setCurrentBudgetMonth(true);
+        listBudgetDates.get(2).setBudgetSelected(true);
+        return listBudgetDates;
+    }
+
+    @Override
+    public Budget getBudget(int userId, int dateId)
+    {
+        return budgetRepository.findByUserIdAndBudgetDateId(userId, dateId);
+    }
+
+    @Override
+    public List<Group> getGroups(int budgetId)
+    {
+        return groupRepository.findById(budgetId);
+    }
+
+    @Override
+    public List<LineItem> getLineItems(List<Group> groups)
+    {
+        List<Integer> ids = new ArrayList<Integer>();
+        for(Group group: groups)
+        {
+            ids.add(group.getId());
+        }
+        return lineItemRepository.findByIdIn(ids);
+    }
+
+    @Override
+    public List<Transaction> getTransactions(List<LineItem> lineItems)
+    {
+        List<Integer> ids = new ArrayList<Integer>();
+        for(LineItem lineItem: lineItems)
+        {
+            ids.add(lineItem.getId());
+        }
+        return transactionRepository.findByIdIn(ids);
     }
 }
