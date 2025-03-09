@@ -5,10 +5,80 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Dashboard</title>
+    <style>
+        .budgetDateSelection {
+            text-align: center;
+            padding: 0px;
+            margin: 0px 0px;
+            border: 0.0625rem dashed #69757a;
+            border-radius: .3125rem;
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+        p {
+            margin-bottom: 0.5rem;
+        }
+        .center {
+            text-align: center;
+        }
+        .block {
+            display: block;
+        }
+        .labelHeight {
+            height: 24px;
+        }
+        .tableWidth {
+            width: 33%;
+        }
+    </style>
 </head>
 <body class="container">
-<h1>Dashboard</h1>
-<table class="table">
+<div>
+    <div class="row">
+        <div class="col-md-10">
+            <h1>Dashboard</h1>
+        </div>
+        <div class="col-md-2 text-end">
+            <form th:action="@{/logout}" method="post">
+                <input class="btn btn-primary mt-2" type="submit" value="Logout">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div th:each="date: ${budgetDates}" class="col-1">
+            <div class="budgetDateSelection">
+                <h3 th:text="${date.getBudgetMonth()}"></h3>
+                <p th:text="${date.getBudgetYear()}"></p>
+            </div>
+            <label class="block center labelHeight" th:text="${date.currentBudgetMonth} ? 'Today' : ''" ></label>
+        </div>
+    </div>
+    <div style="margin-left: 10px;">
+        <h3 th:text="'Budget Id Is: ' + ${budget.getId}"></h3>
+        <div th:each="group: ${groups}">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="tableWidth" th:text="${group.getGroupName()}"></th>
+                        <th class="tableWidth">Planned</th>
+                        <th class="tableWidth">Actual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="lineItem: ${group.getLineItems()}">
+                        <td class="tableWidth" th:text="${lineItem.getLineItemName()}"></td>
+                        <td class="tableWidth" th:text="${lineItem.getPlannedAmount()}"></td>
+                        <td class="tableWidth">$0.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <br>
+</div>
+
+<table class="table" style="margin-left:10px;">
     <thead>
     <tr>
         <th>First Name</th>
@@ -28,8 +98,5 @@
     </tr>
     </tbody>
 </table>
-<form th:action="@{/logout}" method="post">
-    <input class="btn btn-primary mt-2" type="submit" value="Logout">
-</form>
 </body>
 </html>
