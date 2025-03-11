@@ -55,17 +55,17 @@
     </div>
     <div style="margin-left: 10px;">
         <h3 th:text="'Budget Id Is: ' + ${budget.getId}"></h3>
-        <div th:each="group: ${groups}">
+        <div th:each="category: ${categories}">
             <table class="table">
                 <thead>
                     <tr>
-                        <th class="tableWidth" th:text="${group.getGroupName()}"></th>
+                        <th class="tableWidth" th:text="${category.getGroupName()}"></th>
                         <th class="tableWidth">Planned</th>
                         <th class="tableWidth">Actual</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="lineItem: ${group.getLineItems()}">
+                    <tr th:each="lineItem: ${category.getLineItems()}">
                         <td class="tableWidth" th:text="${lineItem.getLineItemName()}"></td>
                         <td class="tableWidth" th:text="${lineItem.getPlannedAmount()}"></td>
                         <td class="tableWidth">$0.00</td>

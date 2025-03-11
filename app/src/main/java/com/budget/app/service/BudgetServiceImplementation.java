@@ -24,7 +24,7 @@ public class BudgetServiceImplementation implements BudgetService
     private BudgetRepository budgetRepository;
 
     @Autowired
-    private GroupRepository groupRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private LineItemRepository lineItemRepository;
@@ -71,18 +71,19 @@ public class BudgetServiceImplementation implements BudgetService
     }
 
     @Override
-    public List<Group> getGroups(int budgetId)
+    public List<Category> getCategories(int budgetId)
     {
-        return groupRepository.findById(budgetId);
+
+        return categoryRepository.findById(budgetId);
     }
 
     @Override
-    public List<LineItem> getLineItems(List<Group> groups)
+    public List<LineItem> getLineItems(List<Category> categories)
     {
         List<Integer> ids = new ArrayList<Integer>();
-        for(Group group: groups)
+        for(Category category : categories)
         {
-            ids.add(group.getId());
+            ids.add(category.getId());
         }
         return lineItemRepository.findByIdIn(ids);
     }

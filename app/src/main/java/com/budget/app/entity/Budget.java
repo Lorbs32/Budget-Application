@@ -24,21 +24,17 @@ public class Budget
     @JoinColumn(name = "date_id")
     private BudgetDate budgetDate;
 
-//    @OneToMany(mappedBy = "budget",cascade = CascadeType.ALL)
-//    private List<LineItem> lineItems = new ArrayList<LineItem>();
-
     @OneToMany(mappedBy = "budget",cascade = CascadeType.ALL)
-    private List<Group> groups = new ArrayList<Group>();
+    private List<Category> categories = new ArrayList<Category>();
 
     public Budget() {}
 
-    public Budget(int id, User user, BudgetDate date, List<Group> groups)
+    public Budget(int id, User user, BudgetDate date, List<Category> categories)
     {
         this.id = id;
         this.user = user;
         this.budgetDate = date;
-        //this.lineItems = lineItems;
-        this.groups = groups;
+        this.categories = categories;
     }
 
     public int getId() {return id;}
@@ -47,9 +43,7 @@ public class Budget
 
     public BudgetDate getBudgetDate() {return budgetDate;}
 
-    //public List<LineItem> getLineItems() {return lineItems;}
-
-    public List<Group> getGroups() {return groups;}
+    public List<Category> getCategories() {return categories;}
 
     public void setId(int id) {this.id = id;}
 
@@ -57,7 +51,5 @@ public class Budget
 
     public void setBudgetDate(BudgetDate budgetDate) {this.budgetDate = budgetDate;}
 
-    //public void setLineItems(List<LineItem> lineItems) {this.lineItems = lineItems;}
-
-    public void setGroups(List<Group> groups) {this.groups = groups;}
+    public void setCategories(List<Category> categories) {this.categories = categories;}
 }

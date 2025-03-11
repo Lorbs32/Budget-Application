@@ -8,9 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
@@ -46,10 +43,10 @@ public class MainController {
 		Budget budget = budgetService.getBudget(currentUser.getId(), budgetDateSelected.getId());
 		model.addAttribute("budget", budget);
 
-		List<Group> groups = budgetService.getGroups(budget.getId());
-		model.addAttribute("groups", groups);
+		List<Category> categories = budgetService.getCategories(budget.getId());
+		model.addAttribute("categories", categories);
 
-		List<LineItem> lineItems = budgetService.getLineItems(groups);
+		List<LineItem> lineItems = budgetService.getLineItems(categories);
 		model.addAttribute("lineItems", lineItems);
 
 		List<Transaction> transactions = budgetService.getTransactions(lineItems);

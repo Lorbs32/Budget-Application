@@ -7,16 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name ="groups")
+@Table(name ="categories")
 @Component
-public class Group
+public class Category
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "group_id")
+    @Column(name = "category_id")
     private int id;
 
-    @Column(name = "group_name")
+    @Column(name = "category_name")
     private String groupName;
 
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
@@ -28,8 +28,8 @@ public class Group
 
 
     // Constructors
-    public Group() {}
-    public Group(int id, String groupName, Budget budget, List<LineItem> lineItems)
+    public Category() {}
+    public Category(int id, String groupName, Budget budget, List<LineItem> lineItems)
     {
         this.id = id;
         this.groupName = groupName;
