@@ -12,6 +12,8 @@ import java.util.List;
 @Component
 public class BudgetDate
 {
+
+    // Database Setup
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "budget_date_id")
@@ -29,6 +31,8 @@ public class BudgetDate
     @Column(name = "end_date")
     private Date endDate;
 
+
+    // Connections
     @OneToMany(mappedBy = "budgetDate",cascade = CascadeType.ALL)
     private List<Budget> budgets = new ArrayList<Budget>();
 
@@ -38,8 +42,9 @@ public class BudgetDate
     @Transient
     private boolean budgetSelected = false;
 
-    public BudgetDate() {}
 
+    // Constructors
+    public BudgetDate() {}
     public BudgetDate(int id, int year, String month, Date startDate, Date endDate, List<Budget> budgets)
     {
         this.id = id;
@@ -50,6 +55,8 @@ public class BudgetDate
         this.budgets = budgets;
     }
 
+
+    // Getters & Setters
     public int getId() {return id;}
 
     public int getBudgetYear() {return budgetYear;}

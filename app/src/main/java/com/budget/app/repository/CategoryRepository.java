@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
-	@NativeQuery(value = "SELECT * FROM CATEGORIES C WHERE C.BUDGET_ID = ?1")
+	@NativeQuery(value =
+			"SELECT * FROM CATEGORIES C WHERE C.BUDGET_ID = ?1")
 	List<Category> findByBudgetId(int budgetId);
 }

@@ -11,6 +11,8 @@ import java.util.List;
 @Component
 public class Category
 {
+
+    // Database Setup
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
@@ -19,10 +21,11 @@ public class Category
     @Column(name = "category_name")
     private String groupName;
 
+
+    // Connections
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "budget_id")
     private Budget budget;
-
     @OneToMany(mappedBy = "group",cascade = CascadeType.ALL)
     private List<LineItem> lineItems = new ArrayList<LineItem>();
 
