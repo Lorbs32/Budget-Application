@@ -95,4 +95,11 @@ public class BudgetServiceImplementation implements BudgetService
         }
         return transactionRepository.findByIdIn(ids);
     }
+
+    // ------------------TO DO-------------------
+
+    // calculateBudgetSummary(Int budgetId)
+        // Use repo to fetch all line items for a budget
+        // Calculate totals for income and expenses
+        // Calculate remaining balance
 }

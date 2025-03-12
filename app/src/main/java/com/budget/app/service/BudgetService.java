@@ -14,4 +14,6 @@ public interface BudgetService
     public List<Category> getCategories(int budgetId);
     public List<LineItem> getLineItems(List<Category> categories);
     public List<Transaction> getTransactions(List<LineItem> lineItems);
+
+    // calculateBudgetSummary(Int budgetId);
 }

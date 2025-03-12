@@ -23,12 +23,16 @@ public class LineItemServiceImplementation implements LineItemService {
 
 
     // Creates a LineItem
-    public LineItem createLineItem(String lineItemName, BigDecimal plannedAmount, Boolean isIncome, int categoryId) {
-        Category category = categoryRepository.findById(categoryId)
+    public LineItem createLineItem(LineItem lineItem) {
+        // Fetch the Category object based on the category ID from the submitted form
+        Category category = categoryRepository.findById(lineItem.getCategory().getId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        LineItem newLineItem = new LineItem(lineItemName, plannedAmount, isIncome, category, new ArrayList<>());
-        return lineItemRepository.save(newLineItem);
+        // Assign the fetched category to the LineItem
+        lineItem.setCategory(category);
+
+        // Save the LineItem to the database
+        return lineItemRepository.save(lineItem);
     }
 
     // Retrieves all LineItems

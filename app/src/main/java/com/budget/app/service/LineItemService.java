@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface LineItemService {
 
-    public LineItem createLineItem(String lineItemName, BigDecimal plannedAmount, Boolean isIncome, int categoryId);
+    public LineItem createLineItem(LineItem lineItem);
     public List<LineItem> getAllLineItems();
     public List<LineItem> getLineItemsByIncomeType(boolean isIncome);
 }
