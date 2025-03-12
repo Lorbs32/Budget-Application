@@ -100,6 +100,7 @@ public class BudgetServiceImplementation implements BudgetService
 
     // calculateBudgetSummary(Int budgetId)
         // Use repo to fetch all line items for a budget
+        // Separate income from expenses using isIncome true or false
         // Calculate totals for income and expenses
         // Calculate remaining balance
 }

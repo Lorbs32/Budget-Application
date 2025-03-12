@@ -28,6 +28,10 @@ public class LineItem
     @Column(name="is_income")
     private boolean isIncome; // True for income, False for expenses
 
+    @Enumerated(EnumType.STRING) // Example: ONE_TIME, WEEKLY, BI_WEEKLY, MONTHLY, YEARLY
+    @Column(name = "recurrence")
+    private RecurrenceType recurrenceType;
+
 
     // Connections
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
@@ -40,13 +44,15 @@ public class LineItem
     // Constructors
     public LineItem() {}
     public LineItem(String lineItemName, BigDecimal plannedAmount,
-                    Boolean isIncome, Category category, List<Transaction> transactions)
+                    Boolean isIncome, Category category, List<Transaction> transactions,
+                    RecurrenceType recurrenceType)
     {
         this.lineItemName = lineItemName;
         this.plannedAmount = plannedAmount;
         this.isIncome = isIncome;
         this.category = category;
         this.transactions = transactions;
+        this.recurrenceType = recurrenceType;
     }
 
 
@@ -74,4 +80,8 @@ public class LineItem
     public void setPlannedAmount(BigDecimal plannedAmount) {this.plannedAmount = plannedAmount;}
 
     public void setTransactions(List<Transaction> transactions) {this.transactions = transactions;}
+
+    public RecurrenceType getRecurrenceType() {return recurrenceType;}
+
+    public void setRecurrenceType(RecurrenceType recurrenceType) {this.recurrenceType = recurrenceType;}
 }

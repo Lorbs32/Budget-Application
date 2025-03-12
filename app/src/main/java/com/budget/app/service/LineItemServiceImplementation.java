@@ -27,11 +27,10 @@ public class LineItemServiceImplementation implements LineItemService {
         // Fetch the Category object based on the category ID from the submitted form
         Category category = categoryRepository.findById(lineItem.getCategory().getId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
-
-        // Assign the fetched category to the LineItem
         lineItem.setCategory(category);
-
-        // Save the LineItem to the database
+        if (lineItem.getRecurrenceType() == null) {
+            lineItem.setRecurrenceType(RecurrenceType.ONE_TIME); // Set default value to ONE_TIME
+        }
         return lineItemRepository.save(lineItem);
     }
 
