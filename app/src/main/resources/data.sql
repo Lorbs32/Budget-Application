@@ -44,14 +44,14 @@ INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUE
 INSERT INTO budgets (date_id, user_id) VALUES (3,1);
 
 -- Categories (budget_id = 1 (josh))
-INSERT INTO categories (category_name, budget_id,) VALUES ('Income',1);
-INSERT INTO categories (category_name, budget_id,) VALUES ('Housing',1);
-INSERT INTO categories (category_name, budget_id,) VALUES ('Transportation',1);
-INSERT INTO categories (category_name, budget_id,) VALUES ('Food',1);
-INSERT INTO categories (category_name, budget_id,) VALUES ('Personal',1);
-INSERT INTO categories (category_name, budget_id,) VALUES ('Health',1);
-INSERT INTO categories (category_name, budget_id,) VALUES ('Insurance',1);
-INSERT INTO categories (category_name, budget_id,) VALUES ('Saving',1);
+INSERT INTO categories (category_name, budget_id) VALUES ('Income',1);
+INSERT INTO categories (category_name, budget_id) VALUES ('Housing',1);
+INSERT INTO categories (category_name, budget_id) VALUES ('Transportation',1);
+INSERT INTO categories (category_name, budget_id) VALUES ('Food',1);
+INSERT INTO categories (category_name, budget_id) VALUES ('Personal',1);
+INSERT INTO categories (category_name, budget_id) VALUES ('Health',1);
+INSERT INTO categories (category_name, budget_id) VALUES ('Insurance',1);
+INSERT INTO categories (category_name, budget_id) VALUES ('Saving',1);
 
 -- Line Items
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount) VALUES (1,true,'Paycheck 1',2000.00);

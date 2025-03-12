@@ -19,23 +19,23 @@ public class Category
     private int id;
 
     @Column(name = "category_name")
-    private String groupName;
+    private String categoryName;
 
 
     // Connections
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "budget_id")
     private Budget budget;
-    @OneToMany(mappedBy = "group",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
     private List<LineItem> lineItems = new ArrayList<LineItem>();
 
 
     // Constructors
     public Category() {}
-    public Category(int id, String groupName, Budget budget, List<LineItem> lineItems)
+    public Category(int id, String categoryName, Budget budget, List<LineItem> lineItems)
     {
         this.id = id;
-        this.groupName = groupName;
+        this.categoryName = categoryName;
         this.budget = budget;
         this.lineItems = lineItems;
     }
@@ -44,7 +44,7 @@ public class Category
     // Getters & Setters
     public int getId() {return id;}
 
-    public String getGroupName() {return groupName;}
+    public String getGroupName() {return categoryName;}
 
     public Budget getBudget() {return budget;}
 
@@ -52,7 +52,7 @@ public class Category
 
     public void setId(int id) {this.id = id;}
 
-    public void setGroupName(String groupName) {this.groupName = groupName;}
+    public void setGroupName(String groupName) {this.categoryName = groupName;}
 
     public void setBudget(Budget budget) {this.budget = budget;}
 

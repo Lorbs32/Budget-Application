@@ -3,11 +3,16 @@ package com.budget.app.service;
 import com.budget.app.entity.*;
 import com.budget.app.repository.CategoryRepository;
 import com.budget.app.repository.LineItemRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
+@Transactional
 public class LineItemServiceImplementation implements LineItemService {
 
     @Autowired

@@ -31,7 +31,7 @@ public class LineItem
 
     // Connections
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "category_id")
     private Category category;
     @OneToMany(mappedBy = "lineItem",cascade = CascadeType.ALL)
     private List<Transaction> transactions = new ArrayList<Transaction>();
