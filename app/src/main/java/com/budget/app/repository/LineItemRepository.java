@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface LineItemRepository extends JpaRepository<LineItem, Integer> {
 	List<LineItem> findByIdIn(List<Integer> ids);
+	List<LineItem> findByIsIncome(boolean isIncome);
 }

@@ -14,24 +14,22 @@ import java.util.List;
 @Transactional
 public class BudgetServiceImplementation implements BudgetService
 {
+    // Autowires
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private BudgetDateRepository budgetDateRepository;
-
     @Autowired
     private BudgetRepository budgetRepository;
-
     @Autowired
-    private GroupRepository groupRepository;
-
+    private CategoryRepository categoryRepository;
     @Autowired
     private LineItemRepository lineItemRepository;
-
     @Autowired
     private TransactionRepository transactionRepository;
 
+
+    // Interface Method Implementations
     @Override
     public List<User> getUsers()
     {
@@ -71,18 +69,18 @@ public class BudgetServiceImplementation implements BudgetService
     }
 
     @Override
-    public List<Group> getGroups(int budgetId)
+    public List<Category> getCategories(int budgetId)
     {
-        return groupRepository.findById(budgetId);
+        return categoryRepository.findByBudgetId(budgetId);
     }
 
     @Override
-    public List<LineItem> getLineItems(List<Group> groups)
+    public List<LineItem> getLineItems(List<Category> categories)
     {
         List<Integer> ids = new ArrayList<Integer>();
-        for(Group group: groups)
+        for(Category category : categories)
         {
-            ids.add(group.getId());
+            ids.add(category.getId());
         }
         return lineItemRepository.findByIdIn(ids);
     }
@@ -97,4 +95,12 @@ public class BudgetServiceImplementation implements BudgetService
         }
         return transactionRepository.findByIdIn(ids);
     }
+
+    // ------------------TO DO-------------------
+
+    // calculateBudgetSummary(Int budgetId)
+        // Use repo to fetch all line items for a budget
+        // Separate income from expenses using isIncome true or false
+        // Calculate totals for income and expenses
+        // Calculate remaining balance
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Line Items</title>
+</head>
+<body>
+<h2>Budget Line Items</h2>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Type</th>
+        <th>Category</th>
+    </tr>
+    <tr th:each="lineItem : ${lineItems}">
+        <td th:text="${lineItem.lineItemName}"></td>
+        <td th:text="${lineItem.plannedAmount}"></td>
+        <td th:text="${lineItem.isIncome ? 'Income' : 'Expense'}"></td>
+        <td th:text="${lineItem.category.categoryName}"></td>
+    </tr>
+</table>
+
+<a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>
