@@ -39,6 +39,7 @@ INSERT INTO group_types (group_label) VALUES ('expense');
 
 -- Budget
 INSERT INTO budgets (date_id, user_id) VALUES (3,1);
+INSERT INTO budgets (date_id, user_id) VALUES (3,7);
 
 -- Groups
 INSERT INTO groups (group_name, budget_id, group_type_id) VALUES ('Income',1,1);
