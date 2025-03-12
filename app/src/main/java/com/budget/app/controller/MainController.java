@@ -42,10 +42,10 @@ public class MainController {
 		Budget budget = budgetService.getBudget(currentUser.getId(), budgetDateSelected.getId());
 		model.addAttribute("budget", budget);
 
-		List<Group> groups = budgetService.getGroups(budget.getId());
-		model.addAttribute("groups", groups);
+		List<Category> categories = budgetService.getCategories(budget.getId());
+		model.addAttribute("categories", categories);
 
-		List<LineItem> lineItems = budgetService.getLineItems(groups);
+		List<LineItem> lineItems = budgetService.getLineItems(categories);
 		model.addAttribute("lineItems", lineItems);
 
 		List<Transaction> transactions = budgetService.getTransactions(lineItems);

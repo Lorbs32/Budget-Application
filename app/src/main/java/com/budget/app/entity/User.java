@@ -11,6 +11,8 @@ import java.util.List;
 @Component
 public class User
 {
+
+    // Database Setup
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -31,12 +33,15 @@ public class User
     @Column(name="password")
     private String password;
 
+
+    // Connections
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     //@OneToOne(mappedBy = "user")
     private List<Budget> budgets = new ArrayList<Budget>();
 
-    public User() {}
 
+    // Constructors
+    public User() {}
     public User(int id, String firstName, String lastName, String emailAddress, List<Budget> budgets)
     {
         this.id = id;
@@ -46,6 +51,8 @@ public class User
         this.budgets = budgets;
     }
 
+
+    // Getters & Setters
     public int getId()
     {
         return id;

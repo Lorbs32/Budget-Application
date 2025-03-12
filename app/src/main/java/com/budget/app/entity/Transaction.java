@@ -11,6 +11,8 @@ import java.sql.Date;
 @Component
 public class Transaction
 {
+
+    // Database Setup
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id")
@@ -28,12 +30,15 @@ public class Transaction
     @Column(name = "note")
     private String note;
 
+
+    // Connections
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "line_item_id")
     private LineItem lineItem;
 
-    public Transaction() {}
 
+    // Constructors
+    public Transaction() {}
     public Transaction(int id, String merchant, BigDecimal actualAmount, Date transactionDate, String note, LineItem lineItem)
     {
         this.id = id;
@@ -44,6 +49,8 @@ public class Transaction
         this.lineItem = lineItem;
     }
 
+
+    // Getters & Setters
     public int getId() {return id;}
 
     public String getMerchant() {return merchant;}
