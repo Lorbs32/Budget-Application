@@ -14,24 +14,22 @@ import java.util.List;
 @Transactional
 public class BudgetServiceImplementation implements BudgetService
 {
+    // Autowires
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private BudgetDateRepository budgetDateRepository;
-
     @Autowired
     private BudgetRepository budgetRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private LineItemRepository lineItemRepository;
-
     @Autowired
     private TransactionRepository transactionRepository;
 
+
+    // Interface Method Implementations
     @Override
     public List<User> getUsers()
     {
@@ -73,8 +71,7 @@ public class BudgetServiceImplementation implements BudgetService
     @Override
     public List<Category> getCategories(int budgetId)
     {
-
-        return categoryRepository.findById(budgetId);
+        return categoryRepository.findByBudgetId(budgetId);
     }
 
     @Override
