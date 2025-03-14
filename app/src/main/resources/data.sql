@@ -41,7 +41,7 @@ INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUE
 INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Dec', '2025-12-01', '2025-12-31');
 
 -- Budget (budget_id autoincrement to 1 (josh))
-INSERT INTO budgets (date_id, user_id) VALUES (3,1);
+INSERT INTO budgets (date_id, user_id) VALUES (3,2);
 
 -- Categories (budget_id = 1 (josh))
 INSERT INTO categories (category_name, budget_id) VALUES ('Income',1);
