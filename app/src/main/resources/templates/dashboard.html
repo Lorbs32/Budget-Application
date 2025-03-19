@@ -6,6 +6,20 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Dashboard</title>
     <style>
+        .bodyColor{
+            background-color: #48CE65;
+        }
+        .form-container{
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .table-container {
+            width: 80%;
+            margin: 0 auto;
+            max-width: 100%;
+        }
         .budgetDateSelection {
             text-align: center;
             padding: 0px;
@@ -20,6 +34,13 @@
         }
         .center {
             text-align: center;
+            flex:1;
+        }
+        .left-aligned{
+            text-align: left;
+        }
+        .right-aligned{
+            text-align: right;
         }
         .block {
             display: block;
@@ -30,73 +51,78 @@
         .tableWidth {
             width: 33%;
         }
+        .row{
+        display: flex;
+        justify-content:center;
+        align-items: center
+        flex-wrap: wrap;
+        padding: 20px;
+        }
+        .header{
+        background-color:#2a9d43;
+        display: flex;
+        flex-wrap: wrap;
+        }
     </style>
 </head>
-<body class="container">
-<div>
-    <div class="row">
-        <div class="col-md-10">
-            <h1>Dashboard</h1>
+<body class="bodyColor">
+<div class="center">
+    <div class="header">
+        <div class="center">
+            <h1>Budget Planner</h1>
         </div>
-        <div class="col-md-2 text-end">
+        <div class="right-aligned">
             <form th:action="@{/logout}" method="post">
-                <input class="btn btn-primary mt-2" type="submit" value="Logout">
+                <input class="btn-primary mt-2 " type="submit" value="Logout">
             </form>
         </div>
     </div>
-    <div class="row">
-        <div th:each="date: ${budgetDates}" class="col-1">
-            <div class="budgetDateSelection">
-                <h3 th:text="${date.getBudgetMonth()}"></h3>
-                <p th:text="${date.getBudgetYear()}"></p>
-            </div>
-            <label class="block center labelHeight" th:text="${date.currentBudgetMonth} ? 'Today' : ''" ></label>
-        </div>
+    <div class="form-container center">
+        <form id="graphDisplay" th:action="@{/graphDisplay}" method="post">
+            <input class="btn-primary mt-2" type="submit" value="Graph Display">
+        </form>
+        <form id="addGroup" th:action="@{/addGroup}"  method="post">
+            <input class="btn-primary mt-2" type="submit" value="Add Budget">
+        </form>
+        <form id="financialGoals" th:action="@{/overTime}" method="post">
+            <input class="btn-primary mt-2" type="submit" value="Financial Goals">
+        </form>
     </div>
-    <div style="margin-left: 10px;">
-        <h3 th:text="'Budget Id Is: ' + ${budget.getId}"></h3>
-        <div th:each="category: ${categories}">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="tableWidth" th:text="${category.getGroupName()}"></th>
-                        <th class="tableWidth">Planned</th>
-                        <th class="tableWidth">Actual</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="lineItem: ${category.getLineItems()}">
-                        <td class="tableWidth" th:text="${lineItem.getLineItemName()}"></td>
-                        <td class="tableWidth" th:text="${lineItem.getPlannedAmount()}"></td>
-                        <td class="tableWidth">$0.00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <br>
-    <br>
 </div>
-
-<table class="table" style="margin-left:10px;">
-    <thead>
-    <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email Address</th>
-        <th>Username</th>
-        <th>Password</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user: ${users}">
-        <td th:text="${user.getFirstName()}"></td>
-        <td th:text="${user.getLastName()}"></td>
-        <td th:text="${user.getEmailAddress()}"></td>
-        <td th:text="${user.getUsername()}"></td>
-        <td th:text="${user.getPassword()}"></td>
-    </tr>
-    </tbody>
-</table>
+</div>
+<br>
+<div class="row">
+    <div th:each="date: ${budgetDates}" class="col-1">
+        <div class="budgetDateSelection center">
+            <h2 th:text="${date.getBudgetMonth()}"></h2>
+            <p th:text="${date.getBudgetYear()}"></p>
+        </div>
+        <label class="block center labelHeight" th:text="${date.currentBudgetMonth} ? 'Today' : ''" ></label>
+    </div>
+</div>
+<div th:each="category: ${categories}" class="table-container">
+    <table class="table table-hover table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th></th>
+            </tr>
+            <tr th:each="lineItem : ${lineItems}">
+                <td th:text="${lineItem.lineItemName}"></td>
+                <td th:text="${lineItem.plannedAmount}"></td>
+                <td th:text="${lineItem.isIncome ? 'Income' : 'Expense'}"></td>
+                <td th:text="${category.getGroupName}"></td>
+                <td class="tableWidth">
+                <form th:action="@{/updateLineItem}" method="post">
+                    <input type="hidden" th:name="lineItemId" th:value="${lineItem.id}"/>
+                    <input class="btn btn-secondary btn-sm" type="submit" value="Update"/>
+                </form>
+                </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
