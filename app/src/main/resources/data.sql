@@ -46,8 +46,7 @@ INSERT INTO budgets (date_id, user_id) VALUES (3,7);
 -- Transactions
 -- INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (2,'2025-03-05','Apartment Complex','Note text apartment',500.89)
 
-
--- Insert categories for each budget_id
+-- Josh (1)
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Housing', 1);
 INSERT INTO categories (category_name, budget_id)
@@ -55,77 +54,10 @@ VALUES ('Utilities', 1);
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Groceries', 1);
 INSERT INTO categories (category_name, budget_id)
-VALUES ('Transportation', 1);
-INSERT INTO categories (category_name, budget_id)
 VALUES ('Entertainment', 1);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Transportation', 1);
 
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Housing', 2);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Utilities', 2);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Groceries', 2);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Transportation', 2);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Medical', 2);
-
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Housing', 3);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Utilities', 3);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Groceries', 3);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Vacation', 3);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Investments', 3);
-
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Housing', 4);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Utilities', 4);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Groceries', 4);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Personal Care', 4);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Gifts', 4);
-
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Housing', 5);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Utilities', 5);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Groceries', 5);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Insurance', 5);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Education', 5);
-
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Housing', 6);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Utilities', 6);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Groceries', 6);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Dining Out', 6);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Subscriptions', 6);
-
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Housing', 7);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Utilities', 7);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Groceries', 7);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Savings', 7);
-INSERT INTO categories (category_name, budget_id)
-VALUES ('Charity', 7);
-
--- Insert line items with recurrence adjusted to valid options
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (1, FALSE, 'Rent Payment', 1500, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
@@ -136,6 +68,18 @@ INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, 
 VALUES (4, FALSE, 'Gasoline', 200, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (5, FALSE, 'Netflix Subscription', 20, 'MONTHLY');
+
+-- Emma (2)
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Housing', 2);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Utilities', 2);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Groceries', 2);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Transportation', 2);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Medical', 2);
 
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (6, FALSE, 'Rent Payment', 1500, 'MONTHLY');
@@ -148,6 +92,18 @@ VALUES (9, FALSE, 'Uber Rides', 75, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (10, FALSE, 'Doctor Appointment Fee', 100, 'ONE_TIME');
 
+-- Kyle (3)
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Housing', 3);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Utilities', 3);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Groceries', 3);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Vacation', 3);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Investments', 3);
+
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (11, FALSE, 'Mortgage Payment', 2000, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
@@ -158,6 +114,18 @@ INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, 
 VALUES (14, FALSE, 'Flight Tickets', 500, 'ONE_TIME');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (15, TRUE, 'Stock Dividend', 200, 'YEARLY');
+
+-- Naomi (4)
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Housing', 4);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Utilities', 4);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Groceries', 4);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Personal Care', 4);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Gifts', 4);
 
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (16, FALSE, 'Rent Payment', 1500, 'MONTHLY');
@@ -170,6 +138,18 @@ VALUES (19, FALSE, 'Haircut', 40, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (20, FALSE, 'Birthday Gift', 100, 'ONE_TIME');
 
+-- Etana (5)
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Housing', 5);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Utilities', 5);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Groceries', 5);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Insurance', 5);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Education', 5);
+
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (21, FALSE, 'Housing Maintenance', 500, 'YEARLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
@@ -181,6 +161,18 @@ VALUES (24, FALSE, 'Tuition Fees', 1000, 'YEARLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (25, TRUE, 'Scholarship', 1500, 'YEARLY');
 
+-- Andrew (6)
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Housing', 6);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Utilities', 6);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Groceries', 6);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Dining Out', 6);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Subscriptions', 6);
+
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (26, FALSE, 'Dining at Restaurant', 100, 'WEEKLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
@@ -191,3 +183,15 @@ INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, 
 VALUES (29, TRUE, 'Savings Interest', 30, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (30, TRUE, 'Charity Donation', 100, 'ONE_TIME');
+
+-- Mazin (7)
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Housing', 7);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Utilities', 7);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Groceries', 7);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Savings', 7);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Charity', 7);

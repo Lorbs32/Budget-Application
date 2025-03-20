@@ -102,6 +102,7 @@
 </div>
 <div th:each="category: ${categories}" class="table-container">
     <table class="table table-hover table-striped">
+        <thead>
             <tr>
                 <th>Name</th>
                 <th>Amount</th>
@@ -109,6 +110,8 @@
                 <th>Category</th>
                 <th></th>
             </tr>
+        </thead>
+        <tbody>
             <tr th:each="lineItem : ${lineItems}">
                 <td th:text="${lineItem.lineItemName}"></td>
                 <td th:text="${lineItem.plannedAmount}"></td>
