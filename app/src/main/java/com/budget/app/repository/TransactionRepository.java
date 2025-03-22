@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
 	List<Transaction> findByIdIn(List<Integer> ids);
+    default Transaction updateOrInsert(Transaction transaction){return save(transaction);}
+    List<Transaction> findByLineItemId(int id);
 }

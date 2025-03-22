@@ -12,8 +12,10 @@ public interface BudgetService
     public List<BudgetDate> getBudgetDatesBetween(LocalDate currentDate);
     public Budget getBudget(int userId, int dateId);
     public List<Category> getCategories(int budgetId);
-    public List<LineItem> getLineItems(List<Category> categories);
+    public List<LineItem> getLineItemsByCategoryIds(List<Category> categories);
     public List<Transaction> getTransactions(List<LineItem> lineItems);
+    public void updateOrInsert(Transaction transaction);
+    public List<Transaction> getTransactionsByLineItemId(LineItem item);
 
     // calculateBudgetSummary(Int budgetId);
 }

@@ -41,7 +41,7 @@ INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUE
 INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Dec', '2025-12-01', '2025-12-31');
 
 -- Budget (budget_id autoincrement to 1 (josh))
-INSERT INTO budgets (date_id, user_id) VALUES (3,2);
+INSERT INTO budgets (date_id, user_id) VALUES (3,1);
 
 -- Categories (budget_id = 1 (josh))
 INSERT INTO categories (category_name, budget_id) VALUES ('Income',1);
@@ -71,4 +71,4 @@ INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, 
 
 -- Transactions
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (2,'2025-03-05','Apartment Complex','Note text apartment',500.89);
-INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (6,'2025-03-02','Savvy Sliders','Note text restaurant',25.15);
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (6,'2025-03-02','Meal Out','Note text restaurant',25.15);
