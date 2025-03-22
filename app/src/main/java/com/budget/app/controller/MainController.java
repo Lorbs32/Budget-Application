@@ -63,17 +63,11 @@ public class MainController {
 		List<Transaction> transactions = budgetService.getTransactions(lineItems);
 		model.addAttribute("transactions", transactions);
 
-		// on each line item get related transactions
+		// On each line item get related transactions
 		// If no transactions then set actual amount to 0
 		// If some transactions then initialize accumulated actual amount to 0
 		// Then loop through list of transactions and add to the accumulated actual amount
 		// At end of loop set actual amount to accumulated actual amount
-
-		System.out.println("SIZE OF THE LINE ITEMS LIST: " + lineItems.size());
-		for(LineItem each : lineItems)
-		{
-			System.out.println("Values of the line items: " + each.getLineItemName());
-		}
 		for(LineItem item : lineItems)
 		{
 			List<Transaction> relatedTransactions = budgetService.getTransactionsByLineItemId(item);
