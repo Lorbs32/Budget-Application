@@ -65,9 +65,9 @@ VALUES (2, FALSE, 'Electricity Bill', 120, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (3, FALSE, 'Weekly Food Supplies', 250, 'WEEKLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (4, FALSE, 'Gasoline', 200, 'MONTHLY');
+VALUES (4, FALSE, 'Netflix Subscription', 20, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (5, FALSE, 'Netflix Subscription', 20, 'MONTHLY');
+VALUES (5, FALSE, 'Gasoline', 200, 'MONTHLY');
 
 -- Emma (2)
 INSERT INTO categories (category_name, budget_id)
@@ -157,13 +157,13 @@ VALUES (22, FALSE, 'Solar Panel Installment', 300, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (23, FALSE, 'Vitamins and Supplements', 50, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (24, FALSE, 'Tuition Fees', 1000, 'YEARLY');
+VALUES (25, FALSE, 'Tuition Fees', 1000, 'YEARLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (25, TRUE, 'Scholarship', 1500, 'YEARLY');
 
 -- Andrew (6)
 INSERT INTO categories (category_name, budget_id)
-VALUES ('Housing', 6);
+VALUES ('Subscriptions', 6);
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Utilities', 6);
 INSERT INTO categories (category_name, budget_id)
@@ -171,14 +171,14 @@ VALUES ('Groceries', 6);
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Dining Out', 6);
 INSERT INTO categories (category_name, budget_id)
-VALUES ('Subscriptions', 6);
+VALUES ('Income', 6);
 
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (26, FALSE, 'Dining at Restaurant', 100, 'WEEKLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (27, FALSE, 'Music Streaming', 10, 'MONTHLY');
+VALUES (26, FALSE, 'Music Streaming', 10, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (28, FALSE, 'Weekend Snacks', 50, 'WEEKLY');
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
+VALUES (29, FALSE, 'Dining at Restaurant', 100, 'WEEKLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (29, TRUE, 'Savings Interest', 30, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
