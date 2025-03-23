@@ -69,6 +69,11 @@ VALUES (4, FALSE, 'Netflix Subscription', 20, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (5, FALSE, 'Gasoline', 200, 'MONTHLY');
 
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (1, '2025-03-05', 'Apartment Complex', 'Note text apartment', 500.89);
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (4, '2025-03-02', 'Netflix', 'Note text netflix', 25.15);
+
 -- Emma (2)
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Housing', 2);
