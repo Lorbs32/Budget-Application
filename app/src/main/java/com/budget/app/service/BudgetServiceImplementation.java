@@ -75,14 +75,14 @@ public class BudgetServiceImplementation implements BudgetService
     }
 
     @Override
-    public List<LineItem> getLineItems(List<Category> categories)
+    public List<LineItem> getLineItemsByCategoryIds(List<Category> categories)
     {
         List<Integer> ids = new ArrayList<Integer>();
         for(Category category : categories)
         {
             ids.add(category.getId());
         }
-        return lineItemRepository.findByIdIn(ids);
+        return lineItemRepository.findByCategoryIdIn(ids);
     }
 
     @Override
@@ -94,6 +94,17 @@ public class BudgetServiceImplementation implements BudgetService
             ids.add(lineItem.getId());
         }
         return transactionRepository.findByIdIn(ids);
+    }
+
+    @Override
+    public void updateOrInsert(Transaction transaction)
+    {
+        Transaction saveResult = transactionRepository.updateOrInsert(transaction);
+    }
+
+    @Override
+    public List<Transaction> getTransactionsByLineItemId(LineItem item) {
+        return transactionRepository.findByLineItemId(item.getId());
     }
 
     // ------------------TO DO-------------------
