@@ -40,6 +40,10 @@ public class LineItem
     @OneToMany(mappedBy = "lineItem",cascade = CascadeType.ALL)
     private List<Transaction> transactions = new ArrayList<Transaction>();
 
+    // The summed amount of all transactions for this line item.
+    @Transient
+    private BigDecimal cumulativeActualAmount;
+
 
     // Constructors
     public LineItem() {}
@@ -84,4 +88,8 @@ public class LineItem
     public RecurrenceType getRecurrenceType() {return recurrenceType;}
 
     public void setRecurrenceType(RecurrenceType recurrenceType) {this.recurrenceType = recurrenceType;}
+
+    public BigDecimal getCumulativeActualAmount() {return cumulativeActualAmount;}
+
+    public void setCumulativeActualAmount(BigDecimal actualAmount) {this.cumulativeActualAmount = actualAmount;}
 }
