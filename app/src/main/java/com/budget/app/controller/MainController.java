@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -85,51 +86,26 @@ public class MainController {
 				item.setCumulativeActualAmount(accumulatedActualAmount);
 			}
 		}
-
-		return "dashboard";
-	}
-
-	@RequestMapping("/graphDisplay")
-	public String getGraph(Model model){
-		List<BudgetDate> budgetDates = budgetService.getBudgetDatesBetween(todaysDate);
-		model.addAttribute("budgetDates", budgetDates);
-
-		BudgetDate budgetDateSelected = new BudgetDate();
-		for (BudgetDate budgetDate : budgetDates)
-		{
-			if (budgetDate.getBudgetSelected())
-			{
-				budgetDateSelected = budgetDate;
-			}
-		}
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		User currentUser = userDetails.getUser();
-		Budget budget = budgetService.getBudget(currentUser.getId(), budgetDateSelected.getId());
-		model.addAttribute("budget", budget);
-
-		List<Category> categories = budgetService.getCategories(budget.getId());
-		List<LineItem> lineItems = budgetService.getLineItemsByCategoryIds(categories);
 		List<String> labels = new ArrayList<>();
 		List<Double> values = new ArrayList<>();
 
 		for (LineItem lineItem : lineItems) {
 			labels.add(lineItem.getLineItemName());
 
-			//Doesnt pull values from database
 			double totalAmount = 0;
-			for (Transaction transaction : lineItem.getTransactions()) {
-				totalAmount += transaction.getActualAmount().doubleValue();
+			for (Transaction tr : lineItem.getTransactions()) {
+				totalAmount += tr.getActualAmount().doubleValue();
 			}
 			values.add(totalAmount);
 		}
 
+		// Add the pie chart data to the model
 		model.addAttribute("labels", labels);
 		model.addAttribute("values", values);
-		return "graphDisplay";
+		return "dashboard";
 	}
 
-	@RequestMapping ("/addTransactionToBudget")
+@RequestMapping ("/addTransactionToBudget")
 	public String addTransaction(@ModelAttribute Transaction transaction, Model model)
 	{
 		budgetService.updateOrInsert(transaction);
