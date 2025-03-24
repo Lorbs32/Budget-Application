@@ -71,4 +71,4 @@ INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, 
 
 -- Transactions
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (2,'2025-03-05','Apartment Complex','Note text apartment',500.89);
-INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (6,'2025-03-02','Savvy Sliders','Note text restaurant',25.15);
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (6,'2025-03-02','Meal Out','Note text restaurant',25.15);
