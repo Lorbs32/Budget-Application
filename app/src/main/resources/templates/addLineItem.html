@@ -13,6 +13,14 @@
   <label for="plannedAmount">Amount:</label>
   <input type="number" id="plannedAmount" name="plannedAmount" step="0.01" required>
 
+  <label for="recurrenceType">Recurrence Type:</label>
+  <select id="recurrenceType" th:field="*{recurrenceType}">
+    <option th:each="type : ${recurrenceTypes}"
+            th:value="${type}"
+            th:text="${type}">
+    </option>
+  </select>
+
   <label for="isIncome">Type:</label>
   <select id="isIncome" name="isIncome">
     <option value="true">Income</option>

@@ -1,6 +1,7 @@
 package com.budget.app.controller;
 
 import com.budget.app.entity.*;
+import com.budget.app.repository.CategoryRepository;
 import com.budget.app.service.LineItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,10 @@ public class LineItemController {
 
     @Autowired
     private LineItemService lineItemService;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
-    // Page to Display all Line Items
+    // Display all Line Items
     @GetMapping
     public String getAllLineItems(@RequestParam(required = false) Boolean isIncome, Model model) {
         List<LineItem> lineItems = (isIncome == null) ?
@@ -28,10 +31,12 @@ public class LineItemController {
     }
 
 
-    // Page to create a new Line Item
+    // Create a new Line Items
     @GetMapping("/create")
     public String showCreateLineItemForm(Model model) {
         model.addAttribute("lineItem", new LineItem());  // Prepares an empty object for binding
+        model.addAttribute("categories", categoryRepository.findAll()); // adds list of categories
+        model.addAttribute("recurrenceTypes", RecurrenceType.values()); // adds recurrence type <select>
         return "addLineItem";  // ✅ Updated view name
     }
     @PostMapping("/create")

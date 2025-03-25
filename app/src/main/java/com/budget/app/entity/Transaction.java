@@ -30,6 +30,9 @@ public class Transaction
     @Column(name = "note")
     private String note;
 
+    @Enumerated(EnumType.STRING)
+    private RecurrenceType recurrenceType;
+
 
     // Connections
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
@@ -74,4 +77,12 @@ public class Transaction
     public void setNote(String note) {this.note = note;}
 
     public void setLineItem(LineItem lineItem) {this.lineItem = lineItem;}
+
+    public RecurrenceType getRecurrenceType() {
+        return recurrenceType;
+    }
+
+    public void setRecurrenceType(RecurrenceType recurrenceType) {
+        this.recurrenceType = recurrenceType;
+    }
 }

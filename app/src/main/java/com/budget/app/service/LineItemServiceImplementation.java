@@ -3,8 +3,11 @@ package com.budget.app.service;
 import com.budget.app.entity.*;
 import com.budget.app.repository.CategoryRepository;
 import com.budget.app.repository.LineItemRepository;
+import com.budget.app.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,9 +20,10 @@ public class LineItemServiceImplementation implements LineItemService {
 
     @Autowired
     private LineItemRepository lineItemRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 
     // Creates a LineItem
@@ -31,6 +35,11 @@ public class LineItemServiceImplementation implements LineItemService {
         if (lineItem.getRecurrenceType() == null) {
             lineItem.setRecurrenceType(RecurrenceType.ONE_TIME); // Set default value to ONE_TIME
         }
+        // Assign the current user to the LineItem
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName(); // Logged-in user's username
+        User user = userRepository.findByUsername(username); // Find user
+        lineItem.setUser(user);
         return lineItemRepository.save(lineItem);
     }
 

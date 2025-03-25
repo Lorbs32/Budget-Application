@@ -37,8 +37,13 @@ public class LineItem
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "category_id")
     private Category category;
+
     @OneToMany(mappedBy = "lineItem",cascade = CascadeType.ALL)
     private List<Transaction> transactions = new ArrayList<Transaction>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     // The summed amount of all transactions for this line item.
     @Transient
@@ -92,4 +97,8 @@ public class LineItem
     public BigDecimal getCumulativeActualAmount() {return cumulativeActualAmount;}
 
     public void setCumulativeActualAmount(BigDecimal actualAmount) {this.cumulativeActualAmount = actualAmount;}
+
+    public User getUser(){ return user; }
+
+    public void setUser(User user) { this.user = user; }
 }

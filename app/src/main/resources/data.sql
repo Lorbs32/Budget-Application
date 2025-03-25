@@ -41,7 +41,7 @@ INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUE
 INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Dec', '2025-12-01', '2025-12-31');
 
 -- Budget (budget_id autoincrement to 1 (josh))
-INSERT INTO budgets (date_id, user_id) VALUES (3,1);
+INSERT INTO budgets (date_id, user_id) VALUES (3,2);
 
 -- Categories (budget_id = 1 (josh))
 INSERT INTO categories (category_name, budget_id) VALUES ('Income',1);
@@ -54,20 +54,20 @@ INSERT INTO categories (category_name, budget_id) VALUES ('Insurance',1);
 INSERT INTO categories (category_name, budget_id) VALUES ('Saving',1);
 
 -- Line Items
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (1,true,'Paycheck 1',2000.00, 'BI_WEEKLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (2,false,'Mortgage/Rent',500.89, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (2,false,'Electricity',101.05, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (3,false,'Gas',25.25, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (4,false,'Groceries',100.00, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (4,false,'Restaurants',75.00, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (5,false,'Clothing',20.00, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (5,false,'Phone',45.00, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (6,false,'Gym',30.00, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (6,false,'Doctor/Dentist Visits',50.00, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (7,false,'Health Insurance',125.00, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (7,false,'Life Insurance',15.50, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (7,false,'Auto Insurance',100.00, 'MONTHLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES (8,false,'Emergency Fund',200.00, 'MONTHLY');
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (1,true,'Paycheck 1',2000.00, 'BI_WEEKLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (2,false,'Mortgage/Rent',500.89, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (2,false,'Electricity',101.05, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (3,false,'Gas',25.25, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (4,false,'Groceries',100.00, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (4,false,'Restaurants',75.00, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (5,false,'Clothing',20.00, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (5,false,'Phone',45.00, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (6,false,'Gym',30.00, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (6,false,'Doctor/Dentist Visits',50.00, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (7,false,'Health Insurance',125.00, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (7,false,'Life Insurance',15.50, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (7,false,'Auto Insurance',100.00, 'MONTHLY', 1);
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence, user_id) VALUES (8,false,'Emergency Fund',200.00, 'MONTHLY', 1);
 
 -- Transactions
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (2,'2025-03-05','Apartment Complex','Note text apartment',500.89);
