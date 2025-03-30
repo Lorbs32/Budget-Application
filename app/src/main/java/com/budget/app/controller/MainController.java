@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -71,11 +72,11 @@ public class MainController {
 				List<Transaction> relatedTransactions = budgetService.getTransactionsByLineItemId(item);
 				if (relatedTransactions.isEmpty())
 				{
-					item.setCumulativeActualAmount(BigDecimal.valueOf(0.00));
+					item.setCumulativeActualAmount(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP));
 				}
 				else
 				{
-					BigDecimal accumulatedActualAmount = BigDecimal.valueOf(0.00);
+					BigDecimal accumulatedActualAmount = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
 					for (Transaction transact : relatedTransactions)
 					{
 						accumulatedActualAmount = accumulatedActualAmount.add(transact.getActualAmount());
