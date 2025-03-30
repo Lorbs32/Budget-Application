@@ -5,17 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d93e2eb5-0611-43f3-a060-5aa82b5f9e3a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/budget/app/controller/LineItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/budget/app/controller/LineItemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/budget/app/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/budget/app/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/budget/app/entity/Budget.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/budget/app/entity/Budget.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/budget/app/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/budget/app/entity/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/budget/app/repository/BudgetRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/budget/app/repository/BudgetRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/budget/app/repository/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/budget/app/repository/CategoryRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/budget/app/service/BudgetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/budget/app/service/BudgetService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/budget/app/service/BudgetServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/budget/app/service/BudgetServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/budget/app/service/LineItemServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/budget/app/service/LineItemServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/resources/templates/addLineItem.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/templates/addLineItem.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/resources/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/templates/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/resources/static/css/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/static/css/dashboard.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/resources/templates/dashboardFragments.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/templates/dashboardFragments.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,9 +20,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
