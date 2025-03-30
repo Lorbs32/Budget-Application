@@ -1,14 +1,12 @@
 package com.budget.app.entity;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name ="categories")
-@Component
 public class Category
 {
 
@@ -27,7 +25,7 @@ public class Category
     @JoinColumn(name = "budget_id")
     private Budget budget;
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
-    private List<LineItem> lineItems = new ArrayList<LineItem>();
+    private List<LineItem> lineItems = new ArrayList<>();
 
 
     // Constructors
@@ -44,7 +42,7 @@ public class Category
     // Getters & Setters
     public int getId() {return id;}
 
-    public String getGroupName() {return categoryName;}
+    public String getCategoryName() {return categoryName;}
 
     public Budget getBudget() {return budget;}
 
@@ -52,7 +50,7 @@ public class Category
 
     public void setId(int id) {this.id = id;}
 
-    public void setGroupName(String groupName) {this.categoryName = groupName;}
+    public void setCategoryName(String categoryName) {this.categoryName = categoryName;}
 
     public void setBudget(Budget budget) {this.budget = budget;}
 
