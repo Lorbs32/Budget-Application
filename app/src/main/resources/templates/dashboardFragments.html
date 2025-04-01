@@ -39,11 +39,10 @@
                 <tr th:each="lineItem : ${category.getLineItems()}">
                     <td th:text="${lineItem.lineItemName}"></td>
                     <td>
-                        <span>$</span>
-                        <span th:text="${lineItem.plannedAmount}"></span>
+                        <span th:text="'$'+${lineItem.plannedAmount}"></span>
                     </td>
-                    <td>
-                        <span>$</span><span th:text="${lineItem.getCumulativeActualAmount()}"></span>
+                    <td th:class="${lineItem.plannedAmount < lineItem.cumulativeActualAmount}?text-danger">
+                        <span th:text="${lineItem.plannedAmount < lineItem.cumulativeActualAmount}?'$'+${lineItem.cumulativeActualAmount}+' (over budget)':'$'+${lineItem.cumulativeActualAmount}"></span>
                     </td>
                     <td class="tableWidth">
                         <form th:action="@{/updateLineItem}" method="post">

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class LineItem
     private String lineItemName; // Example: "Electric Bill", "Paycheck"
 
     @Column(name="planned_amount")
-    private BigDecimal plannedAmount = BigDecimal.valueOf(0.00); // Example: 100.50
+    private BigDecimal plannedAmount = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+    //BigDecimal.valueOf(0.00); // Example: 100.50
 
     @Column(name="is_income")
     private boolean isIncome; // True for income, False for expenses
