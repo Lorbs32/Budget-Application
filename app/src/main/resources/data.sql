@@ -1,4 +1,3 @@
--- INSERT INTO users (first_name, last_name, email_address, username, password) VALUES ('', '', '', '', '')
 INSERT INTO users (first_name, last_name, email_address, username, password)
 VALUES ('Josh', 'McGuire', 'joshmcguire14@gmail.com', 'joshmcguire14', 'password');
 INSERT INTO users (first_name, last_name, email_address, username, password)
@@ -15,36 +14,46 @@ INSERT INTO users (first_name, last_name, email_address, username, password)
 VALUES ('Mazin', 'Iqbal', 'maziniqbal2005@gmail.com', 'maziniqbal2005', 'password');
 
 -- Date
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Jan', '2025-01-01', '2025-01-31');
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Feb', '2025-02-01', '2025-02-28');
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Mar', '2025-03-01', '2025-03-31');
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Apr', '2025-04-01', '2025-04-30');
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'May', '2025-05-01', '2025-05-31');
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Jun', '2025-06-01', '2025-06-30');
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Jul', '2025-07-01', '2025-07-31');
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Aug', '2025-08-01', '2025-08-31');
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Sep', '2025-09-01', '2025-09-30');
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Oct', '2025-10-01', '2025-10-31');
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Nov', '2025-11-01', '2025-11-30');
-INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date) VALUES (2025, 'Dec', '2025-12-01', '2025-12-31');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'Jan', '2025-01-01', '2025-01-31');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'Feb', '2025-02-01', '2025-02-28');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'Mar', '2025-03-01', '2025-03-31');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'Apr', '2025-04-01', '2025-04-30');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'May', '2025-05-01', '2025-05-31');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'Jun', '2025-06-01', '2025-06-30');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'Jul', '2025-07-01', '2025-07-31');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'Aug', '2025-08-01', '2025-08-31');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'Sep', '2025-09-01', '2025-09-30');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'Oct', '2025-10-01', '2025-10-31');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'Nov', '2025-11-01', '2025-11-30');
+INSERT INTO budget_dates (budget_year, budget_month, start_date, end_date)
+VALUES (2025, 'Dec', '2025-12-01', '2025-12-31');
 
 -- Budget (budget_id autoincrement to 1 (josh))
-INSERT INTO budgets (date_id, user_id) VALUES (3,1);
-INSERT INTO budgets (date_id, user_id) VALUES (3,2);
-INSERT INTO budgets (date_id, user_id) VALUES (3,3);
-INSERT INTO budgets (date_id, user_id) VALUES (3,4);
-INSERT INTO budgets (date_id, user_id) VALUES (3,5);
-INSERT INTO budgets (date_id, user_id) VALUES (3,6);
-INSERT INTO budgets (date_id, user_id) VALUES (3,7);
-
--- Script for categories
--- INSERT INTO categories (category_name, budget_id) VALUES ('', );
-
--- Line Items
--- INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence) VALUES ();
-
--- Transactions
--- INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (2,'2025-03-05','Apartment Complex','Note text apartment',500.89)
+INSERT INTO budgets (date_id, user_id)
+VALUES (3, 1);
+INSERT INTO budgets (date_id, user_id)
+VALUES (3, 2);
+INSERT INTO budgets (date_id, user_id)
+VALUES (3, 3);
+INSERT INTO budgets (date_id, user_id)
+VALUES (3, 4);
+INSERT INTO budgets (date_id, user_id)
+VALUES (3, 5);
+INSERT INTO budgets (date_id, user_id)
+VALUES (3, 6);
+INSERT INTO budgets (date_id, user_id)
+VALUES (3, 7);
 
 -- Josh (1)
 INSERT INTO categories (category_name, budget_id)
@@ -65,14 +74,9 @@ VALUES (2, FALSE, 'Electricity Bill', 120, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (3, FALSE, 'Weekly Food Supplies', 250, 'WEEKLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (4, FALSE, 'Netflix Subscription', 20, 'MONTHLY');
+VALUES (4, FALSE, 'Gasoline', 200, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (5, FALSE, 'Gasoline', 200, 'MONTHLY');
-
-INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
-VALUES (1, '2025-03-05', 'Apartment Complex', 'Note text apartment', 500.89);
-INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
-VALUES (4, '2025-03-02', 'Netflix', 'Note text netflix', 25.15);
+VALUES (5, FALSE, 'Netflix Subscription', 20, 'MONTHLY');
 
 -- Emma (2)
 INSERT INTO categories (category_name, budget_id)
@@ -162,13 +166,13 @@ VALUES (22, FALSE, 'Solar Panel Installment', 300, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (23, FALSE, 'Vitamins and Supplements', 50, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (25, FALSE, 'Tuition Fees', 1000, 'YEARLY');
+VALUES (24, FALSE, 'Tuition Fees', 1000, 'YEARLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (25, TRUE, 'Scholarship', 1500, 'YEARLY');
 
 -- Andrew (6)
 INSERT INTO categories (category_name, budget_id)
-VALUES ('Subscriptions', 6);
+VALUES ('Housing', 6);
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Utilities', 6);
 INSERT INTO categories (category_name, budget_id)
@@ -176,14 +180,14 @@ VALUES ('Groceries', 6);
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Dining Out', 6);
 INSERT INTO categories (category_name, budget_id)
-VALUES ('Income', 6);
+VALUES ('Subscriptions', 6);
 
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (26, FALSE, 'Music Streaming', 10, 'MONTHLY');
+VALUES (26, FALSE, 'Dining at Restaurant', 100, 'WEEKLY');
+INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
+VALUES (27, FALSE, 'Music Streaming', 10, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (28, FALSE, 'Weekend Snacks', 50, 'WEEKLY');
-INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (29, FALSE, 'Dining at Restaurant', 100, 'WEEKLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (29, TRUE, 'Savings Interest', 30, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
@@ -200,3 +204,7 @@ INSERT INTO categories (category_name, budget_id)
 VALUES ('Savings', 7);
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Charity', 7);
+
+-- Transactions
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (2,'2025-03-05','Apartment Complex','Note text apartment',500.89);
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (6,'2025-03-02','Meal Out','Note text restaurant',25.15);

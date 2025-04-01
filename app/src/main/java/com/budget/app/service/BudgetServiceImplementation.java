@@ -42,6 +42,26 @@ public class BudgetServiceImplementation implements BudgetService
         return userRepository.findByEmailAddress(email);
     }
 
+//    @Override
+//    public List<BudgetDate> getBudgetDatesBetween(LocalDate currentDate)
+//    {
+//        BudgetDate budgetDate = budgetDateRepository.findByBudgetDateBetween(currentDate);
+//        Integer currentBudgetDateId = budgetDate.getId();
+//        List<Integer> ids = new ArrayList<Integer>();
+//
+//        // TO DO need to write a more flexible algorithm here.
+//        // This assumes 5 months to display and that the 3 month "march" is the current and selected month.
+//        ids.add(currentBudgetDateId - 2);
+//        ids.add(currentBudgetDateId - 1);
+//        ids.add(currentBudgetDateId);
+//        ids.add(currentBudgetDateId + 1);
+//        ids.add(currentBudgetDateId + 2);
+//        List<BudgetDate> listBudgetDates = budgetDateRepository.findByIdIn(ids);
+//        listBudgetDates.get(2).setCurrentBudgetMonth(true);
+//        listBudgetDates.get(2).setBudgetSelected(true);
+//        return listBudgetDates;
+//    }
+
     @Override
     public List<BudgetDate> getBudgetDatesBetween(LocalDate currentDate)
     {
