@@ -3,13 +3,17 @@ package com.budget.app.controller;
 import com.budget.app.entity.*;
 import com.budget.app.security.model.CustomUserDetails;
 import com.budget.app.service.BudgetService;
+import com.budget.app.service.CategoryService;
+import com.budget.app.service.LineItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

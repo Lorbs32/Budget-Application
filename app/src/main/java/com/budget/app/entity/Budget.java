@@ -8,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Table(name ="budgets")
-@Component
 public class Budget
 {
 
