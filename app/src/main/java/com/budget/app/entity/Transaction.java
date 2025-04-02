@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
 
 @Entity
@@ -22,7 +23,8 @@ public class Transaction
     private String merchant;
 
     @Column(name="actual_amount")
-    private BigDecimal actualAmount = BigDecimal.valueOf(0.00);
+    private BigDecimal actualAmount = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+    // BigDecimal.valueof(0.00);
 
     @Column(name = "transaction_date")
     private Date transactionDate;

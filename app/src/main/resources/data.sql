@@ -41,19 +41,19 @@ VALUES (2025, 'Dec', '2025-12-01', '2025-12-31');
 
 -- Budget (budget_id autoincrement to 1 (josh))
 INSERT INTO budgets (date_id, user_id)
-VALUES (3, 1);
+VALUES (4, 1);
 INSERT INTO budgets (date_id, user_id)
-VALUES (3, 2);
+VALUES (4, 2);
 INSERT INTO budgets (date_id, user_id)
-VALUES (3, 3);
+VALUES (4, 3);
 INSERT INTO budgets (date_id, user_id)
-VALUES (3, 4);
+VALUES (4, 4);
 INSERT INTO budgets (date_id, user_id)
-VALUES (3, 5);
+VALUES (4, 5);
 INSERT INTO budgets (date_id, user_id)
-VALUES (3, 6);
+VALUES (4, 6);
 INSERT INTO budgets (date_id, user_id)
-VALUES (3, 7);
+VALUES (4, 7);
 
 -- Josh (1)
 INSERT INTO categories (category_name, budget_id)
