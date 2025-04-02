@@ -128,6 +128,16 @@ public class BudgetServiceImplementation implements BudgetService
         return transactionRepository.findByLineItemId(item.getId());
     }
 
+    @Override
+    public Budget getBudgetById(int budgetId) {
+        return budgetRepository.findByUserId(budgetId);
+    }
+
+    @Override
+    public List<Budget> getAllBudgets() {
+        return budgetRepository.findAll();
+    }
+
     // ------------------TO DO-------------------
 
 	// calculateBudgetSummary(Int budgetId)
