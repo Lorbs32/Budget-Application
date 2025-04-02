@@ -88,4 +88,18 @@ public class BudgetDate
     public void setCurrentBudgetMonth(boolean currentBudgetMonth) {this.currentBudgetMonth = currentBudgetMonth;}
 
     public void setBudgetSelected(boolean budgetSelected) {this.budgetSelected = budgetSelected;}
+
+    @Override
+    public String toString() {
+        return "BudgetDate{" +
+                "id=" + id +
+                ", budgetYear=" + budgetYear +
+                ", budgetMonth='" + budgetMonth + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", budgets=" + budgets +
+                ", currentBudgetMonth=" + currentBudgetMonth +
+                ", budgetSelected=" + budgetSelected +
+                '}';
+    }
 }
