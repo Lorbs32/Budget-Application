@@ -13,5 +13,3 @@ public interface BudgetDateService {
     public List<BudgetDate> budgetsForPreviousMonths(int n);
     public List<BudgetDate> budgetsForYear(int year);
 }
-
-
