@@ -7,7 +7,7 @@
 <body>
 <!--NO budget -- This displays when there is NO current / selected month budget in the database.-->
 <div th:fragment="blankState" class="div-container center">
-    <img src="images/blank_state_icon.png" width="20%">
+    <img src="/images/blank_state_icon.png" width="20%">
     <h3>Hey there, looks like you need a budget for this month.</h3>
     <p>If you had a budget last month that will copy over to get you started.</p>
     <button type="button" class="btn btn-primary block marginAuto">Start Planning</button>
@@ -242,13 +242,12 @@
             </div>
         </div>
     </div>
-</div>
 
 <div th:fragment="actionMenu" class="form-container center">
     <button type="button" class="btn btn-secondary mt-2" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
         Add Category
     </button>
-    <form id="financialGoals" th:action="@{/overTime}" method="post">
+    <form id="financialGoals" th:action="@{/financialgoals}" method="post">
         <input class="btn btn-secondary mt-2" type="submit" value="Financial Goals">
     </form>
 </div>
