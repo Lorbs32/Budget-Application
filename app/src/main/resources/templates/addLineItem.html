@@ -19,6 +19,13 @@
     <option value="false">Expense</option>
   </select>
 
+  <label for="recurrenceType">Recurrence:</label>
+  <select id="recurrenceType" name="recurrenceType">
+    <option value="ONE_TIME" selected>One Time</option>
+    <option value="MONTHLY">Monthly</option>
+    <option value="YEARLY">Yearly</option>
+  </select>
+
   <label for="category">Category:</label>
   <select id="category" name="category.id">  <!-- Ensures category ID is passed -->
     <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>

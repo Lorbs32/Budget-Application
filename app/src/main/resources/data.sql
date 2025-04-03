@@ -205,6 +205,34 @@ VALUES ('Savings', 7);
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Charity', 7);
 
--- Transactions
-INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (2,'2025-03-05','Apartment Complex','Note text apartment',500.89);
-INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount) VALUES (6,'2025-03-02','Meal Out','Note text restaurant',25.15);
+-- Josh Transactions
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (1, '2025-04-03', 'Landlord', 'Rent payment', 1500.00);
+
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (2, '2025-04-05', 'Electric Company', 'Electric bill', 120.00);
+
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (3, '2025-04-07', 'Grocery Store', 'Weekly groceries', 80.00);
+
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (4, '2025-04-08', 'Gas Station', 'Fuel refill', 60.00);
+
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (5, '2025-04-10', 'Netflix', 'Monthly subscription', 20.00);
+
+-- Kyle Transactions
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (11, '2025-04-03', 'Landlord', 'Rent payment', 1500.00);
+
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (12, '2025-04-05', 'Electric Company', 'Electric bill', 120.00);
+
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (13, '2025-04-07', 'Grocery Store', 'Weekly groceries', 80.00);
+
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (14, '2025-04-08', 'Gas Station', 'Fuel refill', 60.00);
+
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (15, '2025-04-10', 'Netflix', 'Monthly subscription', 20.00);
