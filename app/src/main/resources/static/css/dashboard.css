@@ -66,21 +66,21 @@ h1 {
     color: #dee2e6;
 }
 .bodyColor {
-    background-color: #48CE65;
+    background-color: #F0F0F0;
 }
 .transactionColor {
-    background-color: #FFFFFF;
+    background-color: #F8F8F8;
 }
 .transactionModalColor {
     background-color: #D9EFF9;
 }
-        .graphContainer {
-            width: 100%;
-            height: 400px;
-            padding: 0;
-            margin: 0;
-        }
-        #pieGraph {
-            width: 100% !important;
-            height: 100% !important;
-        }
+.graphContainer {
+        width: 100%;
+        height: 400px;
+        padding: 0;
+        margin: 0;
+}
+#pieGraph {
+        width: 100% !important;
+        height: 100% !important;
+}
