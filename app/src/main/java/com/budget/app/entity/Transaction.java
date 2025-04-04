@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name ="transactions")
@@ -27,7 +28,7 @@ public class Transaction
     // BigDecimal.valueof(0.00);
 
     @Column(name = "transaction_date")
-    private Date transactionDate;
+    private LocalDate transactionDate;
 
     @Column(name = "note")
     private String note;
@@ -41,7 +42,7 @@ public class Transaction
 
     // Constructors
     public Transaction() {}
-    public Transaction(int id, String merchant, BigDecimal actualAmount, Date transactionDate, String note, LineItem lineItem)
+    public Transaction(int id, String merchant, BigDecimal actualAmount, LocalDate transactionDate, String note, LineItem lineItem)
     {
         this.id = id;
         this.merchant = merchant;
@@ -59,7 +60,7 @@ public class Transaction
 
     public BigDecimal getActualAmount() {return actualAmount;}
 
-    public Date getTransactionDate() {return transactionDate;}
+    public LocalDate getTransactionDate() {return transactionDate;}
 
     public String getNote() {return note;}
 
@@ -71,7 +72,7 @@ public class Transaction
 
     public void setActualAmount(BigDecimal actualAmount) {this.actualAmount = actualAmount;}
 
-    public void setTransactionDate(Date transactionDate) {this.transactionDate = transactionDate;}
+    public void setTransactionDate(LocalDate transactionDate) {this.transactionDate = transactionDate;}
 
     public void setNote(String note) {this.note = note;}
 

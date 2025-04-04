@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.YearMonth;
 import java.util.List;
 
 @Service
@@ -40,5 +41,24 @@ public class LineItemServiceImplementation implements LineItemService {
     @Override
     public List<LineItem> getLineItemsByIncomeType(boolean isIncome) {
         return lineItemRepository.findByIsIncome(isIncome);
+    }
+
+    // Decide whether subscriptions should show for future months
+    @Override
+    public boolean isActiveForMonth(LineItem item, YearMonth targetMonth) {
+        RecurrenceType recurrence = item.getRecurrenceType();
+
+        if (recurrence == RecurrenceType.ONE_TIME) {
+            if (item.getTransactions().isEmpty())
+                return false;
+            for (Transaction tx : item.getTransactions()) {
+                YearMonth txMonth = YearMonth.from(tx.getTransactionDate());
+                if (txMonth.equals(targetMonth)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
     }
 }
