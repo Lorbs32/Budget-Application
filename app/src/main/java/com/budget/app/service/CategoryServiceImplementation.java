@@ -15,7 +15,5 @@ public class CategoryServiceImplementation  implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public void saveCategory(Category category) {
-        categoryRepository.save(category);
-    }
+    public void saveCategory(Category category) {categoryRepository.updateOrInsert(category);}
 }
