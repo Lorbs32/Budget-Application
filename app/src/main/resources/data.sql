@@ -218,8 +218,8 @@ VALUES (3, '2025-04-07', 'Grocery Store', 'Weekly groceries', 80.00);
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
 VALUES (4, '2025-04-08', 'Gas Station', 'Fuel refill', 60.00);
 
-INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
-VALUES (5, '2025-04-10', 'Netflix', 'Monthly subscription', 20.00);
+--INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+--VALUES (5, '2025-04-10', 'Netflix', 'Monthly subscription', 20.00);
 
 -- Kyle Transactions
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)

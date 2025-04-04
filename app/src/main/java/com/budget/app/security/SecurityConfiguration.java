@@ -25,7 +25,10 @@ public class SecurityConfiguration {
 				.headers(headers -> headers
 						.frameOptions(frameOptions -> frameOptions.disable())
 				)
-				.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/h2-console/**").permitAll().anyRequest().authenticated()) //url in requestMatchers does NOT need auth, other DOES need auth
+				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+						.requestMatchers("/h2-console/**").permitAll()
+						.requestMatchers("/addCategory/**").permitAll().anyRequest().authenticated() //url in requestMatchers does NOT need auth, other DOES need auth
+				)
 				.formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/dashboard", true))
 				.logout(logout -> logout.logoutUrl("/logout").permitAll());
 		return http.build();

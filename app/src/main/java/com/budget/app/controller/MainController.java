@@ -101,9 +101,6 @@ public class MainController {
 
 			model.addAttribute("lineItems", filteredLineItems);
 
-			List<Transaction> transactions = budgetService.getTransactions(lineItems);
-			model.addAttribute("transactions", transactions);
-
 			// On each line item get related transactions
 			// If no transactions then set actual amount to 0
 			// If some transactions then initialize accumulated actual amount to 0
@@ -126,6 +123,10 @@ public class MainController {
 					item.setCumulativeActualAmount(accumulatedActualAmount);
 				}
 			}
+
+			List<Transaction> transactions = budgetService.getTransactions(lineItems);
+			model.addAttribute("transactions", transactions);
+
 			List<String> labels = new ArrayList<>();
 			List<Double> values = new ArrayList<>();
 
