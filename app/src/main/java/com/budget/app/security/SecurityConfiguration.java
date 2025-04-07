@@ -10,14 +10,54 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestHandler;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 	@Autowired private CustomUserDetailsService customerUserDetailsService;
 
+
+//	@Bean
+//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//		CookieCsrfTokenRepository tokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+//		XorCsrfTokenRequestAttributeHandler delegate = new XorCsrfTokenRequestAttributeHandler();
+//		// set the name of the attribute the CsrfToken will be populated on
+//		delegate.setCsrfRequestAttributeName("_csrf");
+//		// Use only the handle() method of XorCsrfTokenRequestAttributeHandler and the
+//		// default implementation of resolveCsrfTokenValue() from CsrfTokenRequestHandler
+//		CsrfTokenRequestHandler requestHandler = delegate::handle;
+//		http
+//				// ...
+//				.csrf((csrf) -> csrf
+//						.csrfTokenRepository(tokenRepository)
+//						.csrfTokenRequestHandler(requestHandler)
+//				);
+//
+//		return http.build();
+//	}
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//		CookieCsrfTokenRepository tokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+//		XorCsrfTokenRequestAttributeHandler delegate = new XorCsrfTokenRequestAttributeHandler();
+////		// set the name of the attribute the CsrfToken will be populated on
+//		delegate.setCsrfRequestAttributeName("_csrf");
+////		// Use only the handle() method of XorCsrfTokenRequestAttributeHandler and the
+////		// default implementation of resolveCsrfTokenValue() from CsrfTokenRequestHandler
+//		CsrfTokenRequestHandler requestHandler = delegate::handle;
+
+
+		//.csrfTokenRepository(tokenRepository)
+		//.csrfTokenRequestHandler(requestHandler)
+		//.csrfTokenRepository(new HttpSessionCsrfTokenRepository())
+
+//		.ignoringRequestMatchers("/addCategory")
+//		.ignoringRequestMatchers("/addCategory/createCategory")
+
 		http
 				.csrf(csrf -> csrf
 						.ignoringRequestMatchers("/h2-console/**")
@@ -26,8 +66,7 @@ public class SecurityConfiguration {
 						.frameOptions(frameOptions -> frameOptions.disable())
 				)
 				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-						.requestMatchers("/h2-console/**").permitAll()
-						.requestMatchers("/addCategory/**").permitAll().anyRequest().authenticated() //url in requestMatchers does NOT need auth, other DOES need auth
+						.requestMatchers("/h2-console/**").permitAll().anyRequest().authenticated() //url in requestMatchers does NOT need auth, other DOES need auth
 				)
 				.formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/dashboard", true))
 				.logout(logout -> logout.logoutUrl("/logout").permitAll());

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://unpkg.com/htmx.org@2.0.4/dist/htmx.js" integrity="sha384-oeUn82QNXPuVkGCkcrInrS1twIxKhkZiFfr2TdiuObZ3n3yIeMiqcRzkIcguaof1" crossorigin="anonymous"></script>
 </head>
 <body>
 <!--NO budget -- This displays when there is NO current / selected month budget in the database.-->
@@ -15,7 +14,7 @@
 </div>
 
 <!--YES budget -- This displays when there is a current / selected month budget in the database.-->
-<div th:fragment="budgetPlanner" class="row">
+<div th:fragment="budgetPlanner" class="row" id="dashboardPopulated">
     <div class="col-8">
         <div class="row">
             <div th:each="date: ${budgetDates}" class="col-2">
@@ -64,13 +63,11 @@
             <a hx-get="/addCategory/retrieveForm"
                hx-trigger="click"
                hx-target="#addCategory"
-               hx-swap="innerHTML">
+               hx-swap="innerHTML"
+               hx-encoding="application/x-www-form-urlencoded"
+               hx-vals='js:{"budgetId": getBudgetId()}'>
                 ADD CATEGORY
             </a>
-<!--            hx-post="/data" hx-trigger="click" hx-target="#result-area"-->
-<!--            <button type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModal">-->
-<!--                Add Category-->
-<!--            </button>-->
         </div>
     </div>
     <div class="col-4 transactionColor">
@@ -264,6 +261,20 @@
     <form id="financialGoals" th:action="@{/overTime}" method="post">
         <input class="btn btn-secondary mt-2 rounded-pill" type="submit" value="Financial Goals">
     </form>
+</div>
+
+<div id="addCategoryMore" class="pb-2 pt-2 budgetSelection center add-container">
+    <a hx-get="/addCategory/retrieveForm"
+       hx-trigger="click"
+       hx-target="#addCategory"
+       hx-swap="innerHTML"
+       hx-encoding="application/x-www-form-urlencoded">
+        ADD CATEGORY
+    </a>
+    <!--            hx-post="/data" hx-trigger="click" hx-target="#result-area"-->
+    <!--            <button type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModal">-->
+    <!--                Add Category-->
+    <!--            </button>-->
 </div>
 
 <div th:fragment="nothing"></div>
