@@ -10,4 +10,6 @@ import java.util.List;
 public interface LineItemRepository extends JpaRepository<LineItem, Integer> {
 	List<LineItem> findByCategoryIdIn(List<Integer> ids);
 	List<LineItem> findByIsIncome(boolean isIncome);
+	LineItem findById(int lineItemId);
+	default void updateOrInsert(LineItem lineItem) { save(lineItem);}
 }
