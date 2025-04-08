@@ -81,9 +81,6 @@
      th:replace="dashboardFragments :: ${isBudgetCreatedInCurrentMonth == 'YES'} ? 'budgetPlanner' : 'blankState'">
 </div>
 <div class="div-container container"
-     th:replace="dashboardFragments :: ${isBudgetCreatedInCurrentMonth == 'YES'} ? 'financialGoals' : 'nothing'">
-</div>
-<div class="div-container container"
      th:replace="dashboardFragments :: ${isBudgetCreatedInCurrentMonth == 'YES'} ? 'actionMenu' : 'nothing'">
 </div>
 </body>
