@@ -5,9 +5,13 @@ import com.budget.app.security.model.CustomUserDetails;
 import com.budget.app.service.BudgetService;
 import com.budget.app.service.CategoryService;
 import com.budget.app.service.LineItemService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,7 +63,7 @@ public class MainController {
 	}
 
 	@RequestMapping("/dashboard")
-	public String dashboard(Model model, final Transaction transaction)
+	public String dashboard(HttpServletRequest request, Model model, final Transaction transaction)
 	{
 		List<BudgetDate> budgetDates = budgetService.getBudgetDatesBetween(todaysDate);
 		model.addAttribute("budgetDates", budgetDates);
@@ -80,6 +84,7 @@ public class MainController {
 		{
 			Budget budget = budgetService.getBudget(currentUser.getId(), budgetDateSelected.getId());
 			model.addAttribute("budget", budget);
+			model.addAttribute("budgetId", budget.getId());
 
 			List<Category> categories = budgetService.getCategories(budget.getId());
 			model.addAttribute("categories", categories);
@@ -100,9 +105,6 @@ public class MainController {
 					.collect(Collectors.toList());
 
 			model.addAttribute("lineItems", filteredLineItems);
-
-			List<Transaction> transactions = budgetService.getTransactions(lineItems);
-			model.addAttribute("transactions", transactions);
 
 			// On each line item get related transactions
 			// If no transactions then set actual amount to 0
@@ -126,6 +128,10 @@ public class MainController {
 					item.setCumulativeActualAmount(accumulatedActualAmount);
 				}
 			}
+
+			List<Transaction> transactions = budgetService.getTransactions(lineItems);
+			model.addAttribute("transactions", transactions);
+
 			List<String> labels = new ArrayList<>();
 			List<Double> values = new ArrayList<>();
 

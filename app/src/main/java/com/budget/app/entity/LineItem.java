@@ -44,7 +44,7 @@ public class LineItem
 
     // The summed amount of all transactions for this line item.
     @Transient
-    private BigDecimal cumulativeActualAmount;
+    private BigDecimal cumulativeActualAmount = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
 
 
     // Constructors
