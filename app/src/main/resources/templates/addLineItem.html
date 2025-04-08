@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add Line Item</title>
+</head>
+<body>
+<h2>Add a New Line Item</h2>
+
+<form action="@{/lineitems/create}" method="post">
+  <label for="lineItemName">Item Name:</label>
+  <input type="text" id="lineItemName" name="lineItemName" required>
+
+  <label for="plannedAmount">Amount:</label>
+  <input type="number" id="plannedAmount" name="plannedAmount" step="0.01" required>
+
+  <label for="isIncome">Type:</label>
+  <select id="isIncome" name="isIncome">
+    <option value="true">Income</option>
+    <option value="false">Expense</option>
+  </select>
+
+  <label for="recurrenceType">Recurrence:</label>
+  <select id="recurrenceType" name="recurrenceType">
+    <option value="ONE_TIME" selected>One Time</option>
+    <option value="MONTHLY">Monthly</option>
+    <option value="YEARLY">Yearly</option>
+  </select>
+
+  <label for="category">Category:</label>
+  <select id="category" name="category.id">  <!-- Ensures category ID is passed -->
+    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+  </select>
+
+  <button type="submit">Add Line Item</button>
+</form>
+
+<a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>

@@ -1,0 +1,86 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.div-container {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 100%;
+}
+.table-container {
+    margin: 0 auto;
+    max-width: 90%;
+}
+.budgetDateSelection {
+    text-align: center;
+    padding: 0px;
+    margin: 0px 0px;
+    border: 0.0625rem dashed #69757a;
+    border-radius: .3125rem;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+p {
+    margin-bottom: 0.5rem;
+}
+.center {
+    text-align: center;
+    flex:1;
+}
+.left-aligned {
+    text-align: left;
+}
+.right-aligned {
+    text-align: right;
+}
+.block {
+    display: block;
+}
+.marginAuto {
+    margin: 0 auto;
+}
+.labelHeight {
+    height: 24px;
+}
+.tableWidth {
+    width: 10%;
+}
+td {
+    width: 30%;
+}
+.row {
+    display: flex;
+    justify-content:center;
+    align-items: center
+    flex-wrap: wrap;
+    padding: 20px;
+}
+.header {
+    background-color: #2a9d43;
+    display: flex;
+    flex-wrap: wrap;
+}
+h1 {
+    color: #dee2e6;
+}
+.bodyColor {
+    background-color: #F0F0F0;
+}
+.transactionColor {
+    background-color: #F8F8F8;
+}
+.transactionModalColor {
+    background-color: #D9EFF9;
+}
+.graphContainer {
+        width: 100%;
+        height: 400px;
+        padding: 0;
+        margin: 0;
+}
+#pieGraph {
+        width: 100% !important;
+        height: 100% !important;
+}
