@@ -11,4 +11,6 @@ public interface LineItemService {
     public List<LineItem> getAllLineItems();
     public List<LineItem> getLineItemsByIncomeType(boolean isIncome);
     public boolean isActiveForMonth(LineItem item, YearMonth targetMonth);
+    public void updateOrInsertLineItem(LineItem lineitem);
+    public LineItem findById(int lineItemId);
 }

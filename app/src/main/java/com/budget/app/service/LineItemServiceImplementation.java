@@ -61,4 +61,15 @@ public class LineItemServiceImplementation implements LineItemService {
         }
         return true;
     }
+
+    @Transactional
+    public void updateOrInsertLineItem(LineItem lineItem)
+    {
+        lineItemRepository.updateOrInsert(lineItem);
+    }
+
+    @Override
+    public LineItem findById(int lineItemId){
+        return lineItemRepository.findById(lineItemId);
+    }
 }

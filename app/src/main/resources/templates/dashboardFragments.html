@@ -29,7 +29,7 @@
             <table class="table table-hover">
                 <thead class="table-light"> <!--Option to use table-dark instead-->
                 <tr>
-                    <th th:text="${category.getCategoryName}"></th>
+                    <th th:text="${category.getCategoryName()}"></th>
                     <th>Planned</th>
                     <th>Actual</th>
                     <th class="tableWidth">
@@ -44,20 +44,63 @@
                 <tr th:each="lineItem : ${category.getLineItems()}">
                     <td th:text="${lineItem.lineItemName}"></td>
                     <td>
-                        <span th:text="'$'+${lineItem.plannedAmount}"></span>
+                        <span th:id="|plannedAmountDisplay-${lineItem.id}|" th:text="'$' + ${lineItem.plannedAmount}"
+                              th:onclick="|toggleEditMode(${lineItem.id})|" style="cursor: pointer;">
+                        </span>
+                        <form th:action="@{/lineitems/updateLineItem}" method="post" th:id="|updateForm-${lineItem.id}|">
+                            <input type="hidden" name="lineItemId" th:value="${lineItem.id}" />
+                            <input type="number" name="plannedAmount" th:value="${lineItem.plannedAmount}"
+                                   class="form-control" min="0" step="any" th:id="|plannedAmountInput-${lineItem.id}|" style="display:none;"/>
+                        </form>
                     </td>
                     <td th:class="${lineItem.plannedAmount < lineItem.cumulativeActualAmount}?text-danger">
                         <span th:text="${lineItem.plannedAmount < lineItem.cumulativeActualAmount}?'$'+${lineItem.cumulativeActualAmount}+' (over budget)':'$'+${lineItem.cumulativeActualAmount}"></span>
                     </td>
                     <td class="tableWidth">
-                        <form th:action="@{/updateLineItem}" method="post">
-                            <input type="hidden" th:name="lineItemId" th:value="${lineItem.id}"/>
-                            <input class="btn btn-secondary btn-sm rounded-pill" type="submit" value="Update"/>
-                        </form>
+                        <button type="button" class="btn btn-secondary btn-sm" th:onclick="|submitUpdate(${lineItem.id})|">Update</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
+            <script th:inline="javascript">
+                function toggleEditMode(lineItemId) {
+                    console.log("Edit mode toggled for LineItem ID:", lineItemId);
+                    var span = document.getElementById('plannedAmountDisplay-'+lineItemId);
+                    var input = document.getElementById('plannedAmountInput-'+lineItemId);
+                    var form = document.getElementById('updateForm-'+lineItemId);
+
+                        if (!span || !input || !form) {
+                            console.error(`Elements not found for lineItemId: ${lineItemId}`);
+                            return;
+                        }
+
+                    form.classList.toggle('edit-mode');
+
+                    console.log("span:", span);
+                    console.log("input:", input);
+                    console.log("form:", form);
+
+                    if(form.classList.contains('edit-mode')) {
+                        input.style.display = 'inline-block';
+                        span.style.display = 'none';
+                    }
+                    else {
+                        input.style.display = 'none';
+                        span.style.display= 'inline-block';
+                    }
+                }
+                function submitUpdate(lineItemId) {
+                    console.log("Submitting update for LineItem ID:", lineItemId);
+
+                    var form = document.getElementById('updateForm-' + lineItemId);
+                    if (!form) {
+                        console.error(`Form not found for lineItemId: ${lineItemId}`);
+                        return;
+                    }
+                    // Submit the form
+                    form.submit();
+                }
+            </script>
         </div>
         <div id="addCategory" class="pb-2 pt-2 budgetSelection center add-container">
             <a hx-get="/addCategory/retrieveForm"
@@ -81,23 +124,80 @@
         </ul>
         <div class="tab-content mt-2">
             <div class="tab-pane fade" id="summary" role="tabpanel" aria-labelledby="summary-tab">
-                <div class="graphContainer text-center">
-                    <canvas id="pieGraph"></canvas>
+                <ul class="nav nav-tabs nav-justified mt-2" id="chartTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="transactionGraph-tab" data-bs-toggle="tab" href="#transactionGraph" role="tab" aria-controls="transactionGraph" aria-selected="true">Actual</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="plannedGraph-tab" data-bs-toggle="tab" href="#plannedGraph" role="tab" aria-controls="plannedGraph" aria-selected="false">Planned</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="remainingGraph-tab" data-bs-toggle="tab" href="#remainingGraph" role="tab" aria-controls="remainingGraph" aria-selected="false">Remaining</a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-2">
+                    <div class="tab-pane fade" id="transactionGraph" role="tabpanel" aria-labelledby="transactionGraph-tab">
+                        <div class="graphContainer text-center">
+                            <canvas id="actual"></canvas>
+                        </div>
+                        <div class="text-center">
+                            <h5>Actual Items</h5>
+                            <ul class="list-group">
+                                <li th:each="lineItem : ${lineItems}" class="list-group-item">
+                                    <span th:text="${lineItem.lineItemName}">Item Name</span>
+                                    <span> - $</span>
+                                    <span th:text="${transaction.actualAmount}">Amount</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="plannedGraph" role="tabpanel" aria-labelledby="plannedGraph-tab">
+                        <div class="graphContainer text-center">
+                            <canvas id="planned"></canvas>
+                        </div>
+                        <div class="text-center">
+                            <h5>Planned Items</h5>
+                            <ul class="list-group">
+                                <li th:each="lineItem : ${lineItems}" class="list-group-item">
+                                    <span th:text="${lineItem.lineItemName}">Item Name</span>
+                                    <span> - $</span>
+                                    <span th:text="${lineItem.plannedAmount}">Planned Amount</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="remainingGraph" role="tabpanel" aria-labelledby="remainingGraph-tab">
+                        <div class="graphContainer text-center">
+                            <canvas id="remaining"></canvas>
+                        </div>
+<!--                        <div class="text-center">-->
+<!--                            <h5>Remaining Items</h5>-->
+<!--                            <ul class="list-group">-->
+<!--                                <li th:each="lineItem : ${lineItems}" class="list-group-item">-->
+<!--                                    <span th:text="${lineItem.lineItemName}">Item Name</span>-->
+<!--                                    <span> - $</span>-->
+<!--                                    <span th:text="${remainingValues}">Remaining Amount</span>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+                    </div>
                 </div>
             </div>
+        </div>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script th:inline="javascript">
                 const labels = /*[[${labels}]]*/ [];
-                  const data = /*[[${values}]]*/ [];
+                const transactionValues = /*[[${transactionValues}]]*/ [];
+                const plannedValues = /*[[${plannedValues}]]*/ [];
+                const remainingValues = /*[[${remainingValues}]]*/ [];
 
-                  const ctx = document.getElementById('pieGraph').getContext('2d');
-
-                  const pieGraph = new Chart(ctx, {
-                    type: 'pie',
+                const transactionCtx = document.getElementById('actual').getContext('2d');
+                const transactionGraph = new Chart(transactionCtx, {
+                    type: 'doughnut',
                     data: {
                       labels: labels,
                       datasets: [{
-                        data: data,
+                        data: transactionValues,
                         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40'],
                         borderColor: '#fff', // Optional: color of the borders
                         borderWidth: 1
@@ -120,134 +220,192 @@
                       }
                     }
                   });
-            </script>
-        </div>
-            <div class="tab-pane fade show active" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
-                <div th:each="transaction: ${transactions}" class="table-container">
-                    <div class="row border-bottom border-dark border-1">
-                        <div class="col-4" th:text="${transaction.merchant}"></div>
-                        <div class="col-4" th:text="${transaction.transactionDate}"></div>
-                        <div class="col-4"><span>$</span><span th:text="${transaction.actualAmount}"></span></div>
-                    </div>
-                </div>
-                <br>
-                <p style="text-align:center;">Add transactions</p>
 
-                <!-- Button to trigger transaction modal -->
-                <button type="button" class="btn btn-primary block marginAuto rounded-pill" data-bs-toggle="modal" data-bs-target="#transactionModal">
-                    +
-                </button>
+                const plannedCtx = document.getElementById('planned').getContext('2d');
+                new Chart(plannedCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: plannedValues,
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                            borderColor: '#fff',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        return tooltipItem.label + ': $' + tooltipItem.raw.toFixed(2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                const remainingCtx = document.getElementById('remaining').getContext('2d');
+                new Chart(remainingCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: remainingValues,
+                            backgroundColor: ['#FFCE56', '#36A2EB', '#4BC0C0'],
+                            borderColor: '#fff',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        return tooltipItem.label + ': $' + tooltipItem.raw.toFixed(2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            </script>
+        <div class="tab-pane fade show active" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
+            <div th:each="transaction: ${transactions}" class="table-container">
+                <div class="row border-bottom border-dark border-1">
+                    <div class="col-4" th:text="${transaction.merchant}"></div>
+                    <div class="col-4" th:text="${transaction.transactionDate}"></div>
+                    <div class="col-4"><span>$</span><span th:text="${transaction.actualAmount}"></span></div>
+                </div>
+            </div>
+            <br>
+            <p style="text-align:center;">Add transactions</p>
+
+            <!-- Button to trigger transaction modal -->
+            <button type="button" class="btn btn-secondary block marginAuto" data-bs-toggle="modal" data-bs-target="#transactionModal">
+                +
+            </button>
+        </div>
+    </div>
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header transactionModalColor">
+                    <h2 class="modal-title fs-5" id="transactionModalLabel">Add Transaction</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/addTransactionToBudget}" method="post" th:object="${transaction}">
+                        <label for="transactionAmount" class="form-label" hidden>Transaction Amount</label>
+                        <input th:field="*{actualAmount}" type="number" min="1" step="any" class="form-control" id="transactionAmount" name="transactionAmount">
+                        <br>
+                        <label for="transactionDate" class="form-label" hidden>Transaction Date</label>
+                        <input th:field="*{transactionDate}" type="date" class="form-control" th:value="*{transactionDate}" id="transactionDate" name="transactionDate">
+                        <br>
+                        <label for="merchant" class="form-label" hidden>Merchant</label>
+                        <input th:field="*{merchant}" type="text" class="form-control" placeholder="Where was the money spent or earned?" id="merchant" name="merchant">
+                        <br>
+                        <label for="item" class="form-label" hidden>Line Item</label>
+                        <select th:field="*{lineItem}" class="form-select" id="item" name="item">
+                            <option value="none" selected hidden>Choose Budget Items</option>
+                            <option th:each="lineItem : ${lineItems}"
+                                    th:value="${lineItem.getId()}"
+                                    th:text="${lineItem.getLineItemName()}"></option>
+                        </select>
+                        <br>
+                        <label for="transactionNote" class="form-label" hidden>Note</label>
+                        <textarea th:field="*{note}" style="height: 50px;" placeholder="Enter any notes about the transaction" class="form-control" id="transactionNote" name="transactionNote"></textarea>
+                        <br>
+                        <input type="submit" name="addTransaction" value="Save" class="btn btn-primary mt-2 mr-4 text-end">
+                    </form>
+                </div>
+                <!--            <div class="modal-footer">-->
+                <!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+                <!--                <button type="button" class="btn btn-primary">Save changes</button>-->
+                <!--            </div>-->
             </div>
         </div>
-        <!-- Transaction Modal -->
-        <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header transactionModalColor">
-                        <h2 class="modal-title fs-5" id="transactionModalLabel">Add Transaction</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+    </div>
+    <!--Category Modal -->
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Category Form -->
+                    <form th:action="@{/addCategory/createCategory}" method="post">
+                        <input type="hidden" th:name="budget" th:value="${budget.id}"/>
+                        <label for="categoryName" class="form-label">Category Name:</label>
+                        <input type="text" id="categoryName" name="categoryName" class="form-control" required>
+                        <br>
+                        <button type="submit" class="btn btn-secondary">Add Category</button>
+                    </form>
+                    <div th:if="${message}" class="alert alert-success" role="alert">
+                        <p th:text="${message}"></p>
                     </div>
-                    <div class="modal-body">
-                        <form th:action="@{/addTransactionToBudget}" method="post" th:object="${transaction}">
-                            <label for="transactionAmount" class="form-label" hidden>Transaction Amount</label>
-                            <input th:field="*{actualAmount}" type="number" min="1" step="any" class="form-control" id="transactionAmount" name="transactionAmount">
-                            <br>
-                            <label for="transactionDate" class="form-label" hidden>Transaction Date</label>
-                            <input th:field="*{transactionDate}" type="date" class="form-control" th:value="*{transactionDate}" id="transactionDate" name="transactionDate">
-                            <br>
-                            <label for="merchant" class="form-label" hidden>Merchant</label>
-                            <input th:field="*{merchant}" type="text" class="form-control" placeholder="Where was the money spent or earned?" id="merchant" name="merchant">
-                            <br>
-                            <label for="item" class="form-label" hidden>Line Item</label>
-                            <select th:field="*{lineItem}" class="form-select" id="item" name="item">
-                                <option value="none" selected hidden>Choose Budget Items</option>
-                                <option th:each="lineItem : ${lineItems}"
-                                        th:value="${lineItem.getId()}"
-                                        th:text="${lineItem.getLineItemName()}"></option>
-                            </select>
-                            <br>
-                            <label for="transactionNote" class="form-label" hidden>Note</label>
-                            <textarea th:field="*{note}" style="height: 50px;" placeholder="Enter any notes about the transaction" class="form-control" id="transactionNote" name="transactionNote"></textarea>
-                            <br>
-                            <input type="submit" name="addTransaction" value="Save" class="btn btn-primary mt-2 mr-4 text-end rounded-pill">
-                        </form>
-                    </div>
-                    <!--            <div class="modal-footer">-->
-                    <!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-                    <!--                <button type="button" class="btn btn-primary">Save changes</button>-->
-                    <!--            </div>-->
                 </div>
             </div>
         </div>
-        <!--Category Modal -->
-        <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Category Form -->
-                        <form th:action="@{/addCategory/createCategory}" method="post">
-                            <input type="hidden" th:name="budget" th:value="${budget.id}"/>
-                            <label for="categoryName" class="form-label">Category Name:</label>
-                            <input type="text" id="categoryName" name="categoryName" class="form-control" required>
-                            <br>
-                            <button type="submit" class="btn btn-secondary rounded-pill">Add Category</button>
-                        </form>
-                        <div th:if="${message}" class="alert alert-success" role="alert">
-                            <p th:text="${message}"></p>
+    </div>
+    <!-- Add Line Item Modal -->
+    <div class="modal fade" id="addLineItemModal" tabindex="-1" aria-labelledby="addLineItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header transactionModalColor">
+                    <h2 class="modal-title fs-5" id="addLineItemModalLabel">Add New Line Item</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/lineitems/create}" method="post">
+                        <div class="mb-3">
+                            <label for="lineItemName" class="form-label">Line Item Name</label>
+                            <input type="text" id="lineItemName" name="lineItemName" class="form-control" required>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Add Line Item Modal -->
-        <div class="modal fade" id="addLineItemModal" tabindex="-1" aria-labelledby="addLineItemModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header transactionModalColor">
-                        <h2 class="modal-title fs-5" id="addLineItemModalLabel">Add New Line Item</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form th:action="@{/lineitems/create}" method="post">
-                            <div class="mb-3">
-                                <label for="lineItemName" class="form-label">Line Item Name</label>
-                                <input type="text" id="lineItemName" name="lineItemName" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="plannedAmount" class="form-label">Planned Amount</label>
-                                <input type="number" id="plannedAmount" name="plannedAmount" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="isIncome" class="form-label">Income or Expense?</label>
-                                <select id="isIncome" name="isIncome" class="form-select">
-                                    <option value="true">Income</option>
-                                    <option value="false">Expense</option>
-                                </select>
-                            </div>
-                            <!-- Recurrence Dropdown selection -->
-                            <div class="mb-3">
-                                <label for="recurrenceType" class="form-label">Recurrence</label>
-                                <select id="recurrenceType" name="recurrenceType" class="form-select">
-                                    <option value="ONE_TIME" selected>One Time</option>
-                                    <option value="WEEKLY">Weekly</option>
-                                    <option value="BI_WEEKLY">Bi-Weekly</option>
-                                    <option value="MONTHLY">Monthly</option>
-                                    <option value="YEARLY">Yearly</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="category" class="form-label">Category</label>
-                                <select id="category" name="category.id" class="form-select">
-                                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-secondary rounded-pill">Add Line Item</button>
-                        </form>
-                    </div>
+                        <div class="mb-3">
+                            <label for="plannedAmount" class="form-label">Planned Amount</label>
+                            <input type="number" id="plannedAmount" name="plannedAmount" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="isIncome" class="form-label">Income or Expense?</label>
+                            <select id="isIncome" name="isIncome" class="form-select">
+                                <option value="true">Income</option>
+                                <option value="false">Expense</option>
+                            </select>
+                        </div>
+                        <!-- Recurrence Dropdown selection -->
+                        <div class="mb-3">
+                            <label for="recurrenceType" class="form-label">Recurrence</label>
+                            <select id="recurrenceType" name="recurrenceType" class="form-select">
+                                <option value="ONE_TIME" selected>One Time</option>
+                                <option value="WEEKLY">Weekly</option>
+                                <option value="BI_WEEKLY">Bi-Weekly</option>
+                                <option value="MONTHLY">Monthly</option>
+                                <option value="YEARLY">Yearly</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <select id="category" name="category.id" class="form-select">
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Add Line Item</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -278,6 +436,5 @@
 </div>
 
 <div th:fragment="nothing"></div>
-
 </body>
 </html>
