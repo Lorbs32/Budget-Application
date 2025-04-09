@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Results</title>
+</head>
+<body>
+<h1>Budget Results</h1>
+
+<!-- Display error message if any -->
+<div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+</div>
+
+<!-- Display budgets if available -->
+<div th:if="${budgets}">
+    <h2>Budgets from <span th:text="${startDate}"></span> to <span th:text="${endDate}"></span></h2>
+    <ul>
+        <li th:each="budget : ${budgets}">
+            <p th:text="'Budget for ' + ${budget.month} + ': ' + ${budget.amount}"></p>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
