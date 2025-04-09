@@ -2,29 +2,123 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <title>Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Login</title>
+    <style>
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            z-index: 1;
+        }
+
+        .form-title {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .form-subtitle {
+            font-size: 16px;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+         .custom-money-btn:active {
+       		 transform: scale(0.98);
+      	     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.15);
+   	   }
+
+        .login-quote {
+            font-size: 14px;
+            color: #6c757d;
+            text-align: center;
+            margin-top: 48px; /* about 3 lines of space */
+        }
+
+        /* Money fall animation */
+        .money {
+            position: absolute;
+            top: -50px;
+            font-size: 24px;
+            animation: fall linear forwards;
+            color: #28a745;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-50px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
-<body class="container">
-<h1>Show Me The Money</h1>
-<p>A Budgeting Application</p>
-<div th:if="${param.error}" class="text-danger">
-    Invalid username or password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form class="row g-3" th:action="@{/login}" method="post">
-    <div class="col-md-6">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="username" name="username">
-        <br>
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" name="password">
-        <br>
-        <input type="submit" value="Log In" class="btn btn-primary mt-2">
+<body>
+    <div class="login-container text-center">
+        <div class="form-title">Show Me The Money</div>
+        <div class="form-subtitle">A Budgeting Application</div>
+
+        <div th:if="${param.error}" class="alert alert-danger py-1">
+            Invalid username or password.
+        </div>
+        <div th:if="${param.logout}" class="alert alert-info py-1">
+            You have been logged out.
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="mb-3 text-start">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3 text-start">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100 custom-money-btn">Log In</button>
+        </form>
     </div>
-</form>
+
+    <!-- ✨ Quote now properly spaced under the login card -->
+    <p class="login-quote">
+        <em>Money might not grow on trees, but it could fall from the sky if you work with us. </em>
+    </p>
+
+    <script>
+        function createMoneyDrop() {
+            const emoji = document.createElement('div');
+            emoji.classList.add('money');
+            emoji.innerText = '💵';
+            emoji.style.left = Math.random() * window.innerWidth + 'px';
+            emoji.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+            document.body.appendChild(emoji);
+
+            setTimeout(() => {
+                emoji.remove();
+            }, 4000);
+        }
+
+        const dropInterval = setInterval(createMoneyDrop, 150);
+        setTimeout(() => clearInterval(dropInterval), 3000);
+    </script>
 </body>
 </html>
