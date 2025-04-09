@@ -13,7 +13,11 @@
     margin: 0 auto;
     max-width: 90%;
 }
-.budgetDateSelection {
+.add-container {
+    width: 90%;
+    margin: 0 auto!important;
+}
+.budgetSelection {
     text-align: center;
     padding: 0px;
     margin: 0px 0px;
@@ -50,6 +54,9 @@ p {
 td {
     width: 30%;
 }
+th {
+    width: 30%
+}
 .row {
     display: flex;
     justify-content:center;
@@ -84,6 +91,7 @@ h1 {
 .tab-pane graph{
     display:flex;
 }
+
 .div-container input {
     display: none;
 }
@@ -99,3 +107,9 @@ h1 {
 .edit-mode .form-container {
     display: block;
 }
+
+.form-control-override {
+    display: inline-block;
+    width: 30%;
+}
+

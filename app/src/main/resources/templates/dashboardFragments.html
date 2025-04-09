@@ -10,15 +10,15 @@
     <img src="images/blank_state_icon.png" width="20%">
     <h3>Hey there, looks like you need a budget for this month.</h3>
     <p>If you had a budget last month that will copy over to get you started.</p>
-    <button type="button" class="btn btn-primary block marginAuto">Start Planning</button>
+    <button type="button" class="btn btn-primary block marginAuto rounded-pill">Start Planning</button>
 </div>
 
 <!--YES budget -- This displays when there is a current / selected month budget in the database.-->
-<div th:fragment="budgetPlanner" class="row">
+<div th:fragment="budgetPlanner" class="row" id="dashboardPopulated">
     <div class="col-8">
         <div class="row">
             <div th:each="date: ${budgetDates}" class="col-2">
-                <div class="budgetDateSelection center">
+                <div class="budgetSelection center">
                     <h2 th:text="${date.getBudgetMonth()}"></h2>
                     <p th:text="${date.getBudgetYear()}"></p>
                 </div>
@@ -32,8 +32,8 @@
                     <th th:text="${category.getCategoryName()}"></th>
                     <th>Planned</th>
                     <th>Actual</th>
-                    <th>
-                        <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#addLineItemModal">
+                    <th class="tableWidth">
+                        <button type="button" class="btn btn-light btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#addLineItemModal">
                             +
                         </button>
 
@@ -101,6 +101,16 @@
                     form.submit();
                 }
             </script>
+        </div>
+        <div id="addCategory" class="pb-2 pt-2 budgetSelection center add-container">
+            <a hx-get="/addCategory/retrieveForm"
+               hx-trigger="click"
+               hx-target="#addCategory"
+               hx-swap="innerHTML"
+               hx-encoding="application/x-www-form-urlencoded"
+               hx-vals='js:{"budgetId": getBudgetId()}'>
+                ADD CATEGORY
+            </a>
         </div>
     </div>
     <div class="col-4 transactionColor">
@@ -288,7 +298,6 @@
             </button>
         </div>
     </div>
-        <!-- Transaction Modal -->
     <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -327,6 +336,7 @@
                 <!--            </div>-->
             </div>
         </div>
+
     </div>
     <!--Category Modal -->
     <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
@@ -400,15 +410,31 @@
             </div>
         </div>
     </div>
-    </div>
-    <div th:fragment="actionMenu" class="form-container center">
-        <button type="button" class="btn btn-secondary mt-2" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-            Add Category
-        </button>
-        <form id="financialGoals" th:action="@{/overTime}" method="post">
-            <input class="btn btn-secondary mt-2" type="submit" value="Financial Goals">
-        </form>
-    </div>
-    <div th:fragment="nothing"></div>
+</div>
+
+<div th:fragment="actionMenu" class="form-container center">
+    <button type="button" class="btn btn-secondary mt-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+        Add Category
+    </button>
+    <form id="financialGoals" th:action="@{/overTime}" method="post">
+        <input class="btn btn-secondary mt-2 rounded-pill" type="submit" value="Financial Goals">
+    </form>
+</div>
+
+<div id="addCategoryMore" class="pb-2 pt-2 budgetSelection center add-container">
+    <a hx-get="/addCategory/retrieveForm"
+       hx-trigger="click"
+       hx-target="#addCategory"
+       hx-swap="innerHTML"
+       hx-encoding="application/x-www-form-urlencoded">
+        ADD CATEGORY
+    </a>
+    <!--            hx-post="/data" hx-trigger="click" hx-target="#result-area"-->
+    <!--            <button type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModal">-->
+    <!--                Add Category-->
+    <!--            </button>-->
+</div>
+
+<div th:fragment="nothing"></div>
 </body>
 </html>
