@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Budget Date Range</title>
+
+    <style>
+        h2 {
+            background-color: forestgreen;
+            color: #d3d3d3;
+            padding: 20px;
+            text-align: center;
+            font-size: 36px;
+        }
+
+        /* Form styling */
+        .form-container {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-container input[type="date"] {
+            padding: 8px;
+            width: 200px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Select Your Budget Date Range</h2>
+
+<!-- Display error message if there is any -->
+<div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+</div>
+
+<!-- Form to select start and end date -->
+<form action="/budgets/getBudget" method="get">
+    <div class="form-container">
+        <div>
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" name="startDate" th:value="${startDate}" required />
+        </div>
+        <div>
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" name="endDate" th:value="${endDate}" required />
+        </div>
+        <button type="submit">Get Budget</button>
+    </div>
+</form>
+
+</body>
+</html>
