@@ -1,5 +1,6 @@
 package com.budget.app.controller;
 
+import com.budget.app.domain.ExtractParameter;
 import com.budget.app.entity.*;
 import com.budget.app.service.BudgetService;
 import com.budget.app.service.CategoryService;
@@ -33,7 +34,8 @@ public class CategoryController {
 
     @PostMapping("/createCategory")
     public String addCategory(@RequestParam(value = "categoryName", defaultValue = "DefaultCategory") String categoryName,
-                              @RequestParam("budget") int budgetId, Model model) {
+                              @RequestParam("budget") int budgetId, Model model,
+                              HttpServletRequest request) {
         Budget budget = budgetService.getBudgetById(budgetId);
 
         Category category = new Category();
@@ -42,7 +44,13 @@ public class CategoryController {
 
         categoryService.saveCategory(category);
         model.addAttribute("message", "Category added successfully!");
-        return "redirect:../dashboard";
+
+        // All requests that redirect to the dashboard need to retrieve the currently selected budget date ID and pass it through.
+        String referrer = request.getHeader("referer");
+        String budgetDateId = ExtractParameter.getParameterValue(referrer, "budgetDateId");
+
+        return "redirect:../dashboard?budgetDateId=" + budgetDateId;
+        //return "redirect:../dashboard";
     }
 
     @GetMapping("/retrieveForm")

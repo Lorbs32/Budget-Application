@@ -44,10 +44,10 @@ public class SecurityConfiguration {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 //		CookieCsrfTokenRepository tokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
 //		XorCsrfTokenRequestAttributeHandler delegate = new XorCsrfTokenRequestAttributeHandler();
-////		// set the name of the attribute the CsrfToken will be populated on
+//		// set the name of the attribute the CsrfToken will be populated on
 //		delegate.setCsrfRequestAttributeName("_csrf");
-////		// Use only the handle() method of XorCsrfTokenRequestAttributeHandler and the
-////		// default implementation of resolveCsrfTokenValue() from CsrfTokenRequestHandler
+//		// Use only the handle() method of XorCsrfTokenRequestAttributeHandler and the
+//		// default implementation of resolveCsrfTokenValue() from CsrfTokenRequestHandler
 //		CsrfTokenRequestHandler requestHandler = delegate::handle;
 
 
@@ -68,7 +68,7 @@ public class SecurityConfiguration {
 				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
 						.requestMatchers("/h2-console/**").permitAll().anyRequest().authenticated() //url in requestMatchers does NOT need auth, other DOES need auth
 				)
-				.formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/dashboard", true))
+				.formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/dashboard?budgetDateId=4", true))
 				.logout(logout -> logout.logoutUrl("/logout").permitAll());
 		return http.build();
 	}

@@ -113,7 +113,10 @@ public class BudgetServiceImplementation implements BudgetService
         {
             ids.add(lineItem.getId());
         }
-        return transactionRepository.findByIdIn(ids);
+        return transactionRepository.findByLineItemIdIn(ids);
+
+        // Change this definition on 4/9/25 for the transaction filtering task.
+        // return transactionRepository.findByIdIn(ids);
     }
 
 	// ------------------TO DO-------------------

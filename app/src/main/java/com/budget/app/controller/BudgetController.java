@@ -43,11 +43,7 @@ public class BudgetController {
 
         LocalDate start = startDate != null ? LocalDate.parse(startDate) : null;
         LocalDate end = endDate != null ? LocalDate.parse(endDate) : null;
-        System.out.println(start);
-        System.out.println(end);
 
-
-        //List<BudgetDate> budgets = new ArrayList<>();
         BudgetDate budgetDate = null;
 
         // Validate inputs
@@ -55,10 +51,6 @@ public class BudgetController {
         {
             model.addAttribute("error", "Start date is required.");
         }
-//        else if (start.isAfter(end))
-//        {
-//            model.addAttribute("error", "Start Date must be before End Date.");
-//        }
         else {
             budgetDate = budgetDateService.budgetForDateRange(start);
 
@@ -79,10 +71,3 @@ public class BudgetController {
         return "redirect:../dashboard?budgetDateId=" + budgetDate.getId();
     }
 }
-
-//${error}
-//${budgets}
-//${startDate}
-//${endDate}
-//${budget.month}
-//${budget.amount}

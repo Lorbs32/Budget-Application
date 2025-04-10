@@ -301,6 +301,7 @@
             </button>
         </div>
     </div>
+    <!-- Transaction Modal -->
     <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -326,6 +327,12 @@
                                     th:value="${lineItem.getId()}"
                                     th:text="${lineItem.getLineItemName()}"></option>
                         </select>
+<!--                        <select th:field="*{lineItem}" class="form-select" id="item" name="item">-->
+<!--                            <option value="none" selected hidden>Choose Budget Items</option>-->
+<!--                            <option th:each="lineItem : ${lineItems}"-->
+<!--                                    th:value="${lineItem.getId()}"-->
+<!--                                    th:text="${lineItem.getLineItemName()}"></option>-->
+<!--                        </select>-->
                         <br>
                         <label for="transactionNote" class="form-label" hidden>Note</label>
                         <textarea th:field="*{note}" style="height: 50px;" placeholder="Enter any notes about the transaction" class="form-control" id="transactionNote" name="transactionNote"></textarea>
@@ -341,7 +348,7 @@
         </div>
 
     </div>
-    <!--Category Modal -->
+    <!-- Category Modal -->
     <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
