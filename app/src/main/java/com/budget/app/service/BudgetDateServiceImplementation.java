@@ -51,6 +51,19 @@ public class BudgetDateServiceImplementation implements BudgetDateService {
     }
 
     @Override
+    public BudgetDate budgetForDateRange(LocalDate startDate) {
+//        BudgetDate budget;
+//        LocalDate selectedMonth = startDate;
+        BudgetDate budget = budgetDateRepository.findByStartDate(startDate);
+
+//        while (!selectedMonth.isAfter(endDate)) {
+//            budget.add(budgetDateRepository.findByBudgetDateBetween(currentMonth));
+//            currentMonth = currentMonth.plusMonths(1);
+//        }
+        return budget;
+    }
+
+    @Override
     public List<BudgetDate> budgetsForPreviousMonths(int n) {
         List<BudgetDate> budgets = new ArrayList<>();
         for (int i = 1; i <= n; i++) {

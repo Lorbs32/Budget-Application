@@ -18,6 +18,7 @@ public interface BudgetService
     public List<Transaction> getTransactionsByLineItemId(LineItem item);
     public Budget getBudgetById(int budgetId);
     public List<Budget> getAllBudgets();
+    public BudgetDate getBudgetDateById(int budgetDateId);
 
     // calculateBudgetSummary(Int budgetId);
 }
