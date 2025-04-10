@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
 import java.util.List;
 
 @Controller
@@ -33,7 +34,6 @@ public class LineItemController {
 //        return "displayAllLineItems";  // Returns the Thymeleaf view
 //    }
 
-
     // Page to create a new Line Item
 //    @GetMapping("/create")
 //    public String showCreateLineItemForm(Model model) {
@@ -47,6 +47,17 @@ public class LineItemController {
         Category category = categoryRepository.findById(categoryId);
         lineItem.setCategory(category);
         lineItemService.createLineItem(lineItem);
+        return "redirect:/dashboard";
+    }
+
+    @PostMapping("/updateLineItem")
+    public String updateLineItem(@RequestParam int lineItemId, @RequestParam BigDecimal plannedAmount)
+    {
+        LineItem lineItem = lineItemService.findById(lineItemId);
+        lineItem.setId(lineItemId);
+        lineItem.setPlannedAmount(plannedAmount);
+
+        lineItemService.updateOrInsertLineItem(lineItem);
         return "redirect:/dashboard";
     }
 }
