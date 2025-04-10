@@ -18,7 +18,7 @@
     <h2>Budgets from <span th:text="${startDate}"></span> to <span th:text="${endDate}"></span></h2>
     <ul>
         <li th:each="budget : ${budgets}">
-            <p th:text="'Budget for ' + ${budget.month} + ': ' + ${budget.amount}"></p>
+            <p th:text="'Budget for ' + ${budget.budgetMonth}"></p>
         </li>
     </ul>
 </div>

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,9 +64,22 @@ public class MainController {
 	}
 
 	@RequestMapping("/dashboard")
-	public String dashboard(HttpServletRequest request, Model model, final Transaction transaction)
+	public String dashboard(HttpServletRequest request, Model model, final Transaction transaction
+	,@RequestParam(value = "budgetDateId", required = false, defaultValue = "0") int budgetDateId)
 	{
-		List<BudgetDate> budgetDates = budgetService.getBudgetDatesBetween(todaysDate);
+
+		List<BudgetDate> budgetDates = null;
+		if(budgetDateId != 0)
+		{
+			BudgetDate currentBudgetMonth = budgetService.getBudgetDateById(budgetDateId);
+			budgetDates = budgetService.getBudgetDatesBetween(currentBudgetMonth.getStartDate());
+			//System.out.println("CURRENT BUDGET MONTH: " + currentBudgetMonth.getBudgetMonth());
+		}
+		else
+		{
+			budgetDates = budgetService.getBudgetDatesBetween(todaysDate);
+		}
+
 		model.addAttribute("budgetDates", budgetDates);
 
 		BudgetDate budgetDateSelected = new BudgetDate();

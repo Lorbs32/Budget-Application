@@ -43,27 +43,46 @@ public class BudgetController {
 
         LocalDate start = startDate != null ? LocalDate.parse(startDate) : null;
         LocalDate end = endDate != null ? LocalDate.parse(endDate) : null;
-        
-        List<BudgetDate> budgets = new ArrayList<>();
+        System.out.println(start);
+        System.out.println(end);
+
+
+        //List<BudgetDate> budgets = new ArrayList<>();
+        BudgetDate budgetDate = null;
 
         // Validate inputs
-        if (start == null || end == null) {
-            model.addAttribute("error", "Both start date and end date are required.");
-        } else if (start.isAfter(end)) {
-            model.addAttribute("error", "Start Date must be before End Date.");
-        } else {
-            budgets = budgetDateService.budgetsForDateRange(start, end);
+        if (start == null)
+        {
+            model.addAttribute("error", "Start date is required.");
+        }
+//        else if (start.isAfter(end))
+//        {
+//            model.addAttribute("error", "Start Date must be before End Date.");
+//        }
+        else {
+            budgetDate = budgetDateService.budgetForDateRange(start);
 
-            if (budgets.isEmpty()) {
+            if (budgetDate == null) {
                 model.addAttribute("error", "No budgets found for the selected date range.");
+            }
+            else
+            {
+                model.addAttribute("error","");
             }
         }
 
         // Add the budgets to the model
-        model.addAttribute("budgets", budgets);
-        model.addAttribute("startDate", startDate);
-        model.addAttribute("endDate", endDate);
+//        model.addAttribute("budget", budget);
+//        model.addAttribute("startDate", startDate);
+//        model.addAttribute("endDate", endDate);
 
-        return "budgetResults";
+        return "redirect:../dashboard?budgetDateId=" + budgetDate.getId();
     }
 }
+
+//${error}
+//${budgets}
+//${startDate}
+//${endDate}
+//${budget.month}
+//${budget.amount}
