@@ -83,13 +83,28 @@ h1 {
 }
 .graphContainer {
         width: 100%;
-        height: 400px;
+        height: 300px;
         padding: 0;
         margin: 0;
+        flex: 1;
 }
-#pieGraph {
-        width: 100% !important;
-        height: 100% !important;
+.tab-pane graph{
+    display:flex;
+}
+.div-container input {
+    display: none;
+}
+#plannedAmountDisplay {
+    cursor: pointer;
+}
+.edit-mode input {
+    display: inline-block;
+}
+.edit-mode span {
+    display: none;
+}
+.edit-mode .form-container {
+    display: block;
 }
 .form-control-override {
     display: inline-block;
@@ -103,4 +118,3 @@ div.dateButton:hover {
     background: #2a9d43;
     color: #F8F8F8;
 }
-

@@ -5,20 +5,17 @@ import com.budget.app.security.model.CustomUserDetails;
 import com.budget.app.service.BudgetService;
 import com.budget.app.service.CategoryService;
 import com.budget.app.service.LineItemService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Date;
@@ -80,6 +77,7 @@ public class MainController {
 			budgetDates = budgetService.getBudgetDatesBetween(todaysDate);
 		}
 
+		model.addAttribute("lineItem", new LineItem());
 		model.addAttribute("budgetDates", budgetDates);
 
 		BudgetDate budgetDateSelected = new BudgetDate();
@@ -147,23 +145,33 @@ public class MainController {
 			model.addAttribute("transactions", transactions);
 
 			List<String> labels = new ArrayList<>();
-			List<Double> values = new ArrayList<>();
+			List<Double> transactionValues = new ArrayList<>();
+			List<Double> plannedValues = new ArrayList<>();
+			List<Double> remainingValues = new ArrayList<>();
 
 			for (LineItem lineItem : filteredLineItems)
 			{
-				labels.add(lineItem.getLineItemName());
+				double plannedAmount = lineItem.getPlannedAmount().doubleValue();
 
 				double totalAmount = 0;
 				for (Transaction tr : lineItem.getTransactions())
 				{
 					totalAmount += tr.getActualAmount().doubleValue();
 				}
-				values.add(totalAmount);
+
+				double remainingAmount = plannedAmount - totalAmount;
+
+				labels.add(lineItem.getLineItemName());
+				transactionValues.add(totalAmount);
+				plannedValues.add(plannedAmount);
+				remainingValues.add(remainingAmount);
 			}
 
 			// Add the pie chart data to the model
 			model.addAttribute("labels", labels);
-			model.addAttribute("values", values);
+			model.addAttribute("transactionValues", transactionValues);
+			model.addAttribute("plannedValues", plannedValues);
+			model.addAttribute("remainingValues", remainingValues);
 
 			// Load normal page display
 			model.addAttribute("isBudgetCreatedInCurrentMonth","YES");
