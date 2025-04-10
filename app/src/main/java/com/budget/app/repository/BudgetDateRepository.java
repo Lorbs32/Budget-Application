@@ -15,4 +15,8 @@ public interface BudgetDateRepository extends JpaRepository<BudgetDate, Integer>
 	BudgetDate findByBudgetDateBetween(LocalDate currentDate);
 
 	List<BudgetDate> findByIdIn(List<Integer> ids);
+
+	BudgetDate findById(int budgetDateId);
+
+	BudgetDate findByStartDate(LocalDate startDate);
 }
