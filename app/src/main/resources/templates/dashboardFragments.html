@@ -27,7 +27,7 @@
                         <p th:text="${date.getBudgetYear()}"></p>
                     </div>
                 </a>
-                <label class="block center labelHeight" th:text="${date.currentBudgetMonth} ? 'Today' : ''" ></label>
+                <label class="block center labelHeight green" th:text="${date.currentBudgetMonth} ? 'Selected' : ''" ></label>
             </div>
         </div>
         <div th:each="category: ${categories}" class="table-container">
