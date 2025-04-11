@@ -17,5 +17,6 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
 	Category findById(int categoryId);
 	default Category updateOrInsert(Category category){return save(category);}
+	//void updateOrInsert(Category category);
 
 }

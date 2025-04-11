@@ -19,10 +19,13 @@ public class Budget
 
 
     // Connections
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    // Persist on the budget was not allowing for adding new budgets with the same user.
+//     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+//     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     @JoinColumn(name = "date_id")
     private BudgetDate budgetDate;
     @OneToMany(mappedBy = "budget",cascade = CascadeType.ALL)
@@ -37,6 +40,11 @@ public class Budget
         this.user = user;
         this.budgetDate = date;
         this.categories = categories;
+    }
+    public Budget(User user, BudgetDate date)
+    {
+        this.user = user;
+        this.budgetDate = date;
     }
 
 

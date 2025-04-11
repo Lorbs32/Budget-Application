@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,12 @@ public class BudgetDate
     private String budgetMonth;
 
     @Column(name = "start_date")
-    private Date startDate;
+    private LocalDate startDate;
+//    private Date startDate;
 
     @Column(name = "end_date")
-    private Date endDate;
+    private LocalDate endDate;
+//    private Date endDate;
 
 
     // Connections
@@ -45,7 +48,7 @@ public class BudgetDate
 
     // Constructors
     public BudgetDate() {}
-    public BudgetDate(int id, int year, String month, Date startDate, Date endDate, List<Budget> budgets)
+    public BudgetDate(int id, int year, String month, LocalDate startDate, LocalDate endDate, List<Budget> budgets)
     {
         this.id = id;
         this.budgetYear = year;
@@ -63,9 +66,9 @@ public class BudgetDate
 
     public String getBudgetMonth() {return budgetMonth;}
 
-    public Date getStartDate() {return startDate;}
+    public LocalDate getStartDate() {return startDate;}
 
-    public Date getEndDate() {return endDate;}
+    public LocalDate getEndDate() {return endDate;}
 
     public boolean getCurrentBudgetMonth() {return currentBudgetMonth;}
 
@@ -77,9 +80,9 @@ public class BudgetDate
 
     public void setBudgetMonth(String month) {this.budgetMonth = month;}
 
-    public void setStartDate(Date startDate) {this.startDate = startDate;}
+    public void setStartDate(LocalDate startDate) {this.startDate = startDate;}
 
-    public void setEndDate(Date endDate) {this.endDate = endDate;}
+    public void setEndDate(LocalDate endDate) {this.endDate = endDate;}
 
     public List<Budget> getBudgets() {return budgets;}
 

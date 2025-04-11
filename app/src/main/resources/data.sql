@@ -55,6 +55,9 @@ VALUES (4, 6);
 INSERT INTO budgets (date_id, user_id)
 VALUES (4, 7);
 
+--INSERT INTO budgets (date_id, user_id) -- TEMPORARY
+--VALUES (5, 1); -- TEMPORARY
+
 -- Josh (1)
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Housing', 1);
@@ -204,6 +207,29 @@ INSERT INTO categories (category_name, budget_id)
 VALUES ('Savings', 7);
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Charity', 7);
+
+-- ADDITION JOSH (1)
+--INSERT INTO categories (category_name, budget_id)
+--VALUES ('Housing2', 8);
+--INSERT INTO categories (category_name, budget_id)
+--VALUES ('Utilities2', 8);
+--INSERT INTO categories (category_name, budget_id)
+--VALUES ('Groceries2', 8);
+--INSERT INTO categories (category_name, budget_id)
+--VALUES ('Entertainment2', 8);
+--INSERT INTO categories (category_name, budget_id)
+--VALUES ('Transportation2', 8);
+--
+--INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
+--VALUES (36, FALSE, 'Rent Payment2', 1500, 'MONTHLY');
+--INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
+--VALUES (37, FALSE, 'Electricity Bill2', 120, 'MONTHLY');
+--INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
+--VALUES (38, FALSE, 'Weekly Food Supplies2', 250, 'WEEKLY');
+--INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
+--VALUES (39, FALSE, 'Gasoline2', 200, 'MONTHLY');
+--INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
+--VALUES (40, FALSE, 'Netflix Subscription2', 20, 'MONTHLY');
 
 -- Josh Transactions
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
