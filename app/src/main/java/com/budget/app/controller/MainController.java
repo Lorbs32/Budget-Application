@@ -97,7 +97,9 @@ public class MainController {
 		{
 			Budget budget = budgetService.getBudget(currentUser.getId(), budgetDateSelected.getId());
 			model.addAttribute("budget", budget);
+			System.out.println("Budget attribute " + budget);
 			model.addAttribute("budgetId", budget.getId());
+			System.out.println("Budget ID independent attribute: " + budget.getId());
 
 			List<Category> categories = budgetService.getCategories(budget.getId());
 			model.addAttribute("categories", categories);

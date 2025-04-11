@@ -33,10 +33,14 @@ public class CategoryController {
 //    }
 
     @PostMapping("/createCategory")
-    public String addCategory(@RequestParam(value = "categoryName", defaultValue = "DefaultCategory") String categoryName,
-                              @RequestParam("budget") int budgetId, Model model,
+    public String addCategory(@RequestParam(value = "categoryName", defaultValue = "DefaultCategory", required = false) String categoryName,
+                              @RequestParam(defaultValue = "1") int budgetId, Model model,
                               HttpServletRequest request) {
-        Budget budget = budgetService.getBudgetById(budgetId);
+
+        //Budget budget = budgetService.getBudgetById(budgetId);
+        //BudgetDate budgetDate = budgetService.getBudgetDateById(budget.getBudgetDate().getId());
+        //Budget getBudgetByBudgetDateAndUser(User currentUser, BudgetDate budgetDate);
+        Budget budget = budgetService.getBudgetByBudgetId(budgetId);
 
         Category category = new Category();
         category.setCategoryName(categoryName);
@@ -59,7 +63,7 @@ public class CategoryController {
     {
         return "<form class=\"form-group form-inline\"" +
                 "hx-post=\"/addCategory/createCategory\" hx-headers='js:{\"X-CSRF-TOKEN\": calculateValue()}' hx-refresh=\"true\"" +
-                "hx-target=\"#fullPage\" hx-swap=\"outerHTML\">" +
+                "hx-target=\"#fullPage\" hx-swap=\"outerHTML\" hx-vals='js:{\"budgetId\": getBudgetId()}'>" +
                 "<input type=\"hidden\" name=\"budget\" value=\"" + budgetId + "\"/>" +
                 "<label for=\"categoryName\" class=\"form-label\">Category Name:</label>" +
                 "<input type=\"text\" id=\"categoryName\" name=\"categoryName\" class=\"form-control form-control-override ms-3 me-3\" required>" +
