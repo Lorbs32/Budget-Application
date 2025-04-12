@@ -19,6 +19,9 @@ public interface BudgetService
     public Budget getBudgetById(int budgetId);
     public List<Budget> getAllBudgets();
     public BudgetDate getBudgetDateById(int budgetDateId);
-
+    public void addBudgetBasedOnLastMonth(User currentUser, Budget lastMonthBudget, List<Category> categories, List<LineItem> lineItems, BudgetDate newBudgetDate);
+    public Budget getBudgetByBudgetDateAndUser(User currentUser, BudgetDate budgetDate);
+    public Budget getBudgetByBudgetId(int budgetId);
+    public void addBudgetPredetermined(User currentUser, BudgetDate budgetDate);
     // calculateBudgetSummary(Int budgetId);
 }

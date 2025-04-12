@@ -10,7 +10,9 @@
     <img src="images/blank_state_icon.png" width="20%">
     <h3>Hey there, looks like you need a budget for this month.</h3>
     <p>If you had a budget last month that will copy over to get you started.</p>
-    <button type="button" class="btn btn-primary block marginAuto rounded-pill">Start Planning</button>
+    <form th:action="@{/budgets/addBudget}" method="post">
+        <button type="submit" name="addBudget" value="addBudget" class="btn btn-primary block marginAuto rounded-pill">Start Planning</button>
+    </form>
 </div>
 
 <!--YES budget -- This displays when there is a current / selected month budget in the database.-->
@@ -25,7 +27,7 @@
                         <p th:text="${date.getBudgetYear()}"></p>
                     </div>
                 </a>
-                <label class="block center labelHeight" th:text="${date.currentBudgetMonth} ? 'Today' : ''" ></label>
+                <label class="block center labelHeight green" th:text="${date.currentBudgetMonth} ? 'Selected' : ''" ></label>
             </div>
         </div>
         <div th:each="category: ${categories}" class="table-container">
@@ -119,20 +121,20 @@
     <div class="col-4 transactionColor">
         <ul class="nav nav-tabs nav-justified mt-2">
             <li class="nav-item">
-                <a class="nav-link" id="summary-tab" data-bs-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="false">Summary</a>
+                <a class="nav-link" id="summary-tab" data-bs-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="true">Summary</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" id="transaction-tab" data-bs-toggle="tab" aria-current="page" href="#transactions" role="tab" aria-controls="transactions" aria-selected="true">Transactions</a>
+                <a class="nav-link active" id="transaction-tab" data-bs-toggle="tab" aria-current="page" href="#transactions" role="tab" aria-controls="transactions" aria-selected="false">Transactions</a>
             </li>
         </ul>
         <div class="tab-content mt-2">
             <div class="tab-pane fade" id="summary" role="tabpanel" aria-labelledby="summary-tab">
                 <ul class="nav nav-tabs nav-justified mt-2" id="chartTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="transactionGraph-tab" data-bs-toggle="tab" href="#transactionGraph" role="tab" aria-controls="transactionGraph" aria-selected="true">Actual</a>
+                        <a class="nav-link active" id="transactionGraph-tab" data-bs-toggle="tab" href="#transactionGraph" role="tab" aria-controls="transactionGraph" aria-selected="false">Actual</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="plannedGraph-tab" data-bs-toggle="tab" href="#plannedGraph" role="tab" aria-controls="plannedGraph" aria-selected="false">Planned</a>
+                        <a class="nav-link" id="plannedGraph-tab" data-bs-toggle="tab" href="#plannedGraph" role="tab" aria-controls="plannedGraph" aria-selected="true">Planned</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="remainingGraph-tab" data-bs-toggle="tab" href="#remainingGraph" role="tab" aria-controls="remainingGraph" aria-selected="false">Remaining</a>
@@ -285,6 +287,10 @@
                 });
             </script>
         <div class="tab-pane fade show active" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
+
+            <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>
+            <h4 th:if="${#lists.isEmpty(transactions)}" class="mt-1 mb-1 center">No income or expenses<br>tracked so far this month.</h4>
+
             <div th:each="transaction: ${transactions}" class="table-container">
                 <div class="row border-bottom border-dark border-1">
                     <div class="col-4" th:text="${transaction.merchant}"></div>
@@ -301,6 +307,7 @@
             </button>
         </div>
     </div>
+    <!-- Transaction Modal -->
     <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -326,6 +333,12 @@
                                     th:value="${lineItem.getId()}"
                                     th:text="${lineItem.getLineItemName()}"></option>
                         </select>
+<!--                        <select th:field="*{lineItem}" class="form-select" id="item" name="item">-->
+<!--                            <option value="none" selected hidden>Choose Budget Items</option>-->
+<!--                            <option th:each="lineItem : ${lineItems}"-->
+<!--                                    th:value="${lineItem.getId()}"-->
+<!--                                    th:text="${lineItem.getLineItemName()}"></option>-->
+<!--                        </select>-->
                         <br>
                         <label for="transactionNote" class="form-label" hidden>Note</label>
                         <textarea th:field="*{note}" style="height: 50px;" placeholder="Enter any notes about the transaction" class="form-control" id="transactionNote" name="transactionNote"></textarea>
@@ -341,7 +354,7 @@
         </div>
 
     </div>
-    <!--Category Modal -->
+    <!-- Category Modal -->
     <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

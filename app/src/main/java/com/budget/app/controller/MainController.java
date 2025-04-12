@@ -1,5 +1,6 @@
 package com.budget.app.controller;
 
+import com.budget.app.domain.ExtractParameter;
 import com.budget.app.entity.*;
 import com.budget.app.security.model.CustomUserDetails;
 import com.budget.app.service.BudgetService;
@@ -96,7 +97,9 @@ public class MainController {
 		{
 			Budget budget = budgetService.getBudget(currentUser.getId(), budgetDateSelected.getId());
 			model.addAttribute("budget", budget);
+			System.out.println("Budget attribute " + budget);
 			model.addAttribute("budgetId", budget.getId());
+			System.out.println("Budget ID independent attribute: " + budget.getId());
 
 			List<Category> categories = budgetService.getCategories(budget.getId());
 			model.addAttribute("categories", categories);
@@ -112,10 +115,13 @@ public class MainController {
 			YearMonth targetMonth = YearMonth.of(yearValue, monthValue);
 
 			// Filter line items based on recurrence
-			List<LineItem> filteredLineItems = lineItems.stream()
+			List<LineItem> filteredMonthlyLineItems = lineItems.stream()
 					.filter(item -> lineItemService.isActiveForMonth(item, targetMonth))
 					.collect(Collectors.toList());
 
+			model.addAttribute("filteredMonthlyLineItems", filteredMonthlyLineItems);
+
+			List<LineItem>  filteredLineItems = budgetService.getLineItemsByCategoryIds(categories);
 			model.addAttribute("lineItems", filteredLineItems);
 
 			// On each line item get related transactions
@@ -192,9 +198,15 @@ public class MainController {
 	}
 
 	@RequestMapping ("/addTransactionToBudget")
-	public String addTransaction(@ModelAttribute Transaction transaction, Model model)
+	public String addTransaction(@ModelAttribute Transaction transaction, Model model,
+								 HttpServletRequest request)
 	{
 		budgetService.updateOrInsert(transaction);
-		return "redirect:dashboard";
+
+		// All requests that redirect to the dashboard need to retrieve the currently selected budget date ID and pass it through.
+		String referrer = request.getHeader("referer");
+		String budgetDateId = ExtractParameter.getParameterValue(referrer, "budgetDateId");
+
+		return "redirect:dashboard?budgetDateId=" + budgetDateId;
 	}
 }

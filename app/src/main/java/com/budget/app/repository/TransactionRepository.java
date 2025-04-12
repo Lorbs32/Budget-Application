@@ -11,4 +11,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 	List<Transaction> findByIdIn(List<Integer> ids);
     default Transaction updateOrInsert(Transaction transaction){return save(transaction);}
     List<Transaction> findByLineItemId(int id);
+    List<Transaction> findByLineItemIdIn(List<Integer> ids);
 }

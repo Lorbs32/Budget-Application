@@ -6,8 +6,6 @@
 <head>
     <meta charset="UTF-8">
 
-<!--    <meta name="_csrf" th:content="${csrfToken}">-->
-<!--    <meta name="_csrf_header" th:content="${csrfHeaderName}">-->
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta name="budgetId" th:content="${budgetId}"/>
@@ -56,7 +54,7 @@
         }
     </script>
 
-    <!--Budget App Stylesheet-->
+    <!--Dashboard Stylesheet-->
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 
     <title>Dashboard</title>

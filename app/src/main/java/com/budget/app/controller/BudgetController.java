@@ -1,9 +1,14 @@
 package com.budget.app.controller;
 
-import com.budget.app.entity.BudgetDate;
+import com.budget.app.domain.ExtractParameter;
+import com.budget.app.entity.*;
+import com.budget.app.security.model.CustomUserDetails;
 import com.budget.app.service.BudgetDateService;
 import com.budget.app.service.BudgetService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 @Controller
 @RequestMapping("/budgets")
@@ -43,11 +50,7 @@ public class BudgetController {
 
         LocalDate start = startDate != null ? LocalDate.parse(startDate) : null;
         LocalDate end = endDate != null ? LocalDate.parse(endDate) : null;
-        System.out.println(start);
-        System.out.println(end);
 
-
-        //List<BudgetDate> budgets = new ArrayList<>();
         BudgetDate budgetDate = null;
 
         // Validate inputs
@@ -55,10 +58,6 @@ public class BudgetController {
         {
             model.addAttribute("error", "Start date is required.");
         }
-//        else if (start.isAfter(end))
-//        {
-//            model.addAttribute("error", "Start Date must be before End Date.");
-//        }
         else {
             budgetDate = budgetDateService.budgetForDateRange(start);
 
@@ -78,11 +77,42 @@ public class BudgetController {
 
         return "redirect:../dashboard?budgetDateId=" + budgetDate.getId();
     }
-}
 
-//${error}
-//${budgets}
-//${startDate}
-//${endDate}
-//${budget.month}
-//${budget.amount}
+    @PostMapping("/addBudget")
+    public String addBudget(Model model,
+                            HttpServletRequest request)
+    {
+        // All requests that redirect to the dashboard need to retrieve the currently selected budget date ID and pass it through.
+        // In this case also use the budget date ID to create the new budget, and minus one to check for budget from last month.
+        String referrer = request.getHeader("referer");
+        String budgetDateId = ExtractParameter.getParameterValue(referrer, "budgetDateId");
+
+        // Get authenticated user.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
+
+        // budget ID from URL params minus 1 budget date ID last month.
+        int lastMonthBudgetDateId = parseInt(budgetDateId) - 1;
+        Budget lastMonthBudget = budgetService.getBudget(currentUser.getId(),lastMonthBudgetDateId);
+
+        // Check whether there's a budget last month.
+        if(lastMonthBudget != null)
+        {
+            // Pull last month's categories, and line items.
+            BudgetDate budgetDate = budgetService.getBudgetDateById(lastMonthBudgetDateId + 1);
+            List<Category> categories = budgetService.getCategories(lastMonthBudget.getId());
+            List<LineItem> lineItems = budgetService.getLineItemsByCategoryIds(categories);
+            // Use those categories and line items to generate a new month's budget.
+            budgetService.addBudgetBasedOnLastMonth(currentUser, lastMonthBudget, categories, lineItems, budgetDate);
+        }
+        else
+        {
+            // Otherwise, create a budget based on predefined data.
+            BudgetDate budgetDate = budgetService.getBudgetDateById(parseInt(budgetDateId));
+            budgetService.addBudgetPredetermined(currentUser, budgetDate);
+        }
+
+        return "redirect:../dashboard?budgetDateId=" + budgetDateId;
+    }
+}

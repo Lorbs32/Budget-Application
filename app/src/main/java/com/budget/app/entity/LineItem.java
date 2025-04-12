@@ -60,6 +60,15 @@ public class LineItem
         this.transactions = transactions;
         this.recurrenceType = recurrenceType;
     }
+    public LineItem(String lineItemName, BigDecimal plannedAmount, Boolean isIncome,
+                    Category category, RecurrenceType recurrenceType)
+    {
+        this.lineItemName = lineItemName;
+        this.plannedAmount = plannedAmount;
+        this.isIncome = isIncome;
+        this.category = category;
+        this.recurrenceType = recurrenceType;
+    }
 
 
     // Getters & Setters
