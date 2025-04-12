@@ -143,6 +143,48 @@
 
     })(jQuery);
 </script>
+
+<!-- ===================== Debt Payoff Calculator START ===================== -->
+<div class="container mt-5">
+    <h2>Debt Payoff Calculator</h2>
+
+    <form method="post" th:action="@{/dashboard/debt-payoff}">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Debt Name</th>
+                <th>Balance</th>
+                <th>Min Payment</th>
+                <th>Interest Rate (%)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="debt, iterStat : ${debts}">
+                <td><input type="text" class="form-control" name="name" th:value="${debt.name}" required /></td>
+                <td><input type="number" class="form-control" name="balance" step="0.01" min="0" th:value="${debt.balance}" required /></td>
+                <td><input type="number" class="form-control" name="minPayment" step="0.01" min="0" th:value="${debt.minPayment}" required /></td>
+                <td><input type="number" class="form-control" name="interestRate" step="0.01" min="0" max="100" th:value="${debt.interestRate}" required /></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="mb-3">
+            <label for="extraPayment" class="form-label">Extra Monthly Payment:</label>
+            <input type="number" id="extraPayment" class="form-control" name="extraPayment" step="0.01" min="0" th:value="${extraPayment}" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Calculate Payoff</button>
+    </form>
+
+    <div th:if="${result != null}" class="mt-4 alert alert-info">
+        <h4>📊 Payoff Summary</h4>
+        <p><strong>Months to Pay Off:</strong> <span th:text="${result.monthsToPayOff}">0</span></p>
+        <p><strong>Total Interest (Minimum Payments):</strong> $<span th:text="${#numbers.formatDecimal(result.totalInterestMinimum, 1, 2)}">0.00</span></p>
+        <p><strong>Total Interest (Snowball):</strong> $<span th:text="${#numbers.formatDecimal(result.totalInterestSnowball, 1, 2)}">0.00</span></p>
+        <p><strong>🎉 Interest Saved:</strong> $<span th:text="${#numbers.formatDecimal(result.interestSaved, 1, 2)}">0.00</span></p>
+    </div>
+</div>
+<!-- ===================== Debt Payoff Calculator END ===================== -->
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
