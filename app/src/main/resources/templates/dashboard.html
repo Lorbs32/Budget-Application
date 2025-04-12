@@ -148,7 +148,7 @@
 <div class="container mt-5">
     <h2>Debt Payoff Calculator</h2>
 
-    <form method="post" th:action="@{/dashboard/debt-payoff}">
+    <form method="post" th:action="@{/dashboard}">
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -160,6 +160,7 @@
             </thead>
             <tbody>
             <tr th:each="debt, iterStat : ${debts}">
+                <input type="hidden" name="budgetDateId" th:value="${budgetDateSelected.id}" />
                 <td><input type="text" class="form-control" name="name" th:value="${debt.name}" required /></td>
                 <td><input type="number" class="form-control" name="balance" step="0.01" min="0" th:value="${debt.balance}" required /></td>
                 <td><input type="number" class="form-control" name="minPayment" step="0.01" min="0" th:value="${debt.minPayment}" required /></td>
@@ -185,6 +186,7 @@
     </div>
 </div>
 <!-- ===================== Debt Payoff Calculator END ===================== -->
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
