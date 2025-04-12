@@ -1,10 +1,12 @@
 package com.budget.app.controller;
 
+import com.budget.app.domain.DebtPayoffResult;
 import com.budget.app.domain.ExtractParameter;
 import com.budget.app.entity.*;
 import com.budget.app.security.model.CustomUserDetails;
 import com.budget.app.service.BudgetService;
 import com.budget.app.service.CategoryService;
+import com.budget.app.service.DebtPayoffService;
 import com.budget.app.service.LineItemService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import com.budget.app.domain.DebtInput;
 
 import java.math.BigDecimal;
@@ -33,6 +32,9 @@ import java.util.stream.Collectors;
 public class MainController {
 	@Autowired
 	private BudgetService budgetService;
+
+	@Autowired
+	private DebtPayoffService debtPayoffService;
 
 	@Autowired
 	public LocalDate todaysDate;
@@ -62,17 +64,23 @@ public class MainController {
 		}
 	}
 
-	@RequestMapping("/dashboard")
-	public String dashboard(HttpServletRequest request, Model model, final Transaction transaction
+	// Changed to GetMapping to use PostMapping below
+	@GetMapping("/dashboard")
+	public String dashboard(HttpServletRequest request, Model model, @ModelAttribute Transaction transaction
 	,@RequestParam(value = "budgetDateId", required = false, defaultValue = "0") int budgetDateId)
 	{
+		// Added transaction to model for PostMapping to not display nulls
+		if (!model.containsAttribute("transaction")) {
+			model.addAttribute("transaction", transaction);
+		}
 
 		List<BudgetDate> budgetDates = null;
+		System.out.println("➡️ In GET /dashboard");
 		if(budgetDateId != 0)
 		{
 			BudgetDate currentBudgetMonth = budgetService.getBudgetDateById(budgetDateId);
 			budgetDates = budgetService.getBudgetDatesBetween(currentBudgetMonth.getStartDate());
-			//System.out.println("CURRENT BUDGET MONTH: " + currentBudgetMonth.getBudgetMonth());
+			System.out.println("CURRENT BUDGET MONTH: " + currentBudgetMonth.getBudgetMonth());
 		}
 		else
 		{
@@ -82,14 +90,21 @@ public class MainController {
 		model.addAttribute("lineItem", new LineItem());
 		model.addAttribute("budgetDates", budgetDates);
 
-		BudgetDate budgetDateSelected = new BudgetDate();
-        for (BudgetDate budgetDate : budgetDates)
-		{
-            if (budgetDate.getBudgetSelected())
-			{
-                budgetDateSelected = budgetDate;
-            }
-        }
+		BudgetDate budgetDateSelected;
+
+		if (budgetDateId != 0) {
+			// Use the explicitly passed ID from the form or URL
+			budgetDateSelected = budgetService.getBudgetDateById(budgetDateId);
+		} else {
+			// Fallback to selected budget logic if no ID was passed
+			budgetDateSelected = new BudgetDate();
+			for (BudgetDate budgetDate : budgetDates) {
+				if (budgetDate.getBudgetSelected()) {
+					budgetDateSelected = budgetDate;
+				}
+			}
+		}
+		System.out.println("Selected Budget Date: " + budgetDateSelected.getBudgetMonth() + " " + budgetDateSelected.getBudgetYear());
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		User currentUser = userDetails.getUser();
@@ -97,6 +112,11 @@ public class MainController {
 		try
 		{
 			Budget budget = budgetService.getBudget(currentUser.getId(), budgetDateSelected.getId());
+			if (budget == null) {
+				System.out.println("XXXXNo budget found for user " + currentUser.getId() + " and budgetDateId " + budgetDateSelected.getId());
+				model.addAttribute("isBudgetCreatedInCurrentMonth", "NO");
+				return "dashboard";
+			}
 			model.addAttribute("budget", budget);
 			System.out.println("Budget attribute " + budget);
 			model.addAttribute("budgetId", budget.getId());
@@ -198,8 +218,49 @@ public class MainController {
 		LocalDate todaysDate = LocalDate.now();
 		transaction.setTransactionDate(todaysDate);
 
+		model.addAttribute("budgetDateSelected", budgetDateSelected);
 		return "dashboard";
 	}
+
+
+	// Debt payoff calculator
+	@PostMapping("/dashboard")
+	public String postDashboardWithDebtPayoff(
+			@RequestParam(name = "budgetDateId") Integer budgetDateId,
+			@RequestParam(name = "name") List<String> names,
+			@RequestParam(name = "balance") List<Double> balances,
+			@RequestParam(name = "minPayment") List<Double> minPayments,
+			@RequestParam(name = "interestRate") List<Double> interestRates,
+			@RequestParam(name = "extraPayment") double extraPayment,
+			Model model,
+			HttpServletRequest request
+	) {
+		System.out.println("In POST /dashboard");
+		System.out.println("POST /dashboard triggered with budgetDateId = " + budgetDateId);
+		// 1. Build debt input list
+		List<DebtInput> debts = new ArrayList<>();
+		for (int i = 0; i < names.size(); i++) {
+			DebtInput debt = new DebtInput();
+			debt.setName(names.get(i));
+			debt.setBalance(balances.get(i));
+			debt.setMinPayment(minPayments.get(i));
+			debt.setInterestRate(interestRates.get(i));
+			debts.add(debt);
+		}
+
+		// 2. Calculate payoff results
+		DebtPayoffResult result = debtPayoffService.calculatePayoff(debts, extraPayment);
+
+		// 3. Add form results to the model
+		model.addAttribute("debts", debts);
+		model.addAttribute("extraPayment", extraPayment);
+		model.addAttribute("result", result);
+
+		// 4. Reuse the GET controller to rebuild the dashboard
+		System.out.println("✅ Re-rendering dashboard with debt result: " + result.getInterestSaved());
+		return dashboard(request, model, new Transaction(), budgetDateId);
+	}
+
 
 	@RequestMapping ("/addTransactionToBudget")
 	public String addTransaction(@ModelAttribute Transaction transaction, Model model,
