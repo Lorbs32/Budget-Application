@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.budget.app.domain.DebtInput;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -181,6 +182,9 @@ public class MainController {
 
 			// Load normal page display
 			model.addAttribute("isBudgetCreatedInCurrentMonth","YES");
+			// Added default values for the debt payoff form so Thymeleaf doesn't error
+			model.addAttribute("debts", List.of(new DebtInput()));
+			model.addAttribute("extraPayment", 0.0);
 		}
 		catch (Exception e)
 		{
