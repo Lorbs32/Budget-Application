@@ -60,7 +60,7 @@ th {
 .row {
     display: flex;
     justify-content:center;
-    align-items: center;
+    align-items: center
     flex-wrap: wrap;
     padding: 20px;
 }
@@ -91,7 +91,6 @@ h1 {
 .tab-pane graph{
     display:flex;
 }
-
 .div-container input {
     display: none;
 }
@@ -107,9 +106,15 @@ h1 {
 .edit-mode .form-container {
     display: block;
 }
-
 .form-control-override {
     display: inline-block;
     width: 30%;
 }
-
+a.dateButton {
+    color: #000000;
+    text-decoration: none;
+}
+div.dateButton:hover {
+    background: #2a9d43;
+    color: #F8F8F8;
+}
