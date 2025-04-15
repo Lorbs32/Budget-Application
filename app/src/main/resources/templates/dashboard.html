@@ -81,6 +81,68 @@
 <div class="div-container container"
      th:replace="dashboardFragments :: ${isBudgetCreatedInCurrentMonth == 'YES'} ? 'actionMenu' : 'nothing'">
 </div>
+<!--Plaid Bank Integration-->
+<!--token: 'link-sandbox-f7b60565-b909-42d7-93dc-8d5d49faa609',-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<script type="text/javascript">
+    (async function($) {
+        const response = await fetch('/plaid/link-token');
+        if (!response.ok) throw new Error("Failed to fetch link token");
+        const data = await response.json();
+        console.log('link token response data is:' + data);
+        console.log("Keys in data:", Object.keys(data));
+        const linkToken = data.link_token;
+        console.log('linkToken is:' + linkToken);
+
+        const handler = Plaid.create({
+            token: linkToken,
+            onSuccess: (public_token, metadata) => {
+                console.log('onSuccess');
+                console.log('Public Token: ', public_token);
+                console.log('Metadata: ', metadata);
+                const csrfToken = calculateValue();
+                console.log('csrf', csrfToken);
+                $.ajax({
+                    type: 'POST',
+                    url: '/plaid/public-token-exchange',
+                    data: { public_token: public_token },
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                    },
+                    success: function(response) {
+                        console.log('Public token exchanged successfully:', response);
+
+                        // Now that the token is exchanged and stored, safely call accounts-balance
+                        $.ajax({
+                            type: 'GET',
+                            url: '/plaid/accounts-balance',
+                            success: function(balanceResponse) {
+                                console.log('Accounts balance:', balanceResponse);
+                                window.location.reload();
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Failed to get account balances:', error);
+                            }
+                    });
+                    },
+                });
+            },
+            onLoad: () => {console.log('onLoad')},
+            onExit: (err, metadata) => {console.log('onExit')},
+            onEvent: (eventName, metadata) => {console.log('onEvent')},
+    });
+
+    $('#link-button').on('click', function(e) {
+        handler.open();
+        console.log('Plaid Link Button Clicked');
+    });
+
+    })(jQuery);
+</script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>

@@ -1,6 +1,8 @@
 package com.budget.app.service;
 
 import com.budget.app.entity.*;
+import com.budget.app.entity.plaid.PlaidAccessTokens;
+import com.budget.app.entity.plaid.PlaidBankAccount;
 import com.budget.app.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,10 @@ public class BudgetServiceImplementation implements BudgetService
     private LineItemRepository lineItemRepository;
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private PlaidAccessTokensRepository plaidAccessTokensRepository;
+    @Autowired
+    private PlaidBankAccountRepository plaidBankAccountRepository;
 
 
     // Interface Method Implementations
@@ -230,6 +236,29 @@ public class BudgetServiceImplementation implements BudgetService
         LineItem subscriptions = new LineItem("Subscriptions",BigDecimal.valueOf(100.00),false,entertainment,RecurrenceType.MONTHLY);
         List<LineItem> newLineItems = new ArrayList<LineItem>(Arrays.asList(paycheck,rent,insurance,groceries,restaurants,travel,subscriptions));
         lineItemRepository.saveAll(newLineItems);
+    }
+
+    @Override
+    public void updateOrInsertPlaidAccess(String accessToken, String itemId, String requestId, User currentUser)
+    {
+        PlaidAccessTokens plaidAccessToken = new PlaidAccessTokens(accessToken, itemId, requestId, currentUser);
+        PlaidAccessTokens saveResult = plaidAccessTokensRepository.updateOrInsert(plaidAccessToken);
+    }
+
+    @Override
+    public PlaidAccessTokens getPlaidAccessToken(User currentUser) {
+        return plaidAccessTokensRepository.getByUserId(currentUser.getId());
+    }
+
+    @Override
+    public void updateOrInsertPlaidBankAccount(PlaidBankAccount plaidBankAccount)
+    {
+        PlaidBankAccount saveResult = plaidBankAccountRepository.updateOrInsert(plaidBankAccount);
+    }
+
+    @Override
+    public List<PlaidBankAccount> getBanksByUserId(User currentUser) {
+        return plaidBankAccountRepository.getByUserId(currentUser.getId());
     }
 
     // ------------------TO DO-------------------

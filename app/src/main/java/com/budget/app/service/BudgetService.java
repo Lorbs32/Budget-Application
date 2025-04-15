@@ -1,6 +1,8 @@
 package com.budget.app.service;
 
 import com.budget.app.entity.*;
+import com.budget.app.entity.plaid.PlaidAccessTokens;
+import com.budget.app.entity.plaid.PlaidBankAccount;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,5 +25,9 @@ public interface BudgetService
     public Budget getBudgetByBudgetDateAndUser(User currentUser, BudgetDate budgetDate);
     public Budget getBudgetByBudgetId(int budgetId);
     public void addBudgetPredetermined(User currentUser, BudgetDate budgetDate);
+    public void updateOrInsertPlaidAccess(String accessToken, String itemId, String requestId, User currentUser);
+    public PlaidAccessTokens getPlaidAccessToken(User currentUser);
+    public void updateOrInsertPlaidBankAccount(PlaidBankAccount plaidBankAccount);
+    public List<PlaidBankAccount> getBanksByUserId(User currentUser);
     // calculateBudgetSummary(Int budgetId);
 }

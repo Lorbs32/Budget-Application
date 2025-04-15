@@ -1,5 +1,7 @@
 package com.budget.app.entity;
 
+import com.budget.app.entity.plaid.PlaidAccessTokens;
+import com.budget.app.entity.plaid.PlaidBankAccount;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +41,11 @@ public class User
     //@OneToOne(mappedBy = "user")
     private List<Budget> budgets = new ArrayList<Budget>();
 
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<PlaidAccessTokens> plaidAccessTokens = new ArrayList<PlaidAccessTokens>();
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<PlaidBankAccount> plaidBankAccounts = new ArrayList<PlaidBankAccount>();
 
     // Constructors
     public User() {}
@@ -113,4 +120,8 @@ public class User
     public List<Budget> getBudgets() {return budgets;}
 
     public void setBudgets(List<Budget> budgets) {this.budgets = budgets;}
+
+    public List<PlaidAccessTokens> getPlaidAccessTokens() {return plaidAccessTokens;}
+
+    public void setPlaidAccessTokens(List<PlaidAccessTokens> plaidAccessTokens) { this.plaidAccessTokens = plaidAccessTokens; }
 }
