@@ -79,4 +79,16 @@ public class LineItemController {
         return "redirect:../dashboard?budgetDateId=" + budgetDateId;
         //return "redirect:/dashboard";
     }
+
+    @PostMapping("/delete")
+    public String deleteLineItem(@RequestParam ("lineItem.id") int lineItemId,
+                                 HttpServletRequest request)
+    {
+        LineItem deleteLineItem = lineItemService.findById(lineItemId);
+        lineItemService.delete(deleteLineItem);
+
+        String referrer = request.getHeader("referer");
+        String budgetDateId = ExtractParameter.getParameterValue(referrer, "budgetDateId");
+        return "redirect:../dashboard?budgetDateId=" + budgetDateId;
+    }
 }

@@ -64,12 +64,15 @@
 <!--TO DO: Replace with th:insert to the header template reference.-->
 <div class="center">
     <div class="header">
+        <div class="left-aligned">
+            <img src="/images/money.png" width="100" height="100">
+        </div>
         <div class="center">
-            <h1>Budget Planner</h1>
+            <h1>Show Me The Money</h1>
         </div>
         <div class="right-aligned">
             <form th:action="@{/logout}" method="post">
-                <input class="btn-primary mt-2 " type="submit" value="Logout">
+                <input class="btn-primary mt-2 rounded-pill" type="submit" value="Logout">
             </form>
         </div>
     </div>
