@@ -1,14 +1,10 @@
 package com.budget.app.controller;
 
-import com.budget.app.domain.DebtPayoffResult;
-import com.budget.app.domain.ExtractParameter;
+import com.budget.app.domain.*;
 import com.budget.app.entity.*;
 import com.budget.app.entity.plaid.PlaidBankAccount;
 import com.budget.app.security.model.CustomUserDetails;
-import com.budget.app.service.BudgetService;
-import com.budget.app.service.CategoryService;
-import com.budget.app.service.DebtPayoffService;
-import com.budget.app.service.LineItemService;
+import com.budget.app.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.budget.app.domain.DebtInput;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -25,12 +20,15 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.time.Month;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
+
 	@Autowired
 	private BudgetService budgetService;
 
@@ -45,6 +43,9 @@ public class MainController {
 
 	@Autowired
 	private LineItemService lineItemService;
+
+	@Autowired
+	private BudgetSummaryService budgetSummaryService;
 
 	// Subscriptions pairing with Months helper method
 	private String expandMonthAbbreviation(String shortMonth) {
@@ -70,6 +71,7 @@ public class MainController {
 	public String dashboard(HttpServletRequest request, Model model, @ModelAttribute Transaction transaction
 	,@RequestParam(value = "budgetDateId", required = false, defaultValue = "0") int budgetDateId)
 	{
+		System.out.println("🧪 Received budgetDateId from URL: " + budgetDateId);
 		// Added transaction to model for PostMapping to not display nulls
 		if (!model.containsAttribute("transaction")) {
 			model.addAttribute("transaction", transaction);
@@ -96,6 +98,7 @@ public class MainController {
 		if (budgetDateId != 0) {
 			// Use the explicitly passed ID from the form or URL
 			budgetDateSelected = budgetService.getBudgetDateById(budgetDateId);
+			model.addAttribute("budgetDateSelected", budgetDateSelected);
 		} else {
 			// Fallback to selected budget logic if no ID was passed
 			budgetDateSelected = new BudgetDate();
@@ -105,6 +108,7 @@ public class MainController {
 				}
 			}
 		}
+		model.addAttribute("budgetDateSelected", budgetDateSelected);
 		System.out.println("Selected Budget Date: " + budgetDateSelected.getBudgetMonth() + " " + budgetDateSelected.getBudgetYear());
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -114,7 +118,7 @@ public class MainController {
 		{
 			Budget budget = budgetService.getBudget(currentUser.getId(), budgetDateSelected.getId());
 			if (budget == null) {
-				System.out.println("XXXXNo budget found for user " + currentUser.getId() + " and budgetDateId " + budgetDateSelected.getId());
+				System.out.println("No budget found for user " + currentUser.getId() + " and budgetDateId " + budgetDateSelected.getId());
 				model.addAttribute("isBudgetCreatedInCurrentMonth", "NO");
 				return "dashboard";
 			}
@@ -122,6 +126,7 @@ public class MainController {
 			System.out.println("Budget attribute " + budget);
 			model.addAttribute("budgetId", budget.getId());
 			System.out.println("Budget ID independent attribute: " + budget.getId());
+			model.addAttribute("budgetDateSelected", budgetDateSelected);
 
 			List<Category> categories = budgetService.getCategories(budget.getId());
 			model.addAttribute("categories", categories);
@@ -221,8 +226,7 @@ public class MainController {
 		// Pre-populate transaction date to today's date in a format that the HTML field input type="date" can use.
 		LocalDate todaysDate = LocalDate.now();
 		transaction.setTransactionDate(todaysDate);
-
-		model.addAttribute("budgetDateSelected", budgetDateSelected);
+		System.out.println("✅ Final model budgetDateSelected ID: " + budgetDateSelected.getId());
 		return "dashboard";
 	}
 
@@ -258,10 +262,40 @@ public class MainController {
 		// 3. Add form results to the model
 		model.addAttribute("debts", debts);
 		model.addAttribute("extraPayment", extraPayment);
-		model.addAttribute("result", result);
+		model.addAttribute("debtPayoffResult", result);
 
 		// 4. Reuse the GET controller to rebuild the dashboard
 		System.out.println("✅ Re-rendering dashboard with debt result: " + result.getInterestSaved());
+		return dashboard(request, model, new Transaction(), budgetDateId);
+	}
+
+	// Budget Summary
+	@PostMapping("/dashboard/summary")
+	public String handleBudgetSummaryForm(
+			@RequestParam(name = "budgetDateId") int budgetDateId,
+			@RequestParam(name = "incomes", required = false) List<Double> incomeSources,
+			HttpServletRequest request,
+			Model model
+	) {
+		System.out.println("🧪 POST received for summary. budgetDateId = " + budgetDateId);
+
+		if (incomeSources == null) incomeSources = new ArrayList<>();
+
+		Map<String, Double> expenses = new LinkedHashMap<>();
+		for (String category : List.of("Giving", "Savings", "Housing", "Transportation", "Food", "Personal", "Lifestyle", "Health", "Insurance")) {
+			String value = request.getParameter(category);
+			if (value != null && !value.isBlank()) {
+				try {
+					expenses.put(category, Double.parseDouble(value));
+				} catch (NumberFormatException ignored) {}
+			}
+		}
+
+		BudgetSummaryInput input = new BudgetSummaryInput(incomeSources, expenses);
+		BudgetSummaryResult result = budgetSummaryService.calculateSummary(input);
+
+		model.addAttribute("budgetSummaryResult", result);
+
 		return dashboard(request, model, new Transaction(), budgetDateId);
 	}
 
