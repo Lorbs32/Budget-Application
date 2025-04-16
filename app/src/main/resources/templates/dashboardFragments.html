@@ -36,7 +36,7 @@
                 <tr>
                     <th th:text="${category.getCategoryName()}"></th>
                     <th>Planned</th>
-                    <th>Actual</th>
+                    <th>Spent</th>
                     <th class="tableWidth">
                         <button type="button" class="btn btn-light btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#addLineItemModal">
                             +
@@ -373,7 +373,7 @@
                         <label for="transactionNote" class="form-label" hidden>Note</label>
                         <textarea th:field="*{note}" style="height: 50px;" placeholder="Enter any notes about the transaction" class="form-control" id="transactionNote" name="transactionNote"></textarea>
                         <br>
-                        <input type="submit" name="addTransaction" value="Save" class="btn btn-primary mt-2 mr-4 text-end">
+                        <input type="submit" name="addTransaction" value="Save" class="btn btn-secondary rounded-pill mt-2 mr-4 text-end">
                     </form>
                 </div>
                 <!--            <div class="modal-footer">-->
@@ -450,7 +450,7 @@
                                 <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-secondary">Add Line Item</button>
+                        <button type="submit" class="btn btn-secondary rounded-pill">Add Line Item</button>
                     </form>
                 </div>
             </div>
