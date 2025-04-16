@@ -41,6 +41,9 @@
                         <button type="button" class="btn btn-light btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#addLineItemModal">
                             +
                         </button>
+                        <button type="button" class="btn btn-light btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#deleteLineItemModal">
+                            -
+                        </button>
                     </th>
                 </tr>
                 </thead>
@@ -409,7 +412,7 @@
         </div>
     </div>
     <!-- Add Line Item Modal -->
-    <div class="modal fade" id="addLineItemModal" tabindex="-1" aria-labelledby="addLineItemModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addLineItemModal" tabindex="-1" aria-labelledby="addLineItemModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header transactionModalColor">
@@ -451,6 +454,28 @@
                             </select>
                         </div>
                         <button type="submit" class="btn btn-secondary rounded-pill">Add Line Item</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Line Item Modal -->
+    <div class="modal fade" id="deleteLineItemModal" tabindex="-1" aria-labelledby="deleteLineItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header transactionModalColor">
+                    <h2 class="modal-title fs-5" id="deleteLineItemModalLabel">Delete Line Item</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/lineitems/delete}" method="post">
+                        <div class="mb-3">
+                            <label for="deleteLineItemName" class="form-label">Line Item Name</label>
+                            <select id="deleteLineItemName" name="lineItem.id" class="form-select">
+                                <option th:each="lineItem : ${lineItems}" th:value="${lineItem.id}" th:text="${lineItem.lineItemName}"></option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-secondary rounded-pill">Delete Line Item</button>
                     </form>
                 </div>
             </div>
