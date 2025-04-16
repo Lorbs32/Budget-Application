@@ -99,12 +99,12 @@
         </form>
     </div>
 
-    <!-- ✨ Quote now properly spaced under the login card -->
+    <!--  Quote under the login card -->
     <p class="login-quote">
         <em>Money might not grow on trees, but it could fall from the sky if you work with us. </em>
     </p>
 
-    <script>
+    <script th:if="${param.error == null and param.logout == null}">
         function createMoneyDrop() {
             const emoji = document.createElement('div');
             emoji.classList.add('money');
