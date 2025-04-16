@@ -262,3 +262,13 @@ VALUES (14, '2025-04-08', 'Gas Station', 'Fuel refill', 60.00);
 
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
 VALUES (15, '2025-04-10', 'Netflix', 'Monthly subscription', 20.00);
+
+-- Emma Transactions
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (6, '2025-04-03', 'Landlord', 'Half Rent payment', 750.00);
+
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (7, '2025-04-05', 'Water', 'water bill', 48.00);
+
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (10, '2025-04-07', 'Checkup', 'Annual Physical', 89.00);

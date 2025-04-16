@@ -41,7 +41,6 @@
                         <button type="button" class="btn btn-light btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#addLineItemModal">
                             +
                         </button>
-
                     </th>
                 </tr>
                 </thead>
@@ -62,7 +61,7 @@
                         <span th:text="${lineItem.plannedAmount < lineItem.cumulativeActualAmount}?'$'+${lineItem.cumulativeActualAmount}+' (over budget)':'$'+${lineItem.cumulativeActualAmount}"></span>
                     </td>
                     <td class="tableWidth">
-                        <button type="button" class="btn btn-secondary btn-sm" th:onclick="|submitUpdate(${lineItem.id})|">Update</button>
+                        <button type="button" class="btn btn-secondary btn-sm rounded-pill" th:onclick="|submitUpdate(${lineItem.id})|">Update</button>
                     </td>
                 </tr>
                 </tbody>
@@ -102,7 +101,7 @@
                         console.error(`Form not found for lineItemId: ${lineItemId}`);
                         return;
                     }
-                    // Submit the form
+
                     form.submit();
                 }
             </script>
@@ -121,47 +120,33 @@
     <div class="col-4 transactionColor">
         <ul class="nav nav-tabs nav-justified mt-2">
             <li class="nav-item">
-                <a class="nav-link" id="summary-tab" data-bs-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="true">Summary</a>
+                <a class="nav-link active" id="summary-tab" data-bs-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="true">Summary</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" id="transaction-tab" data-bs-toggle="tab" aria-current="page" href="#transactions" role="tab" aria-controls="transactions" aria-selected="false">Transactions</a>
+                <a class="nav-link" id="transaction-tab" data-bs-toggle="tab" aria-current="page" href="#transactions" role="tab" aria-controls="transactions" aria-selected="false">Transactions</a>
             </li>
         </ul>
         <div class="tab-content mt-2">
-            <div class="tab-pane fade" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+            <div class="tab-pane fade show active" id="summary" role="tabpanel" aria-labelledby="summary-tab">
                 <ul class="nav nav-tabs nav-justified mt-2" id="chartTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="transactionGraph-tab" data-bs-toggle="tab" href="#transactionGraph" role="tab" aria-controls="transactionGraph" aria-selected="false">Actual</a>
+                        <a class="nav-link active" id="plannedGraph-tab" data-bs-toggle="tab" href="#plannedGraph" role="tab" aria-controls="plannedGraph" aria-selected="true">Planned</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="plannedGraph-tab" data-bs-toggle="tab" href="#plannedGraph" role="tab" aria-controls="plannedGraph" aria-selected="true">Planned</a>
+                        <a class="nav-link" id="transactionGraph-tab" data-bs-toggle="tab" href="#transactionGraph" role="tab" aria-controls="transactionGraph" aria-selected="false">Spent</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="remainingGraph-tab" data-bs-toggle="tab" href="#remainingGraph" role="tab" aria-controls="remainingGraph" aria-selected="false">Remaining</a>
                     </li>
                 </ul>
                 <div class="tab-content mt-2">
-                    <div class="tab-pane fade" id="transactionGraph" role="tabpanel" aria-labelledby="transactionGraph-tab">
-                        <div class="graphContainer text-center">
-                            <canvas id="actual"></canvas>
-                        </div>
-                        <div class="text-center">
-                            <h5>Actual Items</h5>
-                            <ul class="list-group">
-                                <li th:each="lineItem : ${lineItems}" class="list-group-item">
-                                    <span th:text="${lineItem.lineItemName}">Item Name</span>
-                                    <span> - $</span>
-                                    <span th:text="${transaction.actualAmount}">Amount</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="plannedGraph" role="tabpanel" aria-labelledby="plannedGraph-tab">
+                    <div class="tab-pane fade show active" id="plannedGraph" role="tabpanel" aria-labelledby="plannedGraph-tab">
                         <div class="graphContainer text-center">
                             <canvas id="planned"></canvas>
                         </div>
+                        <br>
                         <div class="text-center">
-                            <h5>Planned Items</h5>
+                            <h5>Planned Amount</h5>
                             <ul class="list-group">
                                 <li th:each="lineItem : ${lineItems}" class="list-group-item">
                                     <span th:text="${lineItem.lineItemName}">Item Name</span>
@@ -171,142 +156,187 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="tab-pane fade" id="transactionGraph" role="tabpanel" aria-labelledby="transactionGraph-tab">
+                        <div class="graphContainer text-center">
+                            <canvas id="actual"></canvas>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <h5>Spent</h5>
+                            <ul class="list-group">
+                                <li th:each="lineItem : ${lineItems}" class="list-group-item">
+                                    <span th:text="${lineItem.lineItemName}">Item Name</span>
+                                    <span> - $</span>
+                                    <span th:text="${lineItem.cumulativeActualAmount}">Amount</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="tab-pane fade" id="remainingGraph" role="tabpanel" aria-labelledby="remainingGraph-tab">
                         <div class="graphContainer text-center">
                             <canvas id="remaining"></canvas>
                         </div>
-<!--                        <div class="text-center">-->
-<!--                            <h5>Remaining Items</h5>-->
-<!--                            <ul class="list-group">-->
-<!--                                <li th:each="lineItem : ${lineItems}" class="list-group-item">-->
-<!--                                    <span th:text="${lineItem.lineItemName}">Item Name</span>-->
-<!--                                    <span> - $</span>-->
-<!--                                    <span th:text="${remainingValues}">Remaining Amount</span>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
+                        <br>
+                        <div class="text-center">
+                            <h5>Remaining Amount</h5>
+                            <ul class="list-group">
+                                <li th:each="lineItem : ${lineItems}" class="list-group-item">
+                                    <span th:text="${lineItem.lineItemName}">Item Name</span>
+                                    <span> - $</span>
+                                    <span th:text="${lineItem.plannedAmount} - ${lineItem.cumulativeActualAmount}">Remaining Amount</span>
+                                </li>
+                            </ul>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script th:inline="javascript">
-                const labels = /*[[${labels}]]*/ [];
-                const transactionValues = /*[[${transactionValues}]]*/ [];
-                const plannedValues = /*[[${plannedValues}]]*/ [];
-                const remainingValues = /*[[${remainingValues}]]*/ [];
+            <div class="tab-pane fade" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
 
-                const transactionCtx = document.getElementById('actual').getContext('2d');
-                const transactionGraph = new Chart(transactionCtx, {
-                    type: 'doughnut',
-                    data: {
-                      labels: labels,
-                      datasets: [{
-                        data: transactionValues,
-                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40'],
-                        borderColor: '#fff', // Optional: color of the borders
-                        borderWidth: 1
-                      }]
-                    },
-                    options: {
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      plugins: {
-                        legend: {
-                          position: 'top',
-                        },
-                        tooltip: {
-                          callbacks: {
-                            label: function(tooltipItem) {
-                              return tooltipItem.label + ': $' + tooltipItem.raw.toFixed(2);
-                            }
-                          }
-                        }
-                      }
-                    }
-                  });
+                <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>
+                <h4 th:if="${#lists.isEmpty(transactions)}" class="mt-1 mb-1 center">No income or expenses<br>tracked so far this month.</h4>
 
-                const plannedCtx = document.getElementById('planned').getContext('2d');
-                new Chart(plannedCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            data: plannedValues,
-                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                            borderColor: '#fff',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(tooltipItem) {
-                                        return tooltipItem.label + ': $' + tooltipItem.raw.toFixed(2);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-
-                const remainingCtx = document.getElementById('remaining').getContext('2d');
-                new Chart(remainingCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            data: remainingValues,
-                            backgroundColor: ['#FFCE56', '#36A2EB', '#4BC0C0'],
-                            borderColor: '#fff',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(tooltipItem) {
-                                        return tooltipItem.label + ': $' + tooltipItem.raw.toFixed(2);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            </script>
-        <div class="tab-pane fade show active" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
-
-            <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>
-            <h4 th:if="${#lists.isEmpty(transactions)}" class="mt-1 mb-1 center">No income or expenses<br>tracked so far this month.</h4>
-
-            <div th:each="transaction: ${transactions}" class="table-container">
-                <div class="row border-bottom border-dark border-1">
-                    <div class="col-4" th:text="${transaction.merchant}"></div>
-                    <div class="col-4" th:text="${transaction.transactionDate}"></div>
-                    <div class="col-4"><span>$</span><span th:text="${transaction.actualAmount}"></span></div>
+                <div th:each="transaction: ${transactions}" class="table-container">
+                    <div class="row border-bottom border-dark border-1">
+                        <div class="col-4" th:text="${transaction.merchant}"></div>
+                        <div class="col-4" th:text="${transaction.transactionDate}"></div>
+                        <div class="col-4"><span>$</span><span th:text="${transaction.actualAmount}"></span></div>
+                    </div>
                 </div>
+                <br>
+                <!-- Button to trigger transaction modal -->
+                <button type="button" class="btn block marginAuto" data-bs-toggle="modal" data-bs-target="#transactionModal">
+                    <img src="/images/transaction.png" alt="Add Transaction" width="50" height="50">
+                </button>
             </div>
-            <br>
-            <p style="text-align:center;">Add transactions</p>
-
-            <!-- Button to trigger transaction modal -->
-            <button type="button" class="btn btn-secondary block marginAuto" data-bs-toggle="modal" data-bs-target="#transactionModal">
-                +
-            </button>
         </div>
-    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:inline="javascript">
+        const labels = /*[[${labels}]]*/ [];
+        const transactionValues = /*[[${transactionValues}]]*/ [];
+        const plannedValues = /*[[${plannedValues}]]*/ [];
+        const remainingValues = /*[[${remainingValues}]]*/ [];
+
+        const centerImagePlugin = {
+            id: 'centerImagePlugin',
+            afterDraw(chart) {
+                const { width, height, ctx } = chart;
+                const centerX = chart.chartArea.left + (chart.chartArea.right - chart.chartArea.left) / 2;
+                const centerY = chart.chartArea.top + (chart.chartArea.bottom - chart.chartArea.top) / 2;
+
+                const image = new Image();
+                image.src = '/images/calculator.png';
+
+                const chartAreaSize = Math.min(chart.chartArea.right - chart.chartArea.left, chart.chartArea.bottom - chart.chartArea.top);
+                const imgSize = chartAreaSize * 0.3;
+
+                 image.onload = () => {
+                    ctx.save();
+                    ctx.drawImage(image, centerX - imgSize / 2, centerY - imgSize / 2, imgSize, imgSize);
+                    ctx.restore();
+                };
+                if (image.complete) {
+                    ctx.save();
+                    ctx.drawImage(image, centerX - imgSize / 2, centerY - imgSize / 2, imgSize, imgSize);
+                    ctx.restore();
+                }
+            }
+        };
+
+        const plannedCtx = document.getElementById('planned').getContext('2d');
+        new Chart(plannedCtx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: plannedValues,
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40'],
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': $' + tooltipItem.raw.toFixed(2);
+                            }
+                        }
+                    }
+                }
+            },
+            plugins: [centerImagePlugin]
+        });
+
+        const transactionCtx = document.getElementById('actual').getContext('2d');
+        const transactionGraph = new Chart(transactionCtx, {
+            type: 'doughnut',
+            data: {
+              labels: labels,
+              datasets: [{
+                data: transactionValues,
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40'],
+                borderColor: '#fff',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: 'top',
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function(tooltipItem) {
+                      return tooltipItem.label + ': $' + tooltipItem.raw.toFixed(2);
+                    }
+                  }
+                }
+              }
+            },
+            plugins: [centerImagePlugin]
+          });
+
+        const remainingCtx = document.getElementById('remaining').getContext('2d');
+        new Chart(remainingCtx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: remainingValues,
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40'],
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': $' + tooltipItem.raw.toFixed(2);
+                            }
+                        }
+                    },
+                }
+            },
+            plugins: [centerImagePlugin]
+        });
+    </script>
     <!-- Transaction Modal -->
     <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -429,10 +459,7 @@
 </div>
 
 <div th:fragment="actionMenu" class="form-container center">
-    <button type="button" class="btn btn-secondary mt-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-        Add Category
-    </button>
-    <form id="financialGoals" th:action="@{/overTime}" method="post">
+    <form id="financialGoals" th:action="@{/}" method="post">
         <input class="btn btn-secondary mt-2 rounded-pill" type="submit" value="Financial Goals">
     </form>
 </div>
