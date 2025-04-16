@@ -121,20 +121,23 @@
     <div class="col-4 transactionColor">
         <ul class="nav nav-tabs nav-justified mt-2">
             <li class="nav-item">
-                <a class="nav-link" id="summary-tab" data-bs-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="true">Summary</a>
+                <a class="nav-link active" id="summary-tab" data-bs-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="true">Summary</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" id="transaction-tab" data-bs-toggle="tab" aria-current="page" href="#transactions" role="tab" aria-controls="transactions" aria-selected="false">Transactions</a>
+                <a class="nav-link" id="transaction-tab" data-bs-toggle="tab" href="#transactions" role="tab" aria-controls="transactions" aria-selected="false">Transactions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="bank-tab" data-bs-toggle="tab" href="#banks" role="tab" aria-controls="bank" aria-selected="false">Banks</a>
             </li>
         </ul>
         <div class="tab-content mt-2">
-            <div class="tab-pane fade" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+            <div class="tab-pane fade show active" id="summary" role="tabpanel" aria-labelledby="summary-tab">
                 <ul class="nav nav-tabs nav-justified mt-2" id="chartTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="transactionGraph-tab" data-bs-toggle="tab" href="#transactionGraph" role="tab" aria-controls="transactionGraph" aria-selected="false">Actual</a>
+                        <a class="nav-link" id="transactionGraph-tab" data-bs-toggle="tab" href="#transactionGraph" role="tab" aria-controls="transactionGraph" aria-selected="false">Actual</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="plannedGraph-tab" data-bs-toggle="tab" href="#plannedGraph" role="tab" aria-controls="plannedGraph" aria-selected="true">Planned</a>
+                        <a class="nav-link active" id="plannedGraph-tab" data-bs-toggle="tab" href="#plannedGraph" role="tab" aria-controls="plannedGraph" aria-selected="true">Planned</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="remainingGraph-tab" data-bs-toggle="tab" href="#remainingGraph" role="tab" aria-controls="remainingGraph" aria-selected="false">Remaining</a>
@@ -156,7 +159,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="plannedGraph" role="tabpanel" aria-labelledby="plannedGraph-tab">
+                    <div class="tab-pane fade show active" id="plannedGraph" role="tabpanel" aria-labelledby="plannedGraph-tab">
                         <div class="graphContainer text-center">
                             <canvas id="planned"></canvas>
                         </div>
@@ -286,25 +289,60 @@
                     }
                 });
             </script>
-        <div class="tab-pane fade show active" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
+        <div class="tab-content mt-2">
+            <div class="tab-pane fade" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
+                <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>
+                <h4 th:if="${#lists.isEmpty(transactions)}" class="mt-1 mb-1 center">No income or expenses<br>tracked so far this month.</h4>
 
-            <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>
-            <h4 th:if="${#lists.isEmpty(transactions)}" class="mt-1 mb-1 center">No income or expenses<br>tracked so far this month.</h4>
-
-            <div th:each="transaction: ${transactions}" class="table-container">
-                <div class="row border-bottom border-dark border-1">
-                    <div class="col-4" th:text="${transaction.merchant}"></div>
-                    <div class="col-4" th:text="${transaction.transactionDate}"></div>
-                    <div class="col-4"><span>$</span><span th:text="${transaction.actualAmount}"></span></div>
+                <div th:each="transaction: ${transactions}" class="table-container">
+                    <div class="row border-bottom border-dark border-1">
+                        <div class="col-4" th:text="${transaction.merchant}"></div>
+                        <div class="col-4" th:text="${transaction.transactionDate}"></div>
+                        <div class="col-4"><span>$</span><span th:text="${transaction.actualAmount}"></span></div>
+                    </div>
                 </div>
-            </div>
-            <br>
-            <p style="text-align:center;">Add transactions</p>
+                <br>
+                <p style="text-align:center;">Add transactions</p>
 
-            <!-- Button to trigger transaction modal -->
-            <button type="button" class="btn btn-secondary block marginAuto" data-bs-toggle="modal" data-bs-target="#transactionModal">
-                +
-            </button>
+                <!-- Button to trigger transaction modal -->
+                <button type="button" class="btn btn-secondary block marginAuto" data-bs-toggle="modal" data-bs-target="#transactionModal">
+                    +
+                </button>
+            </div>
+        </div>
+        <div class="tab-content mt-2">
+            <div class="tab-pane fade" id="banks" role="tabpanel" aria-labelledby="banks-tab">
+    <!--            <button id="link-button">Link Account</button>-->
+    <!--            <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>-->
+    <!--            <h4 th:if="${#lists.isEmpty(transactions)}" class="mt-1 mb-1 center">No income or expenses<br>tracked so far this month.</h4>-->
+                <img th:if="${#lists.isEmpty(banks)}" th:src="@{/images/bank.png}" alt="bank institution" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>
+                <h4 th:if="${#lists.isEmpty(banks)}" class="mt-1 mb-1 center">Connect your bank account to track your actual income and expenses.</h4>
+
+                <div th:if="${banks != null and !#lists.isEmpty(banks)}" class="table-container">
+                    <div class="row pb-0">
+                        <div class="col-1"></div>
+                        <div class="col-3"><strong>Institution</strong></div>
+                        <div class="col-3"><strong>Subtype</strong></div>
+                        <div class="col-3"><strong>Available</strong></div>
+                        <div class="col-2"><strong>Current</strong></div>
+                    </div>
+                </div>
+                <div th:each="bank: ${banks}" class="table-container mb-3">
+                    <div class="row border-bottom border-dark border-1 pt-3">
+                        <div class="col-1 ps-0"><img th:src="@{/images/bank.png}" alt="bank institution" width="30px"></div>
+                        <div class="col-3"><span class="align-middle" th:text="${bank.institution}"></span></div>
+                        <div class="col-3"><span class="align-middle" th:text="${bank.subtype}"></span></div>
+                        <div class="col-3"><span class="align-middle">$</span><span class="align-middle" th:text="${bank.balanceAvailable}"></span></div>
+                        <div class="col-2"><span class="align-middle">$</span><span class="align-middle" th:text="${bank.balanceCurrent}"></span></div>
+                    </div>
+                </div>
+                <p th:if="${banks != null and !#lists.isEmpty(banks)}" class="mt-1 mb-1 center">Connect additional bank accounts<br>to track your income and expenses.</p>
+                <br>
+                <!-- Button to trigger Plaid link integration modal -->
+                <button id="link-button" type="button" class="btn btn-secondary block marginAuto">
+                    Link Account
+                </button>
+            </div>
         </div>
     </div>
     <!-- Transaction Modal -->

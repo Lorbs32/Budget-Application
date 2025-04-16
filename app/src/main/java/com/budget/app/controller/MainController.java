@@ -2,6 +2,7 @@ package com.budget.app.controller;
 
 import com.budget.app.domain.ExtractParameter;
 import com.budget.app.entity.*;
+import com.budget.app.entity.plaid.PlaidBankAccount;
 import com.budget.app.security.model.CustomUserDetails;
 import com.budget.app.service.BudgetService;
 import com.budget.app.service.CategoryService;
@@ -149,6 +150,9 @@ public class MainController {
 
 			List<Transaction> transactions = budgetService.getTransactions(lineItems);
 			model.addAttribute("transactions", transactions);
+
+			List<PlaidBankAccount> banks = budgetService.getBanksByUserId(currentUser);
+			model.addAttribute("banks", banks);
 
 			List<String> labels = new ArrayList<>();
 			List<Double> transactionValues = new ArrayList<>();
