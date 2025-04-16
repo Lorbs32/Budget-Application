@@ -154,7 +154,7 @@
                                 <li th:each="lineItem : ${lineItems}" class="list-group-item">
                                     <span th:text="${lineItem.lineItemName}">Item Name</span>
                                     <span> - $</span>
-                                    <span th:text="${transaction.actualAmount}">Amount</span>
+                                    <span th:text="${transaction != null ? transaction.actualAmount : 'N/A'}">Amount</span>
                                 </li>
                             </ul>
                         </div>
