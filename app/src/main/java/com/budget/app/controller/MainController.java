@@ -4,13 +4,11 @@ import com.budget.app.entity.*;
 import com.budget.app.security.model.CustomUserDetails;
 import com.budget.app.service.BudgetService;
 import com.budget.app.service.LineItemService;
-import jakarta.servlet.http.Cookie;
+import com.budget.app.service.financialGoal.FinancialGoalService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.Month;
 import java.util.stream.Collectors;
 
 @Controller
@@ -39,6 +37,8 @@ public class MainController {
 
 	@Autowired
 	private LineItemService lineItemService;
+
+	@Autowired private FinancialGoalService financialGoalService;
 
 	// Subscriptions pairing with Months helper method
 	private String expandMonthAbbreviation(String shortMonth) {
@@ -174,6 +174,10 @@ public class MainController {
 		// Pre-populate transaction date to today's date in a format that the HTML field input type="date" can use.
 		LocalDate todaysDate = LocalDate.now();
 		transaction.setTransactionDate(todaysDate);
+
+		Budget budget = budgetService.getBudget(currentUser.getId(), budgetDateSelected.getId());
+
+		model.addAttribute("financialGoals", financialGoalService.getFinancialGoalsByBudgetId(budget.getId()));
 
 		return "dashboard";
 	}
