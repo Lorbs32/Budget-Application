@@ -1,5 +1,6 @@
 package com.budget.app.controller;
 
+import com.budget.app.domain.ExtractParameter;
 import com.budget.app.entity.*;
 import com.budget.app.service.BudgetService;
 import com.budget.app.service.CategoryService;
@@ -32,9 +33,14 @@ public class CategoryController {
 //    }
 
     @PostMapping("/createCategory")
-    public String addCategory(@RequestParam(value = "categoryName", defaultValue = "DefaultCategory") String categoryName,
-                              @RequestParam("budget") int budgetId, Model model) {
-        Budget budget = budgetService.getBudgetById(budgetId);
+    public String addCategory(@RequestParam(value = "categoryName", defaultValue = "DefaultCategory", required = false) String categoryName,
+                              @RequestParam(defaultValue = "1") int budgetId, Model model,
+                              HttpServletRequest request) {
+
+        //Budget budget = budgetService.getBudgetById(budgetId);
+        //BudgetDate budgetDate = budgetService.getBudgetDateById(budget.getBudgetDate().getId());
+        //Budget getBudgetByBudgetDateAndUser(User currentUser, BudgetDate budgetDate);
+        Budget budget = budgetService.getBudgetByBudgetId(budgetId);
 
         Category category = new Category();
         category.setCategoryName(categoryName);
@@ -42,7 +48,13 @@ public class CategoryController {
 
         categoryService.saveCategory(category);
         model.addAttribute("message", "Category added successfully!");
-        return "redirect:../dashboard";
+
+        // All requests that redirect to the dashboard need to retrieve the currently selected budget date ID and pass it through.
+        String referrer = request.getHeader("referer");
+        String budgetDateId = ExtractParameter.getParameterValue(referrer, "budgetDateId");
+
+        return "redirect:../dashboard?budgetDateId=" + budgetDateId;
+        //return "redirect:../dashboard";
     }
 
     @GetMapping("/retrieveForm")
@@ -51,11 +63,11 @@ public class CategoryController {
     {
         return "<form class=\"form-group form-inline\"" +
                 "hx-post=\"/addCategory/createCategory\" hx-headers='js:{\"X-CSRF-TOKEN\": calculateValue()}' hx-refresh=\"true\"" +
-                "hx-target=\"#fullPage\" hx-swap=\"outerHTML\">" +
+                "hx-target=\"#fullPage\" hx-swap=\"outerHTML\" hx-vals='js:{\"budgetId\": getBudgetId()}'>" +
                 "<input type=\"hidden\" name=\"budget\" value=\"" + budgetId + "\"/>" +
                 "<label for=\"categoryName\" class=\"form-label\">Category Name:</label>" +
                 "<input type=\"text\" id=\"categoryName\" name=\"categoryName\" class=\"form-control form-control-override ms-3 me-3\" required>" +
-                "<button type=\"submit\" class=\"btn btn-primary rounded-pill\">Add Category</button></form>";
+                "<button type=\"submit\" class=\"btn btn-secondary rounded-pill\">Add Category</button></form>";
     }
 
 }

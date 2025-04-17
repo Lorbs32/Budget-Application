@@ -1,8 +1,10 @@
 package com.budget.app.controller;
 
+import com.budget.app.domain.ExtractParameter;
 import com.budget.app.entity.*;
 import com.budget.app.repository.CategoryRepository;
 import com.budget.app.service.LineItemService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,21 +45,50 @@ public class LineItemController {
 //        return "addLineItem";  // ✅ Updated view name
 //    }
     @PostMapping("/create")
-    public String createLineItem(@ModelAttribute LineItem lineItem, @RequestParam("category.id") int categoryId) {
+    public String createLineItem(@ModelAttribute LineItem lineItem,
+                                 @RequestParam("category.id") int categoryId,
+                                 HttpServletRequest request)
+    {
         Category category = categoryRepository.findById(categoryId);
         lineItem.setCategory(category);
         lineItemService.createLineItem(lineItem);
-        return "redirect:/dashboard";
+
+        // All requests that redirect to the dashboard need to retrieve the currently selected budget date ID and pass it through.
+        String referrer = request.getHeader("referer");
+        String budgetDateId = ExtractParameter.getParameterValue(referrer, "budgetDateId");
+
+        return "redirect:../dashboard?budgetDateId=" + budgetDateId;
+        //return "redirect:/dashboard";
     }
 
     @PostMapping("/updateLineItem")
-    public String updateLineItem(@RequestParam int lineItemId, @RequestParam BigDecimal plannedAmount)
+    public String updateLineItem(@RequestParam int lineItemId,
+                                 @RequestParam BigDecimal plannedAmount,
+                                 HttpServletRequest request)
     {
         LineItem lineItem = lineItemService.findById(lineItemId);
         lineItem.setId(lineItemId);
         lineItem.setPlannedAmount(plannedAmount);
 
         lineItemService.updateOrInsertLineItem(lineItem);
-        return "redirect:/dashboard";
+
+        // All requests that redirect to the dashboard need to retrieve the currently selected budget date ID and pass it through.
+        String referrer = request.getHeader("referer");
+        String budgetDateId = ExtractParameter.getParameterValue(referrer, "budgetDateId");
+
+        return "redirect:../dashboard?budgetDateId=" + budgetDateId;
+        //return "redirect:/dashboard";
+    }
+
+    @PostMapping("/delete")
+    public String deleteLineItem(@RequestParam ("lineItem.id") int lineItemId,
+                                 HttpServletRequest request)
+    {
+        LineItem deleteLineItem = lineItemService.findById(lineItemId);
+        lineItemService.delete(deleteLineItem);
+
+        String referrer = request.getHeader("referer");
+        String budgetDateId = ExtractParameter.getParameterValue(referrer, "budgetDateId");
+        return "redirect:../dashboard?budgetDateId=" + budgetDateId;
     }
 }

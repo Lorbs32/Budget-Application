@@ -37,6 +37,11 @@ public class Category
         this.budget = budget;
         this.lineItems = lineItems;
     }
+    public Category(String categoryName, Budget budget)
+    {
+        this.categoryName = categoryName;
+        this.budget = budget;
+    }
 
 
     // Getters & Setters

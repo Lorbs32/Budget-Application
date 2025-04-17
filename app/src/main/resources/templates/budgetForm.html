@@ -54,7 +54,7 @@
 </div>
 
 <!-- Form to select start and end date -->
-<form action="/budgets/getBudget" method="get">
+<form th:action="@{/budgets/getBudget}" method="get">
     <div class="form-container">
         <div>
             <label for="startDate">Start Date</label>
@@ -64,7 +64,7 @@
             <label for="endDate">End Date</label>
             <input type="date" id="endDate" name="endDate" th:value="${endDate}" required />
         </div>
-        <button type="submit">Get Budget</button>
+        <button type="submit" name="getBudget" value="budget">Get Budget</button>
     </div>
 </form>
 
