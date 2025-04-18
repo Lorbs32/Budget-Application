@@ -72,4 +72,8 @@ public class LineItemServiceImplementation implements LineItemService {
     public LineItem findById(int lineItemId){
         return lineItemRepository.findById(lineItemId);
     }
+
+    public void delete(LineItem deleteLineItem) {
+        lineItemRepository.delete(deleteLineItem);
+    }
 }

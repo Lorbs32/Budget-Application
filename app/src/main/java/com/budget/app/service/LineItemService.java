@@ -13,4 +13,5 @@ public interface LineItemService {
     public boolean isActiveForMonth(LineItem item, YearMonth targetMonth);
     public void updateOrInsertLineItem(LineItem lineitem);
     public LineItem findById(int lineItemId);
+    public void delete(LineItem deleteLineItem);
 }
