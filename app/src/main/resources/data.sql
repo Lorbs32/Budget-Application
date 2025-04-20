@@ -121,7 +121,7 @@ VALUES (11, FALSE, 'Mortgage Payment', 2000, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (12, FALSE, 'Internet Bill', 80, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (13, FALSE, 'Monthly Groceries', 350, 'MONTHLY');
+VALUES (13, FALSE, 'Monthly Groceries', 350, 'ONE_TIME');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (14, FALSE, 'Flight Tickets', 500, 'ONE_TIME');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
@@ -252,16 +252,16 @@ INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual
 VALUES (11, '2025-04-03', 'Landlord', 'Rent payment', 1500.00);
 
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
-VALUES (12, '2025-04-05', 'Electric Company', 'Electric bill', 120.00);
+VALUES (12, '2025-04-05', 'Electric Company', 'Electric bill', 80.00);
 
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
 VALUES (13, '2025-04-07', 'Grocery Store', 'Weekly groceries', 80.00);
 
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
-VALUES (14, '2025-04-08', 'Gas Station', 'Fuel refill', 60.00);
+VALUES (14, '2025-04-08', 'Flight Tickets', 'Miami Trip', 375.00);
 
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
-VALUES (15, '2025-04-10', 'Netflix', 'Monthly subscription', 20.00);
+VALUES (15, '2025-04-10', 'Stocks', 'Monthly subscription', 200.00);
 
 -- Emma Transactions
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
