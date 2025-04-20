@@ -64,7 +64,12 @@
                         <span th:text="${lineItem.plannedAmount < lineItem.cumulativeActualAmount}?'$'+${lineItem.cumulativeActualAmount}+' (over budget)':'$'+${lineItem.cumulativeActualAmount}"></span>
                     </td>
                     <td class="tableWidth">
-                        <button type="button" class="btn btn-secondary btn-sm rounded-pill" th:onclick="|submitUpdate(${lineItem.id})|">Update</button>
+                        <button type="button"
+                                class="btn btn-secondary btn-sm rounded-pill"
+                                data-bs-toggle="modal"
+                                th:data-bs-target="'#editLineItemModal-' + ${lineItem.id}">
+                            Update
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -108,6 +113,65 @@
                     form.submit();
                 }
             </script>
+            <div th:each="lineItem : ${category.getLineItems()}">
+                <div class="modal fade" th:id="'editLineItemModal-' + ${lineItem.id}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header transactionModalColor">
+                                <h5 class="modal-title">Edit Line Item</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form th:action="@{/lineitems/updateLineItem}" method="post">
+                                    <input type="hidden" name="lineItemId" th:value="${lineItem.id}" />
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Line Item Name</label>
+                                        <input type="text" class="form-control" name="lineItemName" th:value="${lineItem.lineItemName}" required />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Planned Amount</label>
+                                        <input type="number" class="form-control" name="plannedAmount" th:value="${lineItem.plannedAmount}" min="0" step="any" required />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Income or Expense?</label>
+                                        <select name="isIncome" class="form-select">
+                                            <option value="true" th:selected="${lineItem.income}">Income</option>
+                                            <option value="false" th:selected="${!lineItem.income}">Expense</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Recurrence</label>
+                                        <select name="recurrenceType" class="form-select">
+                                            <option th:each="rec : ${T(com.budget.app.entity.RecurrenceType).values()}"
+                                                    th:value="${rec}"
+                                                    th:text="${rec}"
+                                                    th:selected="${rec == lineItem.recurrenceType}">
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Category</label>
+                                        <select name="category.id" class="form-select">
+                                            <option th:each="cat : ${categories}"
+                                                    th:value="${cat.id}"
+                                                    th:text="${cat.categoryName}"
+                                                    th:selected="${cat.id == lineItem.category.id}">
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-secondary">Save Changes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="addCategory" class="pb-2 pt-2 budgetSelection center add-container">
             <a hx-get="/addCategory/retrieveForm"
