@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Date;
@@ -31,6 +32,9 @@ public class MainController {
 
 	@Autowired
 	private BudgetService budgetService;
+
+	@Autowired
+	private BudgetTrackerService budgetTrackerService;
 
 	@Autowired
 	private DebtPayoffService debtPayoffService;
@@ -92,6 +96,10 @@ public class MainController {
 
 		model.addAttribute("lineItem", new LineItem());
 		model.addAttribute("budgetDates", budgetDates);
+
+		List<BudgetTracker> budgetTracker = null;
+		budgetTracker = budgetTrackerService.getBudgetTrackerForBudgetDates(budgetDates);
+		model.addAttribute("budgetTracker", budgetTracker);
 
 		BudgetDate budgetDateSelected;
 
