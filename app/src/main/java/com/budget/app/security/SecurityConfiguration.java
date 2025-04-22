@@ -69,7 +69,12 @@ public class SecurityConfiguration {
 						.requestMatchers("/h2-console/**").permitAll().anyRequest().authenticated() //url in requestMatchers does NOT need auth, other DOES need auth
 				)
 				.formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/dashboard?budgetDateId=4", true))
-				.logout(logout -> logout.logoutUrl("/logout").permitAll());
+				.logout(logout -> logout
+						.logoutSuccessHandler((request, response, authentication) -> {
+							response.setHeader("HX-Redirect", "/logout");
+						})
+				);
+//				.logout(logout -> logout.logoutUrl("/logout").permitAll());
 		return http.build();
 	}
 
