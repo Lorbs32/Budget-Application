@@ -73,6 +73,15 @@ th {
 }
 h1 {
     color: #dee2e6;
+    display: inline-block;
+    margin-bottom: 0px;
+    vertical-align: middle;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    line-height: 65px;
+    margin-top: 0px;
+    padding-bottom: 5px;
+    font-size: xx-large;
 }
 .bodyColor {
     background-color: #F0F0F0;
@@ -147,4 +156,10 @@ div.dateButton:hover {
 }
 .white {
     color: #dee2e6;
+}
+.container {
+    max-width: 100%;
+}
+.dropdown-item:active {
+    background-color: #5C636A;
 }
