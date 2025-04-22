@@ -113,6 +113,7 @@
                     form.submit();
                 }
             </script>
+            <!-- Update Modal -->
             <div th:each="lineItem : ${category.getLineItems()}">
                 <div class="modal fade" th:id="'editLineItemModal-' + ${lineItem.id}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
@@ -173,6 +174,7 @@
                 </div>
             </div>
         </div>
+        <!-- Update Modal End -->
         <div id="addCategory" class="pb-2 pt-2 budgetSelection center add-container">
             <a hx-get="/addCategory/retrieveForm"
                hx-trigger="click"
@@ -409,33 +411,8 @@
             },
             plugins: [centerImagePlugin]
         });
-    </script>
-
-<!--                    }-->
-<!--                });-->
-<!--            </script>-->
-<!--        <div class="tab-content mt-2">-->
-<!--            <div class="tab-pane fade" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">-->
-<!--                <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>-->
-<!--                <h4 th:if="${#lists.isEmpty(transactions)}" class="mt-1 mb-1 center">No income or expenses<br>tracked so far this month.</h4>-->
-
-<!--                <div th:each="transaction: ${transactions}" class="table-container">-->
-<!--                    <div class="row border-bottom border-dark border-1">-->
-<!--                        <div class="col-4" th:text="${transaction.merchant}"></div>-->
-<!--                        <div class="col-4" th:text="${transaction.transactionDate}"></div>-->
-<!--                        <div class="col-4"><span>$</span><span th:text="${transaction.actualAmount}"></span></div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <br>-->
-<!--                <p style="text-align:center;">Add transactions</p>-->
-
-<!--                &lt;!&ndash; Button to trigger transaction modal &ndash;&gt;-->
-<!--                <button type="button" class="btn btn-secondary block marginAuto" data-bs-toggle="modal" data-bs-target="#transactionModal">-->
-<!--                    +-->
-<!--                </button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="tab-content mt-2">-->
+        </script>
+        <div class="tab-content mt-2">
             <div class="tab-pane fade" id="banks" role="tabpanel" aria-labelledby="banks-tab">
     <!--            <button id="link-button">Link Account</button>-->
     <!--            <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>-->
@@ -516,7 +493,6 @@
             </div>
         </div>
     </div>
-
     <!-- Category Modal -->
     <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog">
