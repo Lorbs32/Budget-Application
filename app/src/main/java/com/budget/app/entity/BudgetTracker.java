@@ -1,8 +1,11 @@
 package com.budget.app.entity;
 
 import java.math.BigDecimal;
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 import jakarta.persistence.*;
 
 
@@ -15,14 +18,28 @@ public class BudgetTracker {
     private int id;
     private BudgetDate budgetDate;
     private BigDecimal balance;
+<<<<<<< Updated upstream
 
     // Constructors
     public BudgetTracker() {}
     public BudgetTracker(int id, BudgetDate budgetDate, BigDecimal balance)
+=======
+    private String budgetText;
+    private String budgetTextClass;
+
+    // Constructors
+    public BudgetTracker() {}
+    public BudgetTracker(int id, BudgetDate budgetDate, BigDecimal balance, String budgetText, String budgetTextClass)
+>>>>>>> Stashed changes
     {
         this.id = id;
         this.budgetDate = budgetDate;
         this.balance = balance;
+<<<<<<< Updated upstream
+=======
+        this.budgetText = budgetText;
+        this.budgetTextClass = budgetTextClass;
+>>>>>>> Stashed changes
     }
 
     public int getId() {
@@ -49,4 +66,23 @@ public class BudgetTracker {
         this.balance = balance;
     }
 
+<<<<<<< Updated upstream
+=======
+    public String getBudgetText() {
+        return budgetText;
+    }
+
+    public void setBudgetText(String budgetText) {
+        this.budgetText = budgetText;
+    }
+
+    public String getBudgetTextClass() {
+        return budgetTextClass;
+    }
+
+    public void setBudgetTextClass(String budgetTextClass) {
+        this.budgetTextClass = budgetTextClass;
+    }
+
+>>>>>>> Stashed changes
 }

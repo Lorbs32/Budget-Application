@@ -7,6 +7,7 @@ import java.util.List;
 public interface BudgetTrackerService {
     public List<BudgetTracker> getBudgetTrackerForBudgetDates(List<BudgetDate> budgetDates);
     public List<BudgetTracker> getBudgetTrackerForYear(int year);
+<<<<<<< Updated upstream
 
     private String expandMonthAbbreviation(String shortMonth) {
         switch (shortMonth.toUpperCase()) {
@@ -26,3 +27,7 @@ public interface BudgetTrackerService {
         }
     }
 }
+=======
+}
+
+>>>>>>> Stashed changes

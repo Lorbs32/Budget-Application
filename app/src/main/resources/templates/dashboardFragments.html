@@ -30,7 +30,6 @@
                 </a>
                 <label class="block center labelHeight green" th:text="${tracker.getBudgetDate().getCurrentBudgetMonth()} ? 'Selected' : ''" ></label>
             </div>
-        </div>
         <div th:each="category: ${categories}" class="table-container">
             <table class="table table-hover">
                 <thead class="table-light"> <!--Option to use table-dark instead-->

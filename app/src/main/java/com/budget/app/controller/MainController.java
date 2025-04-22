@@ -101,6 +101,7 @@ public class MainController {
 		budgetTracker = budgetTrackerService.getBudgetTrackerForBudgetDates(budgetDates);
 		model.addAttribute("budgetTracker", budgetTracker);
 
+<<<<<<< Updated upstream
 		BudgetDate budgetDateSelected;
 
 		if (budgetDateId != 0) {
@@ -114,6 +115,14 @@ public class MainController {
 				if (budgetDate.getBudgetSelected()) {
 					budgetDateSelected = budgetDate;
 				}
+=======
+		BudgetDate budgetDateSelected = new BudgetDate();
+		for (BudgetDate budgetDate : budgetDates)
+		{
+			if (budgetDate.getBudgetSelected())
+			{
+				budgetDateSelected = budgetDate;
+>>>>>>> Stashed changes
 			}
 		}
 		model.addAttribute("budgetDateSelected", budgetDateSelected);
