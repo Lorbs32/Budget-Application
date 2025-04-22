@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 @Service
 @Transactional
@@ -173,12 +175,11 @@ public class BudgetServiceImplementation implements BudgetService
         newBudget.setUser(currentUser);
         newBudget.setBudgetDate(newBudgetDate);
         budgetRepository.save(newBudget);
-        Budget createdBudget = budgetRepository.findByUserIdAndBudgetDateId(currentUser.getId(),newBudgetDate.getId());
+        Budget createdBudget = budgetRepository.findByUserIdAndBudgetDateId(currentUser.getId(), newBudgetDate.getId());
 
         int categorySize = categories.size();
-        List<Category> newCategories = new ArrayList<Category>();
-        for(int i = 0; i < categorySize; i++)
-        {
+        List<Category> newCategories = new ArrayList<>();
+        for (int i = 0; i < categorySize; i++) {
             Category newCategory = new Category();
             newCategory.setCategoryName(categories.get(i).getCategoryName());
             newCategory.setBudget(newBudget);
@@ -186,24 +187,52 @@ public class BudgetServiceImplementation implements BudgetService
         }
         categoryRepository.saveAll(newCategories);
 
+        // Map old line items to new ones so we can match them for transaction copying
+        Map<LineItem, LineItem> oldToNewLineItemMap = new HashMap<>();
+
         int lineItemSize = lineItems.size();
-        List<LineItem> newLineItems = new ArrayList<LineItem>();
-        for(int i = 0; i < lineItemSize; i++) {
+        List<LineItem> newLineItems = new ArrayList<>();
+        for (int i = 0; i < lineItemSize; i++) {
+            LineItem oldItem = lineItems.get(i);
+
             LineItem newLineItem = new LineItem();
-            newLineItem.setLineItemName(lineItems.get(i).getLineItemName());
-            newLineItem.setIncome(lineItems.get(i).isIncome());
-            newLineItem.setRecurrenceType(lineItems.get(i).getRecurrenceType());
-            newLineItem.setPlannedAmount(lineItems.get(i).getPlannedAmount());
-            String previousMonthCategoryName = lineItems.get(i).getCategory().getCategoryName();
+            newLineItem.setLineItemName(oldItem.getLineItemName());
+            newLineItem.setIncome(oldItem.isIncome());
+            newLineItem.setRecurrenceType(oldItem.getRecurrenceType());
+            newLineItem.setPlannedAmount(oldItem.getPlannedAmount());
+
+            String previousMonthCategoryName = oldItem.getCategory().getCategoryName();
             for (Category category : newCategories) {
                 // This match assumes there is only ONE category with the same name - this is unpredictable if there are multiple categories with the same name.
                 if (previousMonthCategoryName.equals(category.getCategoryName())) {
                     newLineItem.setCategory(category);
                 }
             }
+
             newLineItems.add(newLineItem);
+            oldToNewLineItemMap.put(oldItem, newLineItem);
         }
         lineItemRepository.saveAll(newLineItems);
+
+        // Add transaction to recurring line items only
+        for (LineItem oldItem : lineItems) {
+            if (!oldItem.isIncome() &&
+                    (oldItem.getRecurrenceType() == RecurrenceType.MONTHLY || oldItem.getRecurrenceType() == RecurrenceType.YEARLY)) {
+
+                List<Transaction> oldTransactions = transactionRepository.findByLineItemId(oldItem.getId());
+                if (!oldTransactions.isEmpty()) {
+                    Transaction lastTransaction = oldTransactions.get(oldTransactions.size() - 1);
+
+                    Transaction newTransaction = new Transaction();
+                    newTransaction.setActualAmount(lastTransaction.getActualAmount());
+                    newTransaction.setTransactionDate(LocalDate.now());
+                    newTransaction.setMerchant(lastTransaction.getMerchant()); // optional
+                    newTransaction.setLineItem(oldToNewLineItemMap.get(oldItem));
+
+                    transactionRepository.save(newTransaction);
+                }
+            }
+        }
     }
 
     @Override
