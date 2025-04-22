@@ -19,15 +19,16 @@
 <div th:fragment="budgetPlanner" class="row" id="dashboardPopulated">
     <div class="col-8">
         <div class="row">
-            <div th:each="date: ${budgetDates}" class="col-2">
-                <a class="dateButton" th:href="@{/budgets/getBudget(startDate=${date.startDate})}">
-<!--                    th:href="@{http://www.thymeleaf/documentation.html}"-->
+            <div th:each="tracker: ${budgetTracker}" class="col-2">
+                <a class="dateButton" th:href="@{/budgets/getBudget(startDate=${tracker.getBudgetDate().getStartDate()})}">
+                    <!--                    th:href="@{http://www.thymeleaf/documentation.html}"-->
                     <div class="budgetSelection center dateButton">
-                        <h2 th:text="${date.getBudgetMonth()}"></h2>
-                        <p th:text="${date.getBudgetYear()}"></p>
+                        <h2 th:text="${tracker.getBudgetDate().getBudgetMonth()}"></h2>
+                        <p th:text="${tracker.getBudgetDate().getBudgetYear()}"></p>
+                        <p th:class="${tracker.getBudgetTextClass()}" th:utext="${tracker.getBudgetText()}"></p>
                     </div>
                 </a>
-                <label class="block center labelHeight green" th:text="${date.currentBudgetMonth} ? 'Selected' : ''" ></label>
+                <label class="block center labelHeight green" th:text="${tracker.getBudgetDate().getId() == budgetDateSelected.getId()} ? 'Selected' : ''" ></label>
             </div>
         </div>
         <div th:each="category: ${categories}" class="table-container">
