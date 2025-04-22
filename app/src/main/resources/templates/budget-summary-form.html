@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Budget Summary</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .center-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #F0F0F0;
+    }
+
+    .form-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      max-width: 700px;
+      width: 100%;
+    }
+
+    body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.8rem;
+  }
+  </style>
+</head>
+<body class="bodyColor">
+
+<div class="center-page">
+  <div class="form-card">
+    <!-- Centered Title -->
+    <h2 class="text-center mb-4">📋 Budget Summary Calculator</h2>
+
+    <!-- Left-aligned Form -->
+    <form method="post" th:action="@{/budget-summary}" th:object="${budgetSummaryInput}" class="text-start">
+
+      <!-- Incomes -->
+      <div class="mb-3">
+        <h5 class="text-primary">💰 Income Sources</h5>
+        <div th:each="income, iterStat : ${budgetSummaryInput.incomes}">
+          <input type="number" class="form-control"
+                 th:name="'incomes[' + ${iterStat.index} + ']'"
+                 th:placeholder="'e.g. 1500.00'"
+                 th:value="${income != null and income != 0.0} ? ${income} : null"
+                 min="0" />
+        </div>
+      </div>
+
+      <!-- Expenses -->
+      <div class="mb-3">
+        <h5 class="text-danger">🧾 Expenses</h5>
+        <div th:each="category : ${categories}">
+          <div class="mb-3">
+            <label class="form-label" th:for="${category}" th:text="${category}">Category</label>
+            <input type="number" class="form-control"
+                   th:id="${category}"
+                   th:name="'expenses[' + ${category} + ']'"
+                   th:value="${budgetSummaryInput.expenses[category]}"
+                   step="0.01" min="0" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Button -->
+      <div class="text-center mt-2">
+        <button type="submit" class="btn btn-secondary rounded-pill px-4">
+          Generate Summary
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

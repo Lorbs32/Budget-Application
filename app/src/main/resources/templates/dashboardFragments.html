@@ -11,7 +11,7 @@
     <h3>Hey there, looks like you need a budget for this month.</h3>
     <p>If you had a budget last month that will copy over to get you started.</p>
     <form th:action="@{/budgets/addBudget}" method="post">
-        <button type="submit" name="addBudget" value="addBudget" class="btn btn-primary block marginAuto rounded-pill">Start Planning</button>
+        <button type="submit" name="addBudget" value="addBudget" class="btn btn-secondary block marginAuto rounded-pill">Start Planning</button>
     </form>
 </div>
 
@@ -64,7 +64,12 @@
                         <span th:text="${lineItem.plannedAmount < lineItem.cumulativeActualAmount}?'$'+${lineItem.cumulativeActualAmount}+' (over budget)':'$'+${lineItem.cumulativeActualAmount}"></span>
                     </td>
                     <td class="tableWidth">
-                        <button type="button" class="btn btn-secondary btn-sm rounded-pill" th:onclick="|submitUpdate(${lineItem.id})|">Update</button>
+                        <button type="button"
+                                class="btn btn-secondary btn-sm rounded-pill"
+                                data-bs-toggle="modal"
+                                th:data-bs-target="'#editLineItemModal-' + ${lineItem.id}">
+                            Update
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -108,7 +113,68 @@
                     form.submit();
                 }
             </script>
+            <!-- Update Modal -->
+            <div th:each="lineItem : ${category.getLineItems()}">
+                <div class="modal fade" th:id="'editLineItemModal-' + ${lineItem.id}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header transactionModalColor">
+                                <h5 class="modal-title white">Edit Line Item</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form th:action="@{/lineitems/updateLineItem}" method="post">
+                                    <input type="hidden" name="lineItemId" th:value="${lineItem.id}" />
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Line Item Name</label>
+                                        <input type="text" class="form-control" name="lineItemName" th:value="${lineItem.lineItemName}" required />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Planned Amount</label>
+                                        <input type="number" class="form-control" name="plannedAmount" th:value="${lineItem.plannedAmount}" min="0" step="any" required />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Income or Expense?</label>
+                                        <select name="isIncome" class="form-select">
+                                            <option value="true" th:selected="${lineItem.income}">Income</option>
+                                            <option value="false" th:selected="${!lineItem.income}">Expense</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Recurrence</label>
+                                        <select name="recurrenceType" class="form-select">
+                                            <option th:each="rec : ${T(com.budget.app.entity.RecurrenceType).values()}"
+                                                    th:value="${rec}"
+                                                    th:text="${rec}"
+                                                    th:selected="${rec == lineItem.recurrenceType}">
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Category</label>
+                                        <select name="category.id" class="form-select">
+                                            <option th:each="cat : ${categories}"
+                                                    th:value="${cat.id}"
+                                                    th:text="${cat.categoryName}"
+                                                    th:selected="${cat.id == lineItem.category.id}">
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-secondary">Save Changes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- Update Modal End -->
         <div id="addCategory" class="pb-2 pt-2 budgetSelection center add-container">
             <a hx-get="/addCategory/retrieveForm"
                hx-trigger="click"
@@ -129,14 +195,13 @@
                 <a class="nav-link" id="transaction-tab" data-bs-toggle="tab" href="#transactions" role="tab" aria-controls="transactions" aria-selected="false">Transactions</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="bank-tab" data-bs-toggle="tab" href="#banks" role="tab" aria-controls="bank" aria-selected="false">Banks</a>
+                <a class="nav-link" id="bank-tab" data-bs-toggle="tab" href="#banks" role="tab" aria-controls="banks" aria-selected="false">Banks</a>
             </li>
         </ul>
         <div class="tab-content mt-2">
             <div class="tab-pane fade show active" id="summary" role="tabpanel" aria-labelledby="summary-tab">
                 <ul class="nav nav-tabs nav-justified mt-2" id="chartTab" role="tablist">
                     <li class="nav-item">
-
                         <a class="nav-link active" id="plannedGraph-tab" data-bs-toggle="tab" href="#plannedGraph" role="tab" aria-controls="plannedGraph" aria-selected="true">Planned</a>
                     </li>
                     <li class="nav-item">
@@ -157,12 +222,8 @@
                             <ul class="list-group">
                                 <li th:each="lineItem : ${lineItems}" class="list-group-item">
                                     <span th:text="${lineItem.lineItemName}">Item Name</span>
-                                    <span> - $</span>
-
-                                    <span th:text="${lineItem.plannedAmount}">Planned Amount</span>
-
-                                    <span th:text="${transaction != null ? transaction.actualAmount : 'N/A'}">Amount</span>
-
+                                    <span th:text="'$'+${lineItem.plannedAmount}">Planned Amount</span>
+<!--                                    <span th:text="${transaction != null ? transaction.actualAmount : 'N/A'}">Amount</span>-->
                                 </li>
                             </ul>
                         </div>
@@ -177,8 +238,7 @@
                             <ul class="list-group">
                                 <li th:each="lineItem : ${lineItems}" class="list-group-item">
                                     <span th:text="${lineItem.lineItemName}">Item Name</span>
-                                    <span> - $</span>
-                                    <span th:text="${lineItem.cumulativeActualAmount}">Amount</span>
+                                    <span th:text="'$'+${lineItem.cumulativeActualAmount}">Amount</span>
                                 </li>
                             </ul>
                         </div>
@@ -193,17 +253,21 @@
                             <ul class="list-group">
                                 <li th:each="lineItem : ${lineItems}" class="list-group-item">
                                     <span th:text="${lineItem.lineItemName}">Item Name</span>
-                                    <span> - $</span>
-                                    <span th:text="${lineItem.plannedAmount} - ${lineItem.cumulativeActualAmount}">Remaining Amount</span>
+                                    <span th:text="'$' + ${lineItem.plannedAmount - lineItem.cumulativeActualAmount}">Remaining Amount</span>
                                 </li>
                             </ul>
                         </div>
-                        </div>
+<!--                        Text-->
                     </div>
+<!--                    Remaining Tab Pane-->
                 </div>
+<!--                Remaining Tab Content-->
             </div>
-            <div class="tab-pane fade" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
+<!--            Summary Tab Pane-->
+        </div>
+<!--        Summary Tab Content-->
 
+            <div class="tab-pane fade" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
                 <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>
                 <h4 th:if="${#lists.isEmpty(transactions)}" class="mt-1 mb-1 center">No income or expenses<br>tracked so far this month.</h4>
 
@@ -220,8 +284,7 @@
                     <img src="/images/transaction.png" alt="Add Transaction" width="50" height="50">
                 </button>
             </div>
-        </div>
-
+<!--        </div>-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:inline="javascript">
         const labels = /*[[${labels}]]*/ [];
@@ -348,33 +411,8 @@
             },
             plugins: [centerImagePlugin]
         });
-    </script>
-
-                    }
-                });
-            </script>
-        <div class="tab-content mt-2">
-            <div class="tab-pane fade" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
-                <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>
-                <h4 th:if="${#lists.isEmpty(transactions)}" class="mt-1 mb-1 center">No income or expenses<br>tracked so far this month.</h4>
-
-                <div th:each="transaction: ${transactions}" class="table-container">
-                    <div class="row border-bottom border-dark border-1">
-                        <div class="col-4" th:text="${transaction.merchant}"></div>
-                        <div class="col-4" th:text="${transaction.transactionDate}"></div>
-                        <div class="col-4"><span>$</span><span th:text="${transaction.actualAmount}"></span></div>
-                    </div>
-                </div>
-                <br>
-                <p style="text-align:center;">Add transactions</p>
-
-                <!-- Button to trigger transaction modal -->
-                <button type="button" class="btn btn-secondary block marginAuto" data-bs-toggle="modal" data-bs-target="#transactionModal">
-                    +
-                </button>
-            </div>
-        </div>
-        <div class="tab-content mt-2">
+        </script>
+<!--        <div class="tab-content mt-2">-->
             <div class="tab-pane fade" id="banks" role="tabpanel" aria-labelledby="banks-tab">
     <!--            <button id="link-button">Link Account</button>-->
     <!--            <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>-->
@@ -407,15 +445,15 @@
                     Link Account
                 </button>
             </div>
+<!--        Tab pane Banks -->
         </div>
-    </div>
 
     <!-- Transaction Modal -->
     <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header transactionModalColor">
-                    <h2 class="modal-title fs-5" id="transactionModalLabel">Add Transaction</h2>
+                    <h2 class="modal-title fs-5 white" id="transactionModalLabel">Add Transaction</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -455,14 +493,13 @@
                 <!--            </div>-->
             </div>
         </div>
-
     </div>
     <!-- Category Modal -->
     <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                    <h5 class="modal-title white" id="addCategoryModalLabel">Add New Category</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -486,7 +523,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header transactionModalColor">
-                    <h2 class="modal-title fs-5" id="addLineItemModalLabel">Add New Line Item</h2>
+                    <h2 class="modal-title fs-5 white" id="addLineItemModalLabel">Add New Line Item</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -534,7 +571,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header transactionModalColor">
-                    <h2 class="modal-title fs-5" id="deleteLineItemModalLabel">Delete Line Item</h2>
+                    <h2 class="modal-title fs-5 white" id="deleteLineItemModalLabel">Delete Line Item</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -548,8 +585,11 @@
                         <button type="submit" class="btn btn-secondary rounded-pill">Delete Line Item</button>
                     </form>
                 </div>
+<!--                Delete line item modal body-->
             </div>
+<!--            Delete line item modal content-->
         </div>
+<!--        Delete line item modal dialog-->
     </div>
 </div>
 
@@ -604,7 +644,31 @@
     <!--            <button type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModal">-->
     <!--                Add Category-->
     <!--            </button>-->
+<!--    Delete line item modal fade-->
 </div>
+<!--Closes the Budget Planner Fragment-->
+
+<!--<div th:fragment="actionMenu" class="form-container center">-->
+<!--    <form id="financialGoals" th:action="@{/}" method="post">-->
+<!--        <input class="btn btn-secondary mt-2 rounded-pill" type="submit" value="Financial Goals">-->
+<!--    </form>-->
+<!--    <a href="/debt-payoff" class="btn btn-secondary mt-2 rounded-pill">Debt Payoff Calculator</a>-->
+<!--    <a href="/budget-summary" class="btn btn-secondary mt-2 rounded-pill">Budget Summary Calculator</a>-->
+<!--</div>-->
+
+<!--<div id="addCategoryMore" class="pb-2 pt-2 budgetSelection center add-container">-->
+<!--    <a hx-get="/addCategory/retrieveForm"-->
+<!--       hx-trigger="click"-->
+<!--       hx-target="#addCategory"-->
+<!--       hx-swap="innerHTML"-->
+<!--       hx-encoding="application/x-www-form-urlencoded">-->
+<!--        ADD CATEGORY-->
+<!--    </a>-->
+<!--    &lt;!&ndash;            hx-post="/data" hx-trigger="click" hx-target="#result-area"&ndash;&gt;-->
+<!--    &lt;!&ndash;            <button type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModal">&ndash;&gt;-->
+<!--    &lt;!&ndash;                Add Category&ndash;&gt;-->
+<!--    &lt;!&ndash;            </button>&ndash;&gt;-->
+<!--</div>-->
 
 <div th:fragment="nothing"></div>
 </body>
