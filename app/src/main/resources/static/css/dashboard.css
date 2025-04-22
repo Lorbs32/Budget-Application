@@ -148,3 +148,23 @@ div.dateButton:hover {
 .white {
     color: #dee2e6;
 }
+.budget {
+    font: 0.75rem Arial, sans-serif;
+}
+
+.under_budget {
+    color: #000000;
+}
+
+.on_budget {
+    color: #2a9d43;
+    font-weight: bold;
+}
+
+.dateButton:hover .on_budget {
+    color: #ffffff;
+}
+
+.over_budget {
+    color: #CC0000;
+}

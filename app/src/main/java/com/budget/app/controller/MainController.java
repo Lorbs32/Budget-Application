@@ -101,6 +101,9 @@ public class MainController {
 				budgetDateSelected = budgetDate;
 			}
 		}
+
+		model.addAttribute("budgetDateSelected", budgetDateSelected);
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		User currentUser = userDetails.getUser();
