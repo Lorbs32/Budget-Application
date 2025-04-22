@@ -119,7 +119,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header transactionModalColor">
-                                <h5 class="modal-title">Edit Line Item</h5>
+                                <h5 class="modal-title white">Edit Line Item</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
@@ -284,7 +284,7 @@
                     <img src="/images/transaction.png" alt="Add Transaction" width="50" height="50">
                 </button>
             </div>
-<!--        </div>-->
+        </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:inline="javascript">
         const labels = /*[[${labels}]]*/ [];
@@ -602,19 +602,19 @@
     <a href="/budget-summary" class="btn btn-secondary mt-2 rounded-pill">Budget Summary Calculator</a>
 </div>
 
-<div id="addCategoryMore" class="pb-2 pt-2 budgetSelection center add-container">
-    <a hx-get="/addCategory/retrieveForm"
-       hx-trigger="click"
-       hx-target="#addCategory"
-       hx-swap="innerHTML"
-       hx-encoding="application/x-www-form-urlencoded">
-        ADD CATEGORY
-    </a>
-    <!--            hx-post="/data" hx-trigger="click" hx-target="#result-area"-->
-    <!--            <button type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModal">-->
-    <!--                Add Category-->
-    <!--            </button>-->
-</div>
+<!--<div id="addCategoryMore" class="pb-2 pt-2 budgetSelection center add-container">-->
+<!--    <a hx-get="/addCategory/retrieveForm"-->
+<!--       hx-trigger="click"-->
+<!--       hx-target="#addCategory"-->
+<!--       hx-swap="innerHTML"-->
+<!--       hx-encoding="application/x-www-form-urlencoded">-->
+<!--        ADD CATEGORY-->
+<!--    </a>-->
+<!--    &lt;!&ndash;            hx-post="/data" hx-trigger="click" hx-target="#result-area"&ndash;&gt;-->
+<!--    &lt;!&ndash;            <button type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModal">&ndash;&gt;-->
+<!--    &lt;!&ndash;                Add Category&ndash;&gt;-->
+<!--    &lt;!&ndash;            </button>&ndash;&gt;-->
+<!--</div>-->
 
 <div th:fragment="nothing"></div>
 </body>
