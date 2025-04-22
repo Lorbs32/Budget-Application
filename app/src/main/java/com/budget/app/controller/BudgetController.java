@@ -99,7 +99,7 @@ public class BudgetController {
         // Check whether there's a budget last month.
         if(lastMonthBudget != null)
         {
-            // Pull last month's categories, and line items.
+            // Pull last month's categories, and line items. (Basically subscriptions)?
             BudgetDate budgetDate = budgetService.getBudgetDateById(lastMonthBudgetDateId + 1);
             List<Category> categories = budgetService.getCategories(lastMonthBudget.getId());
             List<LineItem> lineItems = budgetService.getLineItemsByCategoryIds(categories);

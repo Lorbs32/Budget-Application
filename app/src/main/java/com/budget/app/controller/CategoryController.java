@@ -67,7 +67,7 @@ public class CategoryController {
                 "<input type=\"hidden\" name=\"budget\" value=\"" + budgetId + "\"/>" +
                 "<label for=\"categoryName\" class=\"form-label\">Category Name:</label>" +
                 "<input type=\"text\" id=\"categoryName\" name=\"categoryName\" class=\"form-control form-control-override ms-3 me-3\" required>" +
-                "<button type=\"submit\" class=\"btn btn-primary rounded-pill\">Add Category</button></form>";
+                "<button type=\"submit\" class=\"btn btn-secondary rounded-pill\">Add Category</button></form>";
     }
 
 }

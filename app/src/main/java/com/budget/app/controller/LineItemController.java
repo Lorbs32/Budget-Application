@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -63,20 +64,39 @@ public class LineItemController {
 
     @PostMapping("/updateLineItem")
     public String updateLineItem(@RequestParam int lineItemId,
+                                 @RequestParam String lineItemName,
                                  @RequestParam BigDecimal plannedAmount,
-                                 HttpServletRequest request)
-    {
+                                 @RequestParam boolean isIncome,
+                                 @RequestParam String recurrenceType,
+                                 @RequestParam("category.id") int categoryId,
+                                 HttpServletRequest request) {
+
         LineItem lineItem = lineItemService.findById(lineItemId);
-        lineItem.setId(lineItemId);
+
+        lineItem.setLineItemName(lineItemName);
         lineItem.setPlannedAmount(plannedAmount);
+        lineItem.setIncome(isIncome);
+        lineItem.setRecurrenceType(RecurrenceType.valueOf(recurrenceType));
+        lineItem.setCategory(categoryRepository.findById(categoryId));
 
         lineItemService.updateOrInsertLineItem(lineItem);
 
-        // All requests that redirect to the dashboard need to retrieve the currently selected budget date ID and pass it through.
+        // Maintain current budget month view
         String referrer = request.getHeader("referer");
         String budgetDateId = ExtractParameter.getParameterValue(referrer, "budgetDateId");
 
         return "redirect:../dashboard?budgetDateId=" + budgetDateId;
-        //return "redirect:/dashboard";
+    }
+
+    @PostMapping("/delete")
+    public String deleteLineItem(@RequestParam ("lineItem.id") int lineItemId,
+                                 HttpServletRequest request)
+    {
+        LineItem deleteLineItem = lineItemService.findById(lineItemId);
+        lineItemService.delete(deleteLineItem);
+
+        String referrer = request.getHeader("referer");
+        String budgetDateId = ExtractParameter.getParameterValue(referrer, "budgetDateId");
+        return "redirect:../dashboard?budgetDateId=" + budgetDateId;
     }
 }
