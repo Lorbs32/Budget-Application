@@ -284,7 +284,7 @@
                     <img src="/images/transaction.png" alt="Add Transaction" width="50" height="50">
                 </button>
             </div>
-        </div>
+<!--        </div>-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:inline="javascript">
         const labels = /*[[${labels}]]*/ [];
@@ -412,7 +412,7 @@
             plugins: [centerImagePlugin]
         });
         </script>
-        <div class="tab-content mt-2">
+<!--        <div class="tab-content mt-2">-->
             <div class="tab-pane fade" id="banks" role="tabpanel" aria-labelledby="banks-tab">
     <!--            <button id="link-button">Link Account</button>-->
     <!--            <img th:if="${#lists.isEmpty(transactions)}" th:src="@{/images/wallet.png}" alt="transaction wallet" width="100px" style="margin: 0 auto; display: block;" class="mt-3"/>-->
@@ -445,6 +445,7 @@
                     Link Account
                 </button>
             </div>
+<!--        Tab pane Banks -->
         </div>
 
     <!-- Transaction Modal -->
@@ -594,13 +595,13 @@
 </div>
 <!--Closes the Budget Planner Fragment-->
 
-<div th:fragment="actionMenu" class="form-container center">
-    <form id="financialGoals" th:action="@{/}" method="post">
-        <input class="btn btn-secondary mt-2 rounded-pill" type="submit" value="Financial Goals">
-    </form>
-    <a href="/debt-payoff" class="btn btn-secondary mt-2 rounded-pill">Debt Payoff Calculator</a>
-    <a href="/budget-summary" class="btn btn-secondary mt-2 rounded-pill">Budget Summary Calculator</a>
-</div>
+<!--<div th:fragment="actionMenu" class="form-container center">-->
+<!--    <form id="financialGoals" th:action="@{/}" method="post">-->
+<!--        <input class="btn btn-secondary mt-2 rounded-pill" type="submit" value="Financial Goals">-->
+<!--    </form>-->
+<!--    <a href="/debt-payoff" class="btn btn-secondary mt-2 rounded-pill">Debt Payoff Calculator</a>-->
+<!--    <a href="/budget-summary" class="btn btn-secondary mt-2 rounded-pill">Budget Summary Calculator</a>-->
+<!--</div>-->
 
 <!--<div id="addCategoryMore" class="pb-2 pt-2 budgetSelection center add-container">-->
 <!--    <a hx-get="/addCategory/retrieveForm"-->
