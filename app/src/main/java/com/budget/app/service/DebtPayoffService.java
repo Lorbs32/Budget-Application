@@ -2,6 +2,7 @@ package com.budget.app.service;
 
 import com.budget.app.domain.DebtInput;
 import com.budget.app.domain.DebtPayoffResult;
+import com.budget.app.domain.DebtPayoffInput;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -80,6 +81,10 @@ public class DebtPayoffService {
         double interestSaved = originalTotalInterest - totalSnowballInterestPaid;
 
         return new DebtPayoffResult(month, originalTotalInterest, totalSnowballInterestPaid, interestSaved);
+    }
+
+    public DebtPayoffResult calculate(DebtPayoffInput input) {
+        return calculatePayoff(input.getDebts(), input.getExtraPayment());
     }
 
     private double simulateMinimumPayments(Debt debt) {

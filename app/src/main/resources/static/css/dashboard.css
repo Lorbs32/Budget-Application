@@ -145,3 +145,6 @@ div.dateButton:hover {
 .tab-pane.active {
     display: block !important;
 }
+.white {
+    color: #dee2e6;
+}
