@@ -5,6 +5,7 @@ import com.budget.app.entity.*;
 import com.budget.app.security.model.CustomUserDetails;
 import com.budget.app.service.BudgetDateService;
 import com.budget.app.service.BudgetService;
+import com.budget.app.service.TransactionService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.Integer.parseInt;
 
@@ -28,6 +30,9 @@ public class BudgetController {
 
     @Autowired
     private BudgetService budgetService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @Autowired
     private BudgetDateService budgetDateService;
@@ -104,7 +109,10 @@ public class BudgetController {
             List<Category> categories = budgetService.getCategories(lastMonthBudget.getId());
             List<LineItem> lineItems = budgetService.getLineItemsByCategoryIds(categories);
             // Use those categories and line items to generate a new month's budget.
-            budgetService.addBudgetBasedOnLastMonth(currentUser, lastMonthBudget, categories, lineItems, budgetDate);
+            Map<LineItem, LineItem> oldToNewLineItemMap =
+                    budgetService.addBudgetBasedOnLastMonth(currentUser, lastMonthBudget, categories, lineItems, budgetDate);
+
+            transactionService.createRecurringTransactions(currentUser, lastMonthBudget, budgetDate, oldToNewLineItemMap);
         }
         else
         {
