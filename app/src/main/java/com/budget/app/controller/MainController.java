@@ -36,6 +36,9 @@ public class MainController {
 	private BudgetService budgetService;
 
 	@Autowired
+	private BudgetTrackerService budgetTrackerService;
+
+	@Autowired
 	private DebtPayoffService debtPayoffService;
 
 	@Autowired
@@ -91,6 +94,10 @@ public class MainController {
 		model.addAttribute("lineItem", new LineItem());
 		model.addAttribute("budgetDates", budgetDates);
 
+		List<BudgetTracker> budgetTracker = null;
+		budgetTracker = budgetTrackerService.getBudgetTrackerForBudgetDates(budgetDates);
+		model.addAttribute("budgetTracker", budgetTracker);
+
 		BudgetDate budgetDateSelected = new BudgetDate();
 		for (BudgetDate budgetDate : budgetDates)
 		{
@@ -99,6 +106,9 @@ public class MainController {
 				budgetDateSelected = budgetDate;
 			}
 		}
+
+		model.addAttribute("budgetDateSelected", budgetDateSelected);
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		User currentUser = userDetails.getUser();
