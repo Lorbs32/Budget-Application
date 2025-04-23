@@ -98,7 +98,7 @@ VALUES (6, FALSE, 'Rent Payment', 1500, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (7, FALSE, 'Water Bill', 50, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (8, FALSE, 'Grocery Delivery', 100, 'BI_WEEKLY');
+VALUES (8, TRUE, 'Employer LLC', 3700, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (9, FALSE, 'Uber Rides', 75, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
@@ -272,3 +272,6 @@ VALUES (7, '2025-04-05', 'Water', 'water bill', 48.00);
 
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
 VALUES (10, '2025-04-07', 'Checkup', 'Annual Physical', 89.00);
+
+INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
+VALUES (8, '2025-04-07', 'Paycheck', 'April Paycheck', 3824.00);
