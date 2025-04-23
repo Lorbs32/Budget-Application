@@ -8,7 +8,7 @@ public class FinancialGoal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String goalName;
-	@OneToOne
+	@ManyToOne
 	private Budget budget;
 
 	public String getGoalName() {

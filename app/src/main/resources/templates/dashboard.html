@@ -14,33 +14,36 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
 
     <!--HTMX 2.0-->
-<!--    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>-->
-<!--    <script src="https://unpkg.com/htmx.org@2.0.4"></script>-->
-<!--    <script src='https://unpkg.com/htmx.org/dist/htmx.min.js'></script>-->
-<!--    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>-->
-    <script src="https://unpkg.com/htmx.org@2.0.4/dist/htmx.js" integrity="sha384-oeUn82QNXPuVkGCkcrInrS1twIxKhkZiFfr2TdiuObZ3n3yIeMiqcRzkIcguaof1" crossorigin="anonymous"></script>
-<!--    <script>-->
-<!--        document.addEventListener('DOMContentLoaded', () => {-->
-<!--        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');-->
-<!--        const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');-->
+    <!--    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>-->
+    <!--    <script src="https://unpkg.com/htmx.org@2.0.4"></script>-->
+    <!--    <script src='https://unpkg.com/htmx.org/dist/htmx.min.js'></script>-->
+    <!--    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>-->
+    <script src="https://unpkg.com/htmx.org@2.0.4/dist/htmx.js"
+            integrity="sha384-oeUn82QNXPuVkGCkcrInrS1twIxKhkZiFfr2TdiuObZ3n3yIeMiqcRzkIcguaof1"
+            crossorigin="anonymous"></script>
+    <!--    <script>-->
+    <!--        document.addEventListener('DOMContentLoaded', () => {-->
+    <!--        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');-->
+    <!--        const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');-->
 
-<!--        htmx.on('htmx:configRequest', (event) => {-->
-<!--          event.detail.headers['X-XSRF-TOKEN'] = csrfToken;-->
-<!--          event.detail.headers[csrfHeaderName] = csrfToken;-->
-<!--        });-->
-<!--      });-->
-<!--    </script>-->
+    <!--        htmx.on('htmx:configRequest', (event) => {-->
+    <!--          event.detail.headers['X-XSRF-TOKEN'] = csrfToken;-->
+    <!--          event.detail.headers[csrfHeaderName] = csrfToken;-->
+    <!--        });-->
+    <!--      });-->
+    <!--    </script>-->
 
-<!--    <script>-->
-<!--        document.body.addEventListener('htmx:configRequest', (event) => {-->
-<!--        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');-->
-<!--        const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');-->
-<!--        event.detail.headers[csrfHeaderName] = csrfToken;-->
-<!--        });-->
-<!--    </script>-->
+    <!--    <script>-->
+    <!--        document.body.addEventListener('htmx:configRequest', (event) => {-->
+    <!--        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');-->
+    <!--        const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');-->
+    <!--        event.detail.headers[csrfHeaderName] = csrfToken;-->
+    <!--        });-->
+    <!--    </script>-->
 
 
     <script>
@@ -48,6 +51,7 @@
             const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
             return token;
         }
+
         function getBudgetId() {
             const budgetId = document.querySelector('meta[name="budgetId"]').getAttribute('content');
             return budgetId;
@@ -86,23 +90,26 @@
         </div>
         <div class="col-md-4 right-aligned">
             <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
                     Menu
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/financial-goals">Financial Goals</a></li>
+                    <li><a class="dropdown-item" href="/financial-goals/page">Financial Goals</a></li>
                     <li><a class="dropdown-item" href="/debt-payoff">Debt Payoff</a></li>
                     <li><a class="dropdown-item" href="/budget-summary">Budget Summary</a></li>
-                    <li><hr class="dropdown-divider"></li>
-<!--                    <li><a class="dropdown-item" href="/budget-summary">Budget Summary</a></li>-->
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <!--                    <li><a class="dropdown-item" href="/budget-summary">Budget Summary</a></li>-->
                     <li>
                         <a class="dropdown-item"
                            hx-post="/logout" hx-headers='js:{"X-CSRF-TOKEN": calculateValue()}' hx-redirect="/logout">
                             Logout
                         </a>
-<!--                        <form th:action="@{/logout}" method="post" class="dropdown-item">-->
-<!--                            <input class="btn-primary mt-2 rounded-pill" type="submit" value="Logout">-->
-<!--                        </form>-->
+                        <!--                        <form th:action="@{/logout}" method="post" class="dropdown-item">-->
+                        <!--                            <input class="btn-primary mt-2 rounded-pill" type="submit" value="Logout">-->
+                        <!--                        </form>-->
                     </li>
 
                 </ul>
@@ -116,9 +123,9 @@
     <div class="div-container container"
          th:replace="dashboardFragments :: ${isBudgetCreatedInCurrentMonth == 'YES'} ? 'budgetPlanner' : 'blankState'">
     </div>
-<!--    <div class="div-container container"-->
-<!--         th:replace="dashboardFragments :: ${isBudgetCreatedInCurrentMonth == 'YES'} ? 'actionMenu' : 'nothing'">-->
-<!--    </div>-->
+    <!--    <div class="div-container container"-->
+    <!--         th:replace="dashboardFragments :: ${isBudgetCreatedInCurrentMonth == 'YES'} ? 'actionMenu' : 'nothing'">-->
+    <!--    </div>-->
 </div>
 
 <!--Plaid Bank Integration-->
@@ -126,7 +133,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 <script type="text/javascript">
-    (async function($) {
+    (async function ($) {
         const response = await fetch('/plaid/link-token');
         if (!response.ok) throw new Error("Failed to fetch link token");
         const data = await response.json();
@@ -146,40 +153,46 @@
                 $.ajax({
                     type: 'POST',
                     url: '/plaid/public-token-exchange',
-                    data: { public_token: public_token },
+                    data: {public_token: public_token},
                     xhrFields: {
                         withCredentials: true
                     },
-                    beforeSend: function(xhr) {
+                    beforeSend: function (xhr) {
                         xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
                     },
-                    success: function(response) {
+                    success: function (response) {
                         console.log('Public token exchanged successfully:', response);
 
                         // Now that the token is exchanged and stored, safely call accounts-balance
                         $.ajax({
                             type: 'GET',
                             url: '/plaid/accounts-balance',
-                            success: function(balanceResponse) {
+                            success: function (balanceResponse) {
                                 console.log('Accounts balance:', balanceResponse);
                                 window.location.reload();
                             },
-                            error: function(xhr, status, error) {
+                            error: function (xhr, status, error) {
                                 console.error('Failed to get account balances:', error);
                             }
-                    });
+                        });
                     },
                 });
             },
-            onLoad: () => {console.log('onLoad')},
-            onExit: (err, metadata) => {console.log('onExit')},
-            onEvent: (eventName, metadata) => {console.log('onEvent')},
-    });
+            onLoad: () => {
+                console.log('onLoad')
+            },
+            onExit: (err, metadata) => {
+                console.log('onExit')
+            },
+            onEvent: (eventName, metadata) => {
+                console.log('onEvent')
+            },
+        });
 
-    $('#link-button').on('click', function(e) {
-        handler.open();
-        console.log('Plaid Link Button Clicked');
-    });
+        $('#link-button').on('click', function (e) {
+            handler.open();
+            console.log('Plaid Link Button Clicked');
+        });
 
     })(jQuery);
 </script>

@@ -593,6 +593,26 @@
         </div>
 <!--        Delete line item modal dialog-->
     </div>
+</div>
+
+<div th:fragment="actionMenu" class="form-container center">
+    <!--    <button type="button" class="btn btn-secondary mt-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#addCategoryModal">-->
+    <!--        Add Category-->
+    <!--    </button>-->
+</div>
+
+<div id="addCategoryMore" class="pb-2 pt-2 budgetSelection center add-container">
+    <a hx-get="/addCategory/retrieveForm"
+       hx-trigger="click"
+       hx-target="#addCategory"
+       hx-swap="innerHTML"
+       hx-encoding="application/x-www-form-urlencoded">
+        ADD CATEGORY
+    </a>
+    <!--            hx-post="/data" hx-trigger="click" hx-target="#result-area"-->
+    <!--            <button type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModal">-->
+    <!--                Add Category-->
+    <!--            </button>-->
 <!--    Delete line item modal fade-->
 </div>
 <!--Closes the Budget Planner Fragment-->
