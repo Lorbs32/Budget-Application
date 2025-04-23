@@ -1,5 +1,6 @@
 package com.budget.app.entity;
 
+import com.plaid.client.model.Recurrence;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +35,6 @@ public class LineItem
     @Column(name = "recurrence")
     private RecurrenceType recurrenceType;
 
-
     // Connections
     @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "category_id")
@@ -45,7 +45,6 @@ public class LineItem
     // The summed amount of all transactions for this line item.
     @Transient
     private BigDecimal cumulativeActualAmount = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
-
 
     // Constructors
     public LineItem() {}

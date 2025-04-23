@@ -6,6 +6,7 @@ import com.budget.app.entity.plaid.PlaidBankAccount;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface BudgetService
 {
@@ -21,7 +22,7 @@ public interface BudgetService
     public Budget getBudgetById(int budgetId);
     public List<Budget> getAllBudgets();
     public BudgetDate getBudgetDateById(int budgetDateId);
-    public void addBudgetBasedOnLastMonth(User currentUser, Budget lastMonthBudget, List<Category> categories, List<LineItem> lineItems, BudgetDate newBudgetDate);
+    public Map<LineItem, LineItem> addBudgetBasedOnLastMonth(User currentUser, Budget lastMonthBudget, List<Category> categories, List<LineItem> lineItems, BudgetDate newBudgetDate);
     public Budget getBudgetByBudgetDateAndUser(User currentUser, BudgetDate budgetDate);
     public Budget getBudgetByBudgetId(int budgetId);
     public void addBudgetPredetermined(User currentUser, BudgetDate budgetDate);

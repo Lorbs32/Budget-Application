@@ -50,6 +50,9 @@ public class MainController {
 	@Autowired
 	private BudgetSummaryService budgetSummaryService;
 
+	@Autowired
+	private TransactionService transactionService;
+
 	// Subscriptions pairing with Months helper method
 	private String expandMonthAbbreviation(String shortMonth) {
 		switch (shortMonth.toUpperCase()) {
@@ -162,7 +165,9 @@ public class MainController {
 				}
 			}
 
-			List<Transaction> transactions = budgetService.getTransactions(lineItems);
+			// Displays transactions for the selected Budget Month
+			List<Transaction> allTransactions = budgetService.getTransactions(lineItems);
+			List<Transaction> transactions = transactionService.findByBudgetId(budget.getId());
 			model.addAttribute("transactions", transactions);
 
 			List<PlaidBankAccount> banks = budgetService.getBanksByUserId(currentUser);

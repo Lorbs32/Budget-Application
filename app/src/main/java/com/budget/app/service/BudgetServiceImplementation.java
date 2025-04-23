@@ -167,7 +167,7 @@ public class BudgetServiceImplementation implements BudgetService
     }
 
     @Override
-    public void addBudgetBasedOnLastMonth(User currentUser, Budget lastMonthBudget, List<Category> categories, List<LineItem> lineItems, BudgetDate newBudgetDate)
+    public Map<LineItem, LineItem> addBudgetBasedOnLastMonth(User currentUser, Budget lastMonthBudget, List<Category> categories, List<LineItem> lineItems, BudgetDate newBudgetDate)
     {
         Budget newBudget = new Budget();
 
@@ -213,26 +213,27 @@ public class BudgetServiceImplementation implements BudgetService
             oldToNewLineItemMap.put(oldItem, newLineItem);
         }
         lineItemRepository.saveAll(newLineItems);
+        return oldToNewLineItemMap;
 
         // Add transaction to recurring line items only
-        for (LineItem oldItem : lineItems) {
-            if (!oldItem.isIncome() &&
-                    (oldItem.getRecurrenceType() == RecurrenceType.MONTHLY || oldItem.getRecurrenceType() == RecurrenceType.YEARLY)) {
-
-                List<Transaction> oldTransactions = transactionRepository.findByLineItemId(oldItem.getId());
-                if (!oldTransactions.isEmpty()) {
-                    Transaction lastTransaction = oldTransactions.get(oldTransactions.size() - 1);
-
-                    Transaction newTransaction = new Transaction();
-                    newTransaction.setActualAmount(lastTransaction.getActualAmount());
-                    newTransaction.setTransactionDate(LocalDate.now());
-                    newTransaction.setMerchant(lastTransaction.getMerchant()); // optional
-                    newTransaction.setLineItem(oldToNewLineItemMap.get(oldItem));
-
-                    transactionRepository.save(newTransaction);
-                }
-            }
-        }
+//        for (LineItem oldItem : lineItems) {
+//            if (!oldItem.isIncome() &&
+//                    (oldItem.getRecurrenceType() == RecurrenceType.MONTHLY || oldItem.getRecurrenceType() == RecurrenceType.YEARLY)) {
+//
+//                List<Transaction> oldTransactions = transactionRepository.findByLineItemId(oldItem.getId());
+//                if (!oldTransactions.isEmpty()) {
+//                    Transaction lastTransaction = oldTransactions.get(oldTransactions.size() - 1);
+//
+//                    Transaction newTransaction = new Transaction();
+//                    newTransaction.setActualAmount(lastTransaction.getActualAmount());
+//                    newTransaction.setTransactionDate(LocalDate.now());
+//                    newTransaction.setMerchant(lastTransaction.getMerchant()); // optional
+//                    newTransaction.setLineItem(oldToNewLineItemMap.get(oldItem));
+//
+//                    transactionRepository.save(newTransaction);
+//                }
+//            }
+//        }
     }
 
     @Override
