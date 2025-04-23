@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Financial Goals</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+<body class="bg-light">
+
+<div class="container mt-4">
+    <!-- Header Button -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">My Financial Goals</h2>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#financialGoalsModal">
+            Create Financial Goal
+        </button>
+    </div>
+
+    <!-- Financial Goals List -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" th:each="financialGoal : ${financialGoals}">
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="card-title" th:text="${financialGoal.goalName}">Goal Name</h5>
+                    <form th:action="@{/financial-goals/delete}" method="post" class="mt-auto">
+                        <input type="hidden" name="financialGoalId" th:value="${financialGoal.id}"/>
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Financial Goals Modal (unchanged) -->
+<div class="modal fade" id="financialGoalsModal" tabindex="-1" aria-labelledby="financialGoalsModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header transactionModalColor">
+                <h2 class="modal-title fs-5" id="financialGoalsModalLabel">Make a new financial goal</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/financial-goals/create">
+                    <input type="hidden" th:value="${budget.id}" th:name="budgetId">
+                    <div class="mb-3">
+                        <label for="financialGoalName" class="form-label">Financial Goal Name</label>
+                        <input id="financialGoalName" type="text" class="form-control" th:name="financialGoalName">
+                    </div>
+                    <input type="submit" class="btn btn-secondary" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+</body>
+</html>

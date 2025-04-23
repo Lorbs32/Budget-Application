@@ -7,4 +7,5 @@ import java.util.List;
 public interface FinancialGoalService {
 	void saveFinancialGoal(FinancialGoal financialGoal);
 	List<FinancialGoal> getFinancialGoalsByBudgetId(int budgetId);
+	void deleteFinancialGoalById(int financialGoalId);
 }

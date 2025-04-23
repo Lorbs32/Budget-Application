@@ -90,7 +90,7 @@
                     Menu
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/financial-goals">Financial Goals</a></li>
+                    <li><a class="dropdown-item" href="/financial-goals/page">Financial Goals</a></li>
                     <li><a class="dropdown-item" href="/debt-payoff">Debt Payoff</a></li>
                     <li><a class="dropdown-item" href="/budget-summary">Budget Summary</a></li>
                     <li><hr class="dropdown-divider"></li>
@@ -104,7 +104,6 @@
 <!--                            <input class="btn-primary mt-2 rounded-pill" type="submit" value="Logout">-->
 <!--                        </form>-->
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -307,9 +306,6 @@
 </div>
 <!-- ===================== Budget Summary Calculator END ===================== -->
 
-<div class="div-container container"
-     th:replace="dashboardFragments :: ${isBudgetCreatedInCurrentMonth == 'YES'} ? 'financialGoals' : 'nothing'">
-</div>
 </body>
 <!--Including the bootstrap js twice caused the dropdown menu not to work.-->
 <!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>-->

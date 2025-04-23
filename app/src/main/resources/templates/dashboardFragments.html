@@ -599,39 +599,6 @@
     <!--    </button>-->
 </div>
 
-<div th:fragment="financialGoals" class="mt-2">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#financialGoalsModal">
-        Create Financial Goal
-    </button>
-
-    <div th:each="financialGoal : ${financialGoals}">
-        <p th:text="${financialGoal.goalName}"></p>
-    </div>
-
-    <!-- Financial Goals Modal -->
-    <div class="modal fade" id="financialGoalsModal" tabindex="-1" aria-labelledby="financialGoalsModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header transactionModalColor">
-                    <h2 class="modal-title fs-5" id="financialGoalsModalLabel">Make a new financial goal</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="/financialgoals/create">
-                        <input type="hidden" th:value="${budget.id}" th:name="budgetId">
-                        <div class="mb-3">
-                            <label for="financialGoalName" class="form-label">Financial Goal Name</label>
-                            <input id="financialGoalName" type="text" class="form-control" th:name="financialGoalName">
-                        </div>
-                        <input type="submit" class="btn btn-secondary" value="Save">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div id="addCategoryMore" class="pb-2 pt-2 budgetSelection center add-container">
     <a hx-get="/addCategory/retrieveForm"
        hx-trigger="click"

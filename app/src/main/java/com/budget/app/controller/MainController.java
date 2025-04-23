@@ -1,32 +1,32 @@
 package com.budget.app.controller;
 
-import com.budget.app.domain.*;
+import com.budget.app.domain.ExtractParameter;
 import com.budget.app.entity.*;
 import com.budget.app.entity.plaid.PlaidBankAccount;
 import com.budget.app.security.model.CustomUserDetails;
 import com.budget.app.service.BudgetService;
+import com.budget.app.service.BudgetSummaryService;
+import com.budget.app.service.DebtPayoffService;
 import com.budget.app.service.LineItemService;
 import com.budget.app.service.financialGoal.FinancialGoalService;
-import com.budget.app.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.Date;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.time.Month;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -208,10 +208,6 @@ public class MainController {
 		transaction.setTransactionDate(todaysDate);
 
 		System.out.println("✅ Final model budgetDateSelected ID: " + budgetDateSelected.getId());
-
-		Budget budget = budgetService.getBudget(currentUser.getId(), budgetDateSelected.getId());
-
-		model.addAttribute("financialGoals", financialGoalService.getFinancialGoalsByBudgetId(budget.getId()));
 
 		return "dashboard";
 	}

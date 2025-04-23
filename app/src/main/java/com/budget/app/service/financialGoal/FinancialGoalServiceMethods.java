@@ -21,4 +21,9 @@ public class FinancialGoalServiceMethods implements FinancialGoalService {
 	public List<FinancialGoal> getFinancialGoalsByBudgetId(int budgetId) {
 		return financialGoalRepository.getFinancialGoalsByBudgetId(budgetId);
 	}
+
+	@Override
+	public void deleteFinancialGoalById(int financialGoalId) {
+		financialGoalRepository.deleteById(financialGoalId);
+	}
 }
