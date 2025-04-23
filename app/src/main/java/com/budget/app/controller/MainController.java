@@ -178,8 +178,10 @@ public class MainController {
 			List<Double> plannedValues = new ArrayList<>();
 			List<Double> remainingValues = new ArrayList<>();
 
-			for (LineItem lineItem : filteredLineItems)
-			{
+			for (LineItem lineItem : filteredLineItems) {
+				if (lineItem.isIncome()) {
+					continue; // Skip income line items
+				}
 				double plannedAmount = lineItem.getPlannedAmount().doubleValue();
 
 				double totalAmount = 0;
