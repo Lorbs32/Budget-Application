@@ -55,6 +55,9 @@ public class MainController {
 	@Autowired
 	private BudgetSummaryService budgetSummaryService;
 
+	@Autowired
+	private TransactionService transactionService;
+
 	// Subscriptions pairing with Months helper method
 	private String expandMonthAbbreviation(String shortMonth) {
 		switch (shortMonth.toUpperCase()) {
@@ -167,7 +170,9 @@ public class MainController {
 				}
 			}
 
-			List<Transaction> transactions = budgetService.getTransactions(lineItems);
+			// Displays transactions for the selected Budget Month
+			List<Transaction> allTransactions = budgetService.getTransactions(lineItems);
+			List<Transaction> transactions = transactionService.findByBudgetId(budget.getId());
 			model.addAttribute("transactions", transactions);
 
 			List<PlaidBankAccount> banks = budgetService.getBanksByUserId(currentUser);
@@ -178,8 +183,10 @@ public class MainController {
 			List<Double> plannedValues = new ArrayList<>();
 			List<Double> remainingValues = new ArrayList<>();
 
-			for (LineItem lineItem : filteredLineItems)
-			{
+			for (LineItem lineItem : filteredLineItems) {
+				if (lineItem.isIncome()) {
+					continue; // Skip income line items
+				}
 				double plannedAmount = lineItem.getPlannedAmount().doubleValue();
 
 				double totalAmount = 0;

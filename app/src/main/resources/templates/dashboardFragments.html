@@ -37,7 +37,7 @@
                 <tr>
                     <th th:text="${category.getCategoryName()}"></th>
                     <th>Planned</th>
-                    <th>Spent</th>
+                    <th>Actual</th>
                     <th class="tableWidth">
                         <button type="button" class="btn btn-light btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#addLineItemModal">
                             +
@@ -61,8 +61,8 @@
                                    class="form-control" min="0" step="any" th:id="|plannedAmountInput-${lineItem.id}|" style="display:none;"/>
                         </form>
                     </td>
-                    <td th:class="${lineItem.plannedAmount < lineItem.cumulativeActualAmount}?text-danger">
-                        <span th:text="${lineItem.plannedAmount < lineItem.cumulativeActualAmount}?'$'+${lineItem.cumulativeActualAmount}+' (over budget)':'$'+${lineItem.cumulativeActualAmount}"></span>
+                    <td th:class="${lineItem.isIncome} ? 'text-success' : (${lineItem.plannedAmount < lineItem.cumulativeActualAmount} ? 'text-danger' : '')">
+                        <span th:text="${lineItem.plannedAmount < lineItem.cumulativeActualAmount}?'$'+${lineItem.cumulativeActualAmount}:'$'+${lineItem.cumulativeActualAmount}"></span>
                     </td>
                     <td class="tableWidth">
                         <button type="button"
@@ -221,7 +221,7 @@
                         <div class="text-center">
                             <h5>Planned Amount</h5>
                             <ul class="list-group">
-                                <li th:each="lineItem : ${lineItems}" class="list-group-item">
+                                <li th:each="lineItem : ${lineItems}" th:if="${!lineItem.income}" class="list-group-item">
                                     <span th:text="${lineItem.lineItemName}">Item Name</span>
                                     <span th:text="'$'+${lineItem.plannedAmount}">Planned Amount</span>
 <!--                                    <span th:text="${transaction != null ? transaction.actualAmount : 'N/A'}">Amount</span>-->
@@ -237,7 +237,7 @@
                         <div class="text-center">
                             <h5>Spent</h5>
                             <ul class="list-group">
-                                <li th:each="lineItem : ${lineItems}" class="list-group-item">
+                                <li th:each="lineItem : ${lineItems}" th:if="${!lineItem.income}" class="list-group-item">
                                     <span th:text="${lineItem.lineItemName}">Item Name</span>
                                     <span th:text="'$'+${lineItem.cumulativeActualAmount}">Amount</span>
                                 </li>
@@ -252,9 +252,10 @@
                         <div class="text-center">
                             <h5>Remaining Amount</h5>
                             <ul class="list-group">
-                                <li th:each="lineItem : ${lineItems}" class="list-group-item">
+                                <li th:each="lineItem : ${lineItems}" th:if="${!lineItem.income}" class="list-group-item">
                                     <span th:text="${lineItem.lineItemName}">Item Name</span>
-                                    <span th:text="'$' + ${lineItem.plannedAmount - lineItem.cumulativeActualAmount}">Remaining Amount</span>
+                                    <span  th:class="${lineItem.plannedAmount - lineItem.cumulativeActualAmount < 0} ? 'text-danger' : ''"
+                                           th:text="'$' + (${lineItem.plannedAmount} - ${lineItem.cumulativeActualAmount})">Remaining Amount</span>
                                 </li>
                             </ul>
                         </div>
