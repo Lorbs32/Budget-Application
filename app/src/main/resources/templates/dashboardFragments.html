@@ -294,15 +294,15 @@
         const plannedValues = /*[[${plannedValues}]]*/ [];
         const remainingValues = /*[[${remainingValues}]]*/ [];
 
+        const image = new Image();
+                image.src = '/images/calculator.png';
+
         const centerImagePlugin = {
             id: 'centerImagePlugin',
             afterDraw(chart) {
                 const { width, height, ctx } = chart;
                 const centerX = chart.chartArea.left + (chart.chartArea.right - chart.chartArea.left) / 2;
                 const centerY = chart.chartArea.top + (chart.chartArea.bottom - chart.chartArea.top) / 2;
-
-                const image = new Image();
-                image.src = '/images/calculator.png';
 
                 const chartAreaSize = Math.min(chart.chartArea.right - chart.chartArea.left, chart.chartArea.bottom - chart.chartArea.top);
                 const imgSize = chartAreaSize * 0.3;
