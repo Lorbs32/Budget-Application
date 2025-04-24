@@ -288,7 +288,6 @@
             </div>
 <!--        </div>-->
 
-<!--        MADE A CHANGE FROM 0.3 to 0.0 to hide the center image. If we can figure out the hide and re-appear on hover we can add it back.-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:inline="javascript">
         const labels = /*[[${labels}]]*/ [];
@@ -307,7 +306,7 @@
                 image.src = '/images/calculator.png';
 
                 const chartAreaSize = Math.min(chart.chartArea.right - chart.chartArea.left, chart.chartArea.bottom - chart.chartArea.top);
-                const imgSize = chartAreaSize * 0.0;
+                const imgSize = chartAreaSize * 0.3;
 
                  image.onload = () => {
                     ctx.save();
