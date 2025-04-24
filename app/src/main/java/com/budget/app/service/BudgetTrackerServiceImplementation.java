@@ -104,8 +104,8 @@ public class BudgetTrackerServiceImplementation implements BudgetTrackerService 
 					}
 				}
 				
-				BigDecimal weeklyMultiplier = BigDecimal.valueOf(4.0);
-				BigDecimal biWeeklyMultiplier = BigDecimal.valueOf(2.0);
+				BigDecimal weeklyMultiplier = BigDecimal.valueOf(4);
+				BigDecimal biWeeklyMultiplier = BigDecimal.valueOf(2);
 				BigDecimal yearlyDivisor = BigDecimal.valueOf(12);
 
 				RecurrenceType recType = item.getRecurrenceType();
@@ -119,7 +119,7 @@ public class BudgetTrackerServiceImplementation implements BudgetTrackerService 
 				}
 				
 				
-				// This looks at planned amount only...need to determine if this should be adjust to
+				// This looks at planned amount only...need to determine if this should be adjusted to
 				// address some combination of planned amount and actual transaction
 				if(item.isIncome()) {
 					totalMonthlyIncome = totalMonthlyIncome.add(currTotal);					
@@ -159,13 +159,13 @@ public class BudgetTrackerServiceImplementation implements BudgetTrackerService 
     			budgetTracker.setBudgetText("&nbsp;");
     			budgetTracker.setBudgetTextClass("budget");        		
         	} else {
-    			budgetTracker.setBudgetText("&#x2713; It's an EveryDollar Budget!");
+    			budgetTracker.setBudgetText("&#x2713; Every dollar is budgeted!");
     			budgetTracker.setBudgetTextClass("budget on_budget");
         		if(balance.compareTo(bigDecimalZero) < 0) {
-        			budgetTracker.setBudgetText("<strong>$" + balance.abs().toString() + "</strong> over budget");
+        			budgetTracker.setBudgetText("<strong>$" + balance.abs().toString() + "</strong> over budget.");
         			budgetTracker.setBudgetTextClass("budget over_budget");
-        		} else if(balance.compareTo(bigDecimalZero) < 0) {
-        			budgetTracker.setBudgetText("<strong>$" + balance.toString() + "</strong> left to budget");
+        		} else if(balance.compareTo(bigDecimalZero) > 0) {
+        			budgetTracker.setBudgetText("<strong>$" + balance.toString() + "</strong> left to budget.");
         			budgetTracker.setBudgetTextClass("budget under_budget");
         		}        		
         	}

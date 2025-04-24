@@ -16,6 +16,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     List<Transaction> findByLineItemIdIn(List<Integer> ids);
 
     // Fetching budgetID for subscription transactions
-    @Query("SELECT t FROM Transaction t WHERE t.lineItem.category.budget.id = :budgetId")
+    @Query("SELECT t FROM Transaction t WHERE t.lineItem.category.budget.id = :budgetId ORDER BY t.transactionDate ASC")
     List<Transaction> findByBudgetId(@Param("budgetId") int budgetId);
 }

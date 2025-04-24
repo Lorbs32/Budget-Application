@@ -75,7 +75,7 @@ public class LineItemController {
 
         lineItem.setLineItemName(lineItemName);
         lineItem.setPlannedAmount(plannedAmount);
-        lineItem.setIncome(isIncome);
+        lineItem.setIsIncome(isIncome);
         lineItem.setRecurrenceType(RecurrenceType.valueOf(recurrenceType));
         lineItem.setCategory(categoryRepository.findById(categoryId));
 

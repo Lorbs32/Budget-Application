@@ -66,20 +66,26 @@ VALUES ('Utilities', 1);
 INSERT INTO categories (category_name, budget_id)
 VALUES ('Groceries', 1);
 INSERT INTO categories (category_name, budget_id)
-VALUES ('Entertainment', 1);
-INSERT INTO categories (category_name, budget_id)
 VALUES ('Transportation', 1);
+INSERT INTO categories (category_name, budget_id)
+VALUES ('Entertainment', 1);
 
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (1, FALSE, 'Rent Payment', 1500, 'MONTHLY');
+VALUES (1, FALSE, 'Rent Payment', 1600, 'MONTHLY');
+--INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
+--VALUES (1, FALSE, 'Renters Insurance', 20.01, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (2, FALSE, 'Electricity Bill', 120, 'MONTHLY');
+VALUES (2, FALSE, 'Electricity DTE', 120.00, 'MONTHLY');
+--INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
+--VALUES (2, FALSE, 'Water', 120, 'MONTHLY');
+--INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
+--VALUES (2, FALSE, 'Internet', 65, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
 VALUES (3, FALSE, 'Weekly Food Supplies', 250, 'WEEKLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (4, FALSE, 'Gasoline', 200, 'MONTHLY');
+VALUES (4, FALSE, 'Gas', 200, 'MONTHLY');
 INSERT INTO line_items (category_id, is_income, line_item_name, planned_amount, recurrence)
-VALUES (5, FALSE, 'Netflix Subscription', 20, 'MONTHLY');
+VALUES (5, FALSE, 'Netflix Subscription', 24.99, 'MONTHLY');
 
 -- Emma (2)
 INSERT INTO categories (category_name, budget_id)
@@ -239,10 +245,10 @@ INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual
 VALUES (2, '2025-04-05', 'Electric Company', 'Electric bill', 120.00);
 
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
-VALUES (3, '2025-04-07', 'Grocery Store', 'Weekly groceries', 80.00);
+VALUES (3, '2025-04-06', 'Grocery Store', 'Weekly groceries', 80.00);
 
 INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
-VALUES (4, '2025-04-08', 'Gas Station', 'Fuel refill', 60.00);
+VALUES (4, '2025-04-07', 'Gas Station', 'Fuel refill', 60.00);
 
 --INSERT INTO transactions (line_item_id, transaction_date, merchant, note, actual_amount)
 --VALUES (5, '2025-04-10', 'Netflix', 'Monthly subscription', 20.00);

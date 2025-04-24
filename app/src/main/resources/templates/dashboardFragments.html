@@ -167,7 +167,7 @@
                                         </select>
                                     </div>
 
-                                    <button type="submit" class="btn btn-secondary">Save Changes</button>
+                                    <button type="submit" class="btn btn-secondary rounded-pill">Save Changes</button>
                                 </form>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
             </div>
         </div>
         <!-- Update Modal End -->
-        <div id="addCategory" class="pb-2 pt-2 budgetSelection center add-container">
+        <div id="addCategory" class="dateButton pb-2 pt-2 budgetSelection center add-container">
             <a hx-get="/addCategory/retrieveForm"
                hx-trigger="click"
                hx-target="#addCategory"
@@ -287,6 +287,8 @@
                 </button>
             </div>
 <!--        </div>-->
+
+<!--        MADE A CHANGE FROM 0.3 to 0.0 to hide the center image. If we can figure out the hide and re-appear on hover we can add it back.-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:inline="javascript">
         const labels = /*[[${labels}]]*/ [];
@@ -305,7 +307,7 @@
                 image.src = '/images/calculator.png';
 
                 const chartAreaSize = Math.min(chart.chartArea.right - chart.chartArea.left, chart.chartArea.bottom - chart.chartArea.top);
-                const imgSize = chartAreaSize * 0.3;
+                const imgSize = chartAreaSize * 0.0;
 
                  image.onload = () => {
                     ctx.save();
@@ -436,8 +438,8 @@
                         <div class="col-1 ps-0"><img th:src="@{/images/bank.png}" alt="bank institution" width="30px"></div>
                         <div class="col-3"><span class="align-middle" th:text="${bank.institution}"></span></div>
                         <div class="col-3"><span class="align-middle" th:text="${bank.subtype}"></span></div>
-                        <div class="col-3"><span class="align-middle">$</span><span class="align-middle" th:text="${bank.balanceAvailable}"></span></div>
-                        <div class="col-2"><span class="align-middle">$</span><span class="align-middle" th:text="${bank.balanceCurrent}"></span></div>
+                        <div class="col-3"><span class="align-middle">$</span><span class="align-middle" th:text="${bank.balanceAvailable}+'0'"></span></div>
+                        <div class="col-2"><span class="align-middle">$</span><span class="align-middle" th:text="${bank.balanceCurrent}+'0'"></span></div>
                     </div>
                 </div>
                 <p th:if="${banks != null and !#lists.isEmpty(banks)}" class="mt-1 mb-1 center">Connect additional bank accounts<br>to track your income and expenses.</p>
@@ -486,7 +488,7 @@
                         <label for="transactionNote" class="form-label" hidden>Note</label>
                         <textarea th:field="*{note}" style="height: 50px;" placeholder="Enter any notes about the transaction" class="form-control" id="transactionNote" name="transactionNote"></textarea>
                         <br>
-                        <input type="submit" name="addTransaction" value="Save" class="btn btn-secondary rounded-pill mt-2 mr-4 text-end">
+                        <input type="submit" name="addTransaction" value="Add Transaction" class="btn btn-secondary rounded-pill mt-2 mr-4 text-end">
                     </form>
                 </div>
                 <!--            <div class="modal-footer">-->
@@ -525,18 +527,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header transactionModalColor">
-                    <h2 class="modal-title fs-5 white" id="addLineItemModalLabel">Add New Line Item</h2>
+                    <h2 class="modal-title fs-5 white" id="addLineItemModalLabel">Add Line Item</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/lineitems/create}" method="post">
+                    <form th:action="@{/lineitems/create}" method="post" th:object="${lineItem}">
                         <div class="mb-3">
                             <label for="lineItemName" class="form-label">Line Item Name</label>
                             <input type="text" id="lineItemName" name="lineItemName" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="plannedAmount" class="form-label">Planned Amount</label>
-                            <input type="number" id="plannedAmount" name="plannedAmount" class="form-control" required>
+                            <input type="number" min="1" step="any" id="plannedAmount" name="plannedAmount" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="isIncome" class="form-label">Income or Expense?</label>
@@ -545,6 +547,7 @@
                                 <option value="false">Expense</option>
                             </select>
                         </div>
+
                         <!-- Recurrence Dropdown selection -->
                         <div class="mb-3">
                             <label for="recurrenceType" class="form-label">Recurrence</label>
