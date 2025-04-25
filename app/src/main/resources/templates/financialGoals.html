@@ -15,6 +15,7 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#financialGoalsModal">
             Create Financial Goal
         </button>
+        <a th:href="@{/dashboard(budgetDateId=${budgetDateId})}" class="btn btn-outline-secondary me-2">Back to Dashboard</a>
     </div>
 
     <!-- Financial Goals List -->
@@ -44,7 +45,7 @@
             </div>
             <div class="modal-body">
                 <form action="/financial-goals/create">
-                    <input type="hidden" th:value="${budget.id}" th:name="budgetId">
+                    <input type="hidden" th:value="${budgetDateId}" name="budgetDateId">
                     <div class="mb-3">
                         <label for="financialGoalName" class="form-label">Financial Goal Name</label>
                         <input id="financialGoalName" type="text" class="form-control" th:name="financialGoalName">

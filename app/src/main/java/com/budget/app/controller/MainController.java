@@ -78,6 +78,7 @@ public class MainController {
 	public String dashboard(HttpServletRequest request, Model model, final Transaction transaction
 			,@RequestParam(value = "budgetDateId", required = false, defaultValue = "0") int budgetDateId)
 	{
+		model.addAttribute("budgetDateId", budgetDateId);
 
 		List<BudgetDate> budgetDates = null;
 		if(budgetDateId != 0)
