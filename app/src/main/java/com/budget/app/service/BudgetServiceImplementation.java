@@ -197,7 +197,7 @@ public class BudgetServiceImplementation implements BudgetService
 
             LineItem newLineItem = new LineItem();
             newLineItem.setLineItemName(oldItem.getLineItemName());
-            newLineItem.setIncome(oldItem.isIncome());
+            newLineItem.setIsIncome(oldItem.isIncome());
             newLineItem.setRecurrenceType(oldItem.getRecurrenceType());
             newLineItem.setPlannedAmount(oldItem.getPlannedAmount());
 

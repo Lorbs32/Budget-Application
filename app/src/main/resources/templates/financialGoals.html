@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>My Financial Goals</title>
@@ -12,26 +12,29 @@
     <!-- Header Button -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">My Financial Goals</h2>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#financialGoalsModal">
+        <button type="button" class="btn btn-secondary rounded-pill" data-bs-toggle="modal" data-bs-target="#financialGoalsModal">
             Create Financial Goal
         </button>
         <a th:href="@{/dashboard(budgetDateId=${budgetDateId})}" class="btn btn-outline-secondary me-2">Back to Dashboard</a>
     </div>
 
     <!-- Financial Goals List -->
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" th:each="financialGoal : ${financialGoals}">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-2" th:each="financialGoal : ${financialGoals}">
         <div class="col">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body d-flex flex-column justify-content-between">
                     <h5 class="card-title" th:text="${financialGoal.goalName}">Goal Name</h5>
                     <form th:action="@{/financial-goals/delete}" method="post" class="mt-auto">
                         <input type="hidden" name="financialGoalId" th:value="${financialGoal.id}"/>
-                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">Delete</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+<!--    Back to Dashboard link-->
+    <a class="mt-3" href="/dashboard">Back to Dashboard</a>
 </div>
 
 <!-- Financial Goals Modal (unchanged) -->
@@ -50,7 +53,7 @@
                         <label for="financialGoalName" class="form-label">Financial Goal Name</label>
                         <input id="financialGoalName" type="text" class="form-control" th:name="financialGoalName">
                     </div>
-                    <input type="submit" class="btn btn-secondary" value="Save">
+                    <input type="submit" class="btn btn-secondary rounded-pill" value="Save">
                 </form>
             </div>
         </div>

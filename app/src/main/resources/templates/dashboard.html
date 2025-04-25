@@ -17,6 +17,9 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
 
+    <!--Dashboard Stylesheet-->
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+
     <!--HTMX 2.0-->
     <!--    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>-->
     <!--    <script src="https://unpkg.com/htmx.org@2.0.4"></script>-->
@@ -58,65 +61,12 @@
         }
     </script>
 
-    <!--Dashboard Stylesheet-->
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
-
     <title>Dashboard</title>
 </head>
 <body class="bodyColor" id="fullPage">
 
-<!--TO DO: Replace with th:insert to the header template reference.-->
-<!--<div class="center">-->
-<!--    <div class="header">-->
-<!--        <div class="left-aligned">-->
-<!--            <img src="/images/money.png" width="100" height="100">-->
-<!--        </div>-->
-<!--        <div class="center">-->
-<!--            <h1>Show Me The Money</h1>-->
-<!--        </div>-->
-<!--        <div class="right-aligned">-->
-<!--            <form th:action="@{/logout}" method="post">-->
-<!--                <input class="btn-primary mt-2 rounded-pill" type="submit" value="Logout">-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
-<div class="row" style="padding:0px; margin:0px;">
-    <div class="header" style="padding-left: 20px;">
-        <div class="col-8 left-aligned" style="padding-left: 4rem;">
-            <img src="/images/money.png" height="65" style="margin-top:3px;">&nbsp;
-            <h1 style="display:inline;">Show Me The Money</h1>
-        </div>
-        <div class="col-md-4 right-aligned">
-            <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false">
-                    Menu
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" th:href="@{/financial-goals/page(budgetDateId=${budgetDateId})}">Financial Goals</a></li>
-                    <li><a class="dropdown-item" href="/debt-payoff">Debt Payoff</a></li>
-                    <li><a class="dropdown-item" href="/budget-summary">Budget Summary</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <!--                    <li><a class="dropdown-item" href="/budget-summary">Budget Summary</a></li>-->
-                    <li>
-                        <a class="dropdown-item"
-                           hx-post="/logout" hx-headers='js:{"X-CSRF-TOKEN": calculateValue()}' hx-redirect="/logout">
-                            Logout
-                        </a>
-                        <!--                        <form th:action="@{/logout}" method="post" class="dropdown-item">-->
-                        <!--                            <input class="btn-primary mt-2 rounded-pill" type="submit" value="Logout">-->
-                        <!--                        </form>-->
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+<div th:replace="headerFragment :: mainHeader"></div>
 
 <br>
 <div class="container">

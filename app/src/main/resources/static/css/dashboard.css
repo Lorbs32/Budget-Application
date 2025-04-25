@@ -175,6 +175,13 @@ div.dateButton:hover {
     color: #ffffff;
 }
 
+.dateButton:hover .under_budget {
+    color: #ffffff;
+}
+.dateButton:hover .over_budget {
+    color: #ffffff;
+}
+
 .over_budget {
     color: #CC0000;
 }

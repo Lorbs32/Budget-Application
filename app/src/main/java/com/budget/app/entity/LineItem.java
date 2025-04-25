@@ -83,7 +83,7 @@ public class LineItem
 
     public boolean isIncome() {return isIncome;}
 
-    public void setIncome(boolean income) {isIncome = income;}
+    public void setIsIncome(boolean income) {isIncome = income;}
 
     public void setId(int id) {this.id = id;}
 
