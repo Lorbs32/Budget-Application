@@ -1,7 +1,6 @@
 package com.budget.app.entity;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,6 @@ public class Budget
     private BudgetDate budgetDate;
     @OneToMany(mappedBy = "budget",cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<Category>();
-
 
     // Constructors
     public Budget() {}

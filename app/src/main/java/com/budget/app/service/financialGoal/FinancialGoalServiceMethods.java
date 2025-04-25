@@ -18,8 +18,8 @@ public class FinancialGoalServiceMethods implements FinancialGoalService {
 	}
 
 	@Override
-	public List<FinancialGoal> getFinancialGoalsByBudgetId(int budgetId) {
-		return financialGoalRepository.getFinancialGoalsByBudgetId(budgetId);
+	public List<FinancialGoal> getFinancialGoalsByBudgetDateId(int budgetDateId) {
+		return financialGoalRepository.getFinancialGoalsByBudgetDateId(budgetDateId);
 	}
 
 	@Override
