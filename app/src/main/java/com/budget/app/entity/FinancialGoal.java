@@ -9,7 +9,15 @@ public class FinancialGoal {
 	private int id;
 	private String goalName;
 	@ManyToOne
-	private Budget budget;
+	private BudgetDate budgetDate;
+
+	public BudgetDate getBudgetDate() {
+		return budgetDate;
+	}
+
+	public void setBudgetDate(BudgetDate budgetDate) {
+		this.budgetDate = budgetDate;
+	}
 
 	public String getGoalName() {
 		return goalName;
@@ -25,13 +33,5 @@ public class FinancialGoal {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Budget getBudget() {
-		return budget;
-	}
-
-	public void setBudget(Budget budget) {
-		this.budget = budget;
 	}
 }
