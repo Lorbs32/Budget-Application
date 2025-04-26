@@ -300,7 +300,7 @@
 
         const centerImagePlugin = {
             id: 'centerImagePlugin',
-            afterDraw(chart) {
+            beforeDraw(chart) {
                 const { width, height, ctx } = chart;
                 const centerX = chart.chartArea.left + (chart.chartArea.right - chart.chartArea.left) / 2;
                 const centerY = chart.chartArea.top + (chart.chartArea.bottom - chart.chartArea.top) / 2;
