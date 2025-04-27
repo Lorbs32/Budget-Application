@@ -26,6 +26,7 @@
                     <h5 class="card-title" th:text="${financialGoal.goalName}">Goal Name</h5>
                     <form th:action="@{/financial-goals/delete}" method="post" class="mt-auto">
                         <input type="hidden" name="financialGoalId" th:value="${financialGoal.id}"/>
+                        <input type="hidden" name="budgetDateId" th:value="${budgetDateId}"/>
                         <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">Delete</button>
                     </form>
                 </div>
