@@ -41,8 +41,8 @@ public class FinancialGoalController {
 	}
 
 	@RequestMapping("/delete")
-	public String delete(@RequestParam("financialGoalId") int financialGoalId) {
+	public String delete(@RequestParam("financialGoalId") int financialGoalId, @RequestParam("budgetDateId") int budgetDateId) {
 		financialGoalService.deleteFinancialGoalById(financialGoalId);
-		return "redirect:/financial-goals/page";
+		return "redirect:/financial-goals/page?budgetDateId=" + budgetDateId;
 	}
 }
